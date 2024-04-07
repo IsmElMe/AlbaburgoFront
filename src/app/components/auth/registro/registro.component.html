@@ -1,0 +1,101 @@
+<section class="row">
+    <div class="col-6 offset-3 vh-100 align-content-center">
+        <form class="form" method="post" [formGroup]="usuario" (submit)="registrar($event)">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label" for="inputNif">NIF</label>
+                    <input type="text" id="inputNif" class="form-control" placeholder="12345678A" maxlength="9" required formControlName="nif"
+                        [ngClass]="{ 'is-valid': nif?.valid, 'is-invalid': nif?.invalid && (nif?.touched || nif?.dirty)}">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label class="form-label" for="inputEmail">Email</label>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="ejemplo@gmail.com" required formControlName="email" 
+                        [ngClass]="{ 'is-valid': email?.valid, 'is-invalid': email?.invalid && (email?.touched || email?.dirty)}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="inputNombre" class="form-label">Nombre</label>
+                    <input type="text" id="inputNombre" class="form-control" required formControlName="nombre"
+                        [ngClass]="{ 'is-valid': nombre?.valid, 'is-invalid': nombre?.invalid && (nombre?.touched || nombre?.dirty)}">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="inputApellidos" class="form-label">Apellidos</label>
+                    <input type="text" id="inputApellidos" class="form-control" required formControlName="apellidos"
+                        [ngClass]="{ 'is-valid': apellidos?.valid, 'is-invalid': apellidos?.invalid && (apellidos?.touched || apellidos?.dirty)}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="inputFecha" class="form-label">Fecha de nacimiento</label>
+                    <input type="date" id="inputFecha" class="form-control" required formControlName="fechaNacimiento"
+                        [ngClass]="{ 'is-valid': fechaNacimiento?.valid, 'is-invalid': fechaNacimiento?.invalid && (fechaNacimiento?.touched || fechaNacimiento?.dirty)}">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="inputTelefono" class="form-label">Teléfono</label>
+                    <input type="tel" id="inputTelefono" class="form-control" required formControlName="telefono"
+                        [ngClass]="{ 'is-valid': telefono?.valid, 'is-invalid': telefono?.invalid && (telefono?.touched || telefono?.dirty)}">
+                </div>
+            </div>
+            <div class="row" formGroupName="password">
+                <div class="col-md-6 mb-4">
+                    <label for="inputPassword" class="col-12 form-label">Contraseña</label>
+                    <div class="password-input w-100">
+                        <input [type]="tipoPassword" id="inputPassword" class="form-control" required formControlName="pass"
+                            [ngClass]="{ 'is-valid': password?.valid, 'is-invalid': password?.invalid && (password?.touched || password?.dirty)}">
+                        <button type="button" id="botonPassword" class="border-0 bg-transparent" (mousedown)="mostrarPassword()" (mouseup)="ocultarPassword()">
+                            @if (mostrarPass) {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                            </svg>
+                            } @else {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye" viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                <path
+                                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                            </svg>
+                            }
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="inputRepetirPassword" class="col-12 form-label">Repetir contraseña</label>
+                    <div class="password-input w-100">
+                        <input [type]="tipoRepetirPassword" id="inputRepetirPassword" class="form-control" required formControlName="repetirPass"
+                            [ngClass]="{ 'is-valid': repetirPassword?.valid, 'is-invalid': repetirPassword?.invalid && (repetirPassword?.touched || repetirPassword?.dirty)}">
+                        <button type="button" id="botonRepetirPassword" class="border-0 bg-transparent" (mousedown)="mostrarRepetirPassword()" (mouseup)="ocultarRepetirPassword()">
+                            @if (mostrarRepetirPass) {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                    <path
+                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                </svg>
+                            } @else {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-eye" viewBox="0 0 16 16">
+                                    <path
+                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                    <path
+                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                </svg>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <input type="submit" id="submit" class="col col-md-6 col-lg-3 btn text-white" value="Registrarse">
+            </div>
+        </form>
+
+        @if (registro$ | async) {
+            <p>La petición de registro se ha completado exitosamente.</p>
+        }
+    </div>
+</section>
