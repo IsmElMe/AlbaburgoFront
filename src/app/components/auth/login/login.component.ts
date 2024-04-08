@@ -37,7 +37,7 @@ export class LoginComponent {
         'password': this.password!.value ?? ''
       };
       
-      this.login$ = this.auth.login(credenciales);
+      // this.login$ = this.auth.login(credenciales);
       this.enviado = true;
     }
   }
