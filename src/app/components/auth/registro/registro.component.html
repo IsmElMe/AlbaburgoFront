@@ -1,6 +1,6 @@
 <section class="row">
-    <div class="col-6 offset-3 vh-100 align-content-center">
-        <form class="form" method="post" [formGroup]="usuario" (submit)="registrar($event)">
+    <div class="col-6 offset-3">
+        <form class="form align-content-center" method="post" [formGroup]="usuario" (submit)="registrar($event)">
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <label class="form-label" for="inputNif">NIF</label>
@@ -90,12 +90,50 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <input type="submit" id="submit" class="col col-md-6 col-lg-3 btn text-white" value="Registrarse">
+                <button type="submit" id="submit" class="col col-md-6 col-lg-3 btn text-white">Registrarse</button>
             </div>
         </form>
 
-        @if (registro$ | async) {
-            <p>La petición de registro se ha completado exitosamente.</p>
-        }
+        <div class="modal fade" id="modalRegistroCorrecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalRegistroError" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Error</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
+
+    @if (enviado) {
+        @if (registro$ | async) {
+            
+        } @else {
+            
+        }
+    }
 </section>

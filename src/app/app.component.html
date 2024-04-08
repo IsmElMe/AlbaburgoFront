@@ -1,3 +1,28 @@
 <div class="container-fluid">
-    <router-outlet />
+    <header class="row">
+        <nav class="navbar col-8">
+            <div class="row align-items-center w-100">
+                <a class="col-4 navbar-brand ms-4" href="#">
+                    <img src="favicon.ico" alt="Logo" id="logoHeader" class="d-inline-block me-2">
+                    Taller Albaburgo
+                </a>
+                <ul class="col-6 navbar-nav flex-row">
+                    <li class="nav-item">
+                      <a class="nav-link me-4" href="#">Trabajos anteriores</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Consejos mantenimiento</a>
+                    </li>
+                  </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <router-outlet />
+    </main>
+
+    <footer class="row">
+        <p></p>
+    </footer>
 </div>

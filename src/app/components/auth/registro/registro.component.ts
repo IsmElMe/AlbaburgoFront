@@ -17,6 +17,7 @@ export class RegistroComponent {
   tipoPassword = 'password';
   mostrarRepetirPass = false;
   tipoRepetirPassword = 'password';
+  enviado = false;
   registro$!: Observable<Usuario>;
 
   constructor(private auth: AuthService, private fb: FormBuilder) { }
@@ -59,6 +60,8 @@ export class RegistroComponent {
       };
 
       this.registro$ = this.auth.registrar(nuevoUsuario);
+      this.enviado = true;
+      
     }
   }
 
