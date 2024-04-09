@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 
-export const SERVIDOR = 'http://albaburgo.server/api';
+export const SERVIDOR = 'http://albaburgo.server';
+export const API = 'http://albaburgo.server/api';
 
 export function errorPeticion<T>(error: HttpErrorResponse): Observable<T> {
     if (error.status == 0)

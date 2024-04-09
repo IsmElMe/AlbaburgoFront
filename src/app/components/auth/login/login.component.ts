@@ -49,8 +49,9 @@ export class LoginComponent implements OnDestroy {
         next: respuesta => {
           if (respuesta.token && respuesta.usuario) {
             sessionStorage.setItem('token', respuesta.token);
-            sessionStorage.setItem('email', respuesta.usuario.email);
-            sessionStorage.setItem('usuario', respuesta.usuario.nombre);
+            localStorage.setItem('email', respuesta.usuario.email);
+            localStorage.setItem('usuario', respuesta.usuario.nombre);
+            this.auth.setNombreUsuario(respuesta.usuario.nombre);
             this.dialog.open(LoginCompletadoModalComponent);
           }
         },
