@@ -1,24 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Credenciales } from '../../../interfaces/usuario';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginCompletadoModalComponent } from '../../modals/login-completado-modal/login-completado-modal.component';
+import { LoginErrorModalComponent } from '../../modals/login-error-modal/login-error-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.sass'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   mostrarPass = false;
   tipoPassword = 'password';
-  enviado = false;
-  login$!: Observable<Credenciales>;
+  subscripcionLogin?: Subscription;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) { }
+  constructor(private auth: AuthService, private fb: FormBuilder, private dialog: MatDialog) { }
 
   usuario = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -28,7 +31,12 @@ export class LoginComponent {
   get email() { return this.usuario.get('email'); }
   get password() { return this.usuario.get('password'); }
 
-  login(evento: Event) {
+  ngOnDestroy(): void {
+    if (this.subscripcionLogin)
+      this.subscripcionLogin.unsubscribe();
+  }
+
+  login(evento: Event): void {
     evento.preventDefault();
 
     if (this.usuario.valid) {
@@ -37,8 +45,21 @@ export class LoginComponent {
         'password': this.password!.value ?? ''
       };
       
-      // this.login$ = this.auth.login(credenciales);
-      this.enviado = true;
+      this.subscripcionLogin = this.auth.login(credenciales).subscribe({
+        next: respuesta => {
+          if (respuesta.token && respuesta.usuario) {
+            sessionStorage.setItem('token', respuesta.token);
+            sessionStorage.setItem('email', respuesta.usuario.email);
+            sessionStorage.setItem('usuario', respuesta.usuario.nombre);
+            this.dialog.open(LoginCompletadoModalComponent);
+          }
+        },
+        error: error => {
+          console.log(error);
+          
+          this.dialog.open(LoginErrorModalComponent);
+        }
+      });
     }
   }
 
@@ -50,9 +71,5 @@ export class LoginComponent {
   ocultarPassword() {
     this.tipoPassword = 'password';
     this.mostrarPass = false;
-  }
-
-  guardarToken() {
-    // sessionStorage.setItem('token', );
   }
 }

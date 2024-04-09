@@ -1,6 +1,6 @@
 <section class="row">
-    <div class="col-6 offset-3">
-        <form class="form align-content-center" method="post" [formGroup]="usuario" (submit)="registrar($event)">
+    <div class="col-10 offset-1 col-lg-6 offset-lg-3">
+        <form class="form align-content-center my-4" method="post" [formGroup]="usuario" (submit)="registrar($event)">
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <label class="form-label" for="inputNif">NIF</label>
@@ -89,8 +89,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-end">
-                <button type="submit" id="submit" class="col col-md-6 col-lg-3 btn text-white">Registrarse</button>
+            <div class="row flex-column-reverse flex-md-row justify-content-md-between">
+                <button type="submit" id="submit" class="col-12 col-md-4 col-lg-3 btn text-white order-1 order-md-2">Registrarse</button>
+                <p class="d-inline col-12 col-md-8 order-2 order-md-1 fs-sm-6">¿Ya tienes una cuenta? <a routerLink="/login">¡Inicia sesión!</a></p>
             </div>
         </form>
     </div>

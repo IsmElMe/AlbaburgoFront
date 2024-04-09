@@ -7,11 +7,12 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { RegistroCompletadoModalComponent } from '../../modals/registro-completado.modal/registro-completado.modal.component';
 import { RegistroErrorModalComponent } from '../../modals/registro-error.modal/registro-error.modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.sass'
 })
@@ -20,7 +21,7 @@ export class RegistroComponent implements OnDestroy {
   tipoPassword = 'password';
   mostrarRepetirPass = false;
   tipoRepetirPassword = 'password';
-  subscripcionRegistro!: Subscription;
+  subscripcionRegistro?: Subscription;
 
   constructor(private auth: AuthService, private fb: FormBuilder, private dialog: MatDialog) { }
 
@@ -47,7 +48,8 @@ export class RegistroComponent implements OnDestroy {
   get repetirPassword() { return this.usuario.get('password')?.get('repetirPass'); }
 
   ngOnDestroy(): void {
-    this.subscripcionRegistro.unsubscribe();
+    if (this.subscripcionRegistro)
+      this.subscripcionRegistro.unsubscribe();
   }
 
   registrar(evento: Event): void {
