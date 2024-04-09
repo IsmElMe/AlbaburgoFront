@@ -19,8 +19,30 @@ export class AppComponent implements OnInit {
   } 
 
   ngOnInit(): void {
-      if (localStorage.getItem('usuario'))
-        this.auth.setNombreUsuario(localStorage.getItem('usuario') ?? '');
+    if (localStorage.getItem('usuario'))
+      this.auth.setNombreUsuario(localStorage.getItem('usuario') ?? '');
+
+    if (localStorage.getItem('tema') && localStorage.getItem('tema') === 'oscuro') {
+      const body = document.getElementsByTagName('body')[0];
+      const inputCambioTema = document.getElementById('cambioTema') as HTMLInputElement;
+
+      body.className = 'mat-typography dark-mode';
+      inputCambioTema.checked = true;
+    }
+
+  }
+
+  cambioTema(evento: Event) {
+    const body = document.getElementsByTagName('body')[0];
+    const target = evento.target as HTMLInputElement;
+
+    if (target.checked) {
+      body.className = 'mat-typography dark-mode';
+      localStorage.setItem('tema', 'oscuro');
+    } else {
+      body.className = 'mat-typography';
+      localStorage.setItem('tema', 'claro');
+    } 
   }
 
   cerrarSesion() {

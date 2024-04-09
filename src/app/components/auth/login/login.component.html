@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="row flex-column-reverse flex-md-row justify-content-md-between">
-                <button type="submit" id="submit" class="col-12 col-md-4 col-lg-3 btn text-white order-1 order-md-2">Iniciar sesión</button>
+                <button type="submit" id="submit" class="col-12 col-md-4 col-lg-3 btn text-white order-1 order-md-2" [disabled]="!usuario.valid">Iniciar sesión</button>
                 <p class="d-inline col-12 col-md-8 order-2 order-md-1 fs-sm-6">¿No tienes una cuenta? <a routerLink="/registro">¡Registrate!</a></p>
             </div>
         </form>

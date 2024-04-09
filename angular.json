@@ -30,7 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/assets/css/temas.scss",
               "src/styles.sass"
             ],
             "scripts": [],
