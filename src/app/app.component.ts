@@ -14,14 +14,15 @@ export class AppComponent implements OnInit {
 
   constructor (private auth: AuthService) { }
 
-  get nombreUsuario() {
-    return this.auth.getNombreUsuario();
-  } 
+  get nombreUsuario() { return this.auth.getNombreUsuario(); } 
+  get rolUsuario() { return this.auth.getRolUsuario(); }
 
   ngOnInit(): void {
-    if (localStorage.getItem('usuario'))
+    if (localStorage.getItem('usuario')) {
       this.auth.setNombreUsuario(localStorage.getItem('usuario') ?? '');
-
+      this.auth.setRolUsuario(localStorage.getItem('rol') ?? '');
+    }
+    
     if (localStorage.getItem('tema') && localStorage.getItem('tema') === 'oscuro') {
       const body = document.getElementsByTagName('body')[0];
       const inputCambioTema = document.getElementById('cambioTema') as HTMLInputElement;
@@ -29,10 +30,9 @@ export class AppComponent implements OnInit {
       body.className = 'mat-typography dark-mode';
       inputCambioTema.checked = true;
     }
-
   }
 
-  cambioTema(evento: Event) {
+  cambioTema(evento: Event): void {
     const body = document.getElementsByTagName('body')[0];
     const target = evento.target as HTMLInputElement;
 
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     } 
   }
 
-  cerrarSesion() {
+  cerrarSesion(): void {
     this.auth.logout(sessionStorage.getItem('token') ?? '');
   }
 }

@@ -11,6 +11,7 @@ import { RespuestaAuth } from '../interfaces/respuesta-auth';
 export class AuthService {
   private headers = { 'Content-Type': 'application/json' };
   private nombreUsuarioSubject = new BehaviorSubject<string>('');
+  private rolUsuarioSubject = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) { }
 
@@ -34,6 +35,7 @@ export class AuthService {
     sessionStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('rol');
     this.nombreUsuarioSubject = new BehaviorSubject<string>('');
 
     return this.http.get<{success: string}>(`${SERVIDOR}/logout`, { headers: { 'Authorization: Bearer ': token } })
@@ -49,5 +51,13 @@ export class AuthService {
 
   getNombreUsuario(): BehaviorSubject<string> {
     return this.nombreUsuarioSubject;
+  }
+
+  setRolUsuario(rol: string): void {
+    this.rolUsuarioSubject.next(rol);
+  }
+
+  getRolUsuario(): BehaviorSubject<string> {
+    return this.rolUsuarioSubject;
   }
 }

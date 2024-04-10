@@ -2,7 +2,7 @@
     <header class="row">
         <nav class="navbar col-8">
             <div class="row align-items-center w-100">
-                <a class="col-4 navbar-brand ms-4" href="#">
+                <a class="col-4 navbar-brand ms-4" routerLink="/">
                     <img src="favicon.ico" alt="Logo" id="logoHeader" class="d-inline-block me-2">
                     Taller Albaburgo
                 </a>
@@ -47,6 +47,11 @@
                                 <p class="col-auto m-0 fs-5 align-self-center">{{ nombreUsuario | async }}</p>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                @if (rolUsuario | async; as rol) {
+                                    @if (rol === 'administrador') {
+                                        <li><a class="dropdown-item" routerLink="/admin">Panel administrador</a></li>
+                                    }
+                                }
                                 <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
                                 <li><a class="dropdown-item" href="#" (click)="cerrarSesion()">Cerrar sesión</a></li>
                             </ul>

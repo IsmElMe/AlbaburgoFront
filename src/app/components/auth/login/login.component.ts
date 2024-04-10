@@ -53,10 +53,25 @@ export class LoginComponent implements OnDestroy {
             localStorage.setItem('usuario', respuesta.usuario.nombre);
             this.auth.setNombreUsuario(respuesta.usuario.nombre);
             this.dialog.open(LoginCompletadoModalComponent);
+
+            switch (respuesta.usuario.id_rol) {
+              case 1: 
+                localStorage.setItem('rol', 'administrador'); 
+                this.auth.setRolUsuario('administrador');
+                break;
+              case 2: 
+                localStorage.setItem('rol', 'cliente'); 
+                this.auth.setRolUsuario('cliente');
+                break;
+              case 3: 
+                localStorage.setItem('rol', 'mecanico'); 
+                this.auth.setRolUsuario('mecanico');
+                break;
+            }
           }
         },
         error: error => {
-          console.log(error);
+          console.error(error);
           
           this.dialog.open(LoginErrorModalComponent);
         }
@@ -64,12 +79,12 @@ export class LoginComponent implements OnDestroy {
     }
   }
 
-  mostrarPassword() {
+  mostrarPassword(): void {
     this.tipoPassword = 'text';
     this.mostrarPass = true;
   }
 
-  ocultarPassword() {
+  ocultarPassword(): void {
     this.tipoPassword = 'password';
     this.mostrarPass = false;
   }

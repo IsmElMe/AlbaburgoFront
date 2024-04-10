@@ -75,10 +75,25 @@ export class RegistroComponent implements OnDestroy {
             localStorage.setItem('usuario', respuesta.usuario.nombre);
             this.auth.setNombreUsuario(respuesta.usuario.nombre);
             this.dialog.open(RegistroCompletadoModalComponent);
+
+            switch (respuesta.usuario.id_rol) {
+              case 1: 
+                localStorage.setItem('rol', 'administrador'); 
+                this.auth.setRolUsuario('administrador');
+                break;
+              case 2: 
+                localStorage.setItem('rol', 'cliente'); 
+                this.auth.setRolUsuario('cliente');
+                break;
+              case 3: 
+                localStorage.setItem('rol', 'mecanico'); 
+                this.auth.setRolUsuario('mecanico');
+                break;
+            }
           }
         },
         error: error => {
-          console.log(error);
+          console.error(error);
           
           this.dialog.open(RegistroErrorModalComponent);
         }

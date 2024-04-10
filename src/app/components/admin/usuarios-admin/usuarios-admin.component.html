@@ -1,0 +1,3 @@
+@for (usuario of usuarios$ | async; track usuario.nif) {
+    <p>{{usuario.nombre}}</p>
+}
