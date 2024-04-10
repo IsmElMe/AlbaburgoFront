@@ -5,8 +5,8 @@ import { Credenciales } from '../../../interfaces/usuario';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginCompletadoModalComponent } from '../../modals/login-completado-modal/login-completado-modal.component';
-import { LoginErrorModalComponent } from '../../modals/login-error-modal/login-error-modal.component';
+import { LoginCompletadoModalComponent } from '../../modals/auth/login-completado-modal/login-completado-modal.component';
+import { LoginErrorModalComponent } from '../../modals/auth/login-error-modal/login-error-modal.component';
 import { RouterLink } from '@angular/router';
 
 @Component({

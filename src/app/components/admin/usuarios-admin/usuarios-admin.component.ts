@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Usuario } from '../../../interfaces/usuario';
 import { UsuarioService } from '../../../services/usuario.service';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { UsuarioModalComponent } from '../../modals/admin/usuario-modal/usuario-modal.component';
 
 @Component({
   selector: 'app-usuarios-admin',
@@ -14,10 +16,13 @@ import { CommonModule } from '@angular/common';
 export class UsuariosAdminComponent implements OnInit {
   usuarios$?: Observable<Usuario[]>;
 
-  constructor(private servicioUsuarios: UsuarioService) { }
+  constructor(private servicioUsuarios: UsuarioService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
       this.usuarios$ = this.servicioUsuarios.obtenerUsuarios();
-      // this.servicioUsuarios.obtenerUsuarios();
+  }
+
+  modalUsuario(usuario: Usuario): void {
+    this.dialog.open(UsuarioModalComponent, { data: { usuario: usuario } });
   }
 }

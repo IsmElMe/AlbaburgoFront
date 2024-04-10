@@ -1,3 +1,24 @@
-@for (usuario of usuarios$ | async; track usuario.nif) {
-    <p>{{usuario.nombre}}</p>
-}
+<div class="row">
+    <div class="col-8 offset-2">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>NIF</th>
+                    <th>Email</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for (usuario of usuarios$ | async; track usuario.nif) {
+                <tr (click)="modalUsuario(usuario)">
+                    <td>{{usuario.nif}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.nombre}}</td>
+                    <td>{{usuario.telefono}}</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

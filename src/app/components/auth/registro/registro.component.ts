@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { Usuario } from '../../../interfaces/usuario';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { RegistroCompletadoModalComponent } from '../../modals/registro-completado.modal/registro-completado.modal.component';
-import { RegistroErrorModalComponent } from '../../modals/registro-error.modal/registro-error.modal.component';
+import { RegistroCompletadoModalComponent } from '../../modals/auth/registro-completado.modal/registro-completado.modal.component';
+import { RegistroErrorModalComponent } from '../../modals/auth/registro-error.modal/registro-error.modal.component';
 import { RouterLink } from '@angular/router';
 
 @Component({

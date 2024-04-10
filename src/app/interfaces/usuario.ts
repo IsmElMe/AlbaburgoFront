@@ -1,10 +1,11 @@
 export interface Usuario {
+    'id'?: number,
     'nif': string,
     'id_rol': number,
     'email': string,
     'nombre': string,
     'apellidos': string,
-    'password': string,
+    'password'?: string,
     'fecha_nacimiento': string,
     'telefono': string
 }
