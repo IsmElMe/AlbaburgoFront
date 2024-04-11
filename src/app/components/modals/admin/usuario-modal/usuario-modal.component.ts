@@ -22,13 +22,14 @@ export class UsuarioModalComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {usuario: Usuario}, private servicioUsuarios: UsuarioService, private fb: FormBuilder) { }
 
+  fecha = this.transformarFecha();
   rol = this.data.usuario.id_rol == 1 ? 'Administrador' : this.data.usuario.id_rol == 2 ? 'Cliente' : 'Mecánico';
   usuario = this.fb.group({
     nif: [this.data.usuario.nif, [Validators.pattern(/^[0-9]{8}[A-Za-z]{1}$/)]],
     email: [this.data.usuario.email, [Validators.email]],
     nombre: [this.data.usuario.nombre],
     apellidos: [this.data.usuario.apellidos],
-    fechaNacimiento: [this.data.usuario.fecha_nacimiento],
+    fechaNacimiento: [this.fecha],
     telefono: [this.data.usuario.telefono],
     password: ['', [Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]]
   });
@@ -70,5 +71,14 @@ export class UsuarioModalComponent {
   ocultarPassword(): void {
     this.tipoPassword = 'password';
     this.mostrarPass = false;
+  }
+
+  transformarFecha(): string {
+    const fechaSeparada = this.data.usuario.fecha_nacimiento.split('-');
+    const fechaDate = new Date(parseInt(fechaSeparada[2]), parseInt(fechaSeparada[1]) - 1, parseInt(fechaSeparada[0]));
+    const mes = fechaDate.getMonth() < 9 ? `0${fechaDate.getMonth() + 1}` : fechaDate.getMonth() + 1;
+    const dia = fechaDate.getDate() < 9 ? `0${fechaDate.getDate()}` : fechaDate.getDate();
+    
+    return `${fechaDate.getFullYear()}-${mes.toString()}-${dia.toString()}`;
   }
 }

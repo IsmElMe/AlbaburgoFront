@@ -26,7 +26,7 @@ export class AuthService {
   login(credenciales: Credenciales): Observable<RespuestaAuth> {
     return this.http.post<RespuestaAuth>(`${SERVIDOR}/login`, JSON.stringify(credenciales), { headers: this.headers })
       .pipe(
-        switchMap(respuesta => { console.log(respuesta); return of(respuesta); }),
+        switchMap(respuesta => { return of(respuesta); }),
         catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
       );
   }
@@ -40,7 +40,7 @@ export class AuthService {
 
     return this.http.get<{success: string}>(`${SERVIDOR}/logout`, { headers: { 'Authorization: Bearer ': token } })
       .pipe(
-        switchMap(respuesta => { console.log(respuesta); return of(respuesta); }),
+        switchMap(respuesta => { return of(respuesta); }),
         catchError((error: HttpErrorResponse) => errorPeticion<{success: string}>(error))
       );
   }
