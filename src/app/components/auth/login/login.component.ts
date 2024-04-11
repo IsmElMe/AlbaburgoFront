@@ -48,7 +48,7 @@ export class LoginComponent implements OnDestroy {
       this.subscripcionLogin = this.auth.login(credenciales).subscribe({
         next: respuesta => {
           if (respuesta.token && respuesta.usuario) {
-            sessionStorage.setItem('token', respuesta.token);
+            localStorage.setItem('token', respuesta.token);
             localStorage.setItem('email', respuesta.usuario.email);
             localStorage.setItem('usuario', respuesta.usuario.nombre);
             this.auth.setNombreUsuario(respuesta.usuario.nombre);

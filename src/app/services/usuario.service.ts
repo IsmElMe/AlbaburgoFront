@@ -25,4 +25,11 @@ export class UsuarioService {
       catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
     );
   }
+
+  borrarUsuario(idUsuario: number): Observable<RespuestaAuth> {
+    return this.http.delete(`${API}/usuario/${idUsuario}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
+      );
+  }
 }

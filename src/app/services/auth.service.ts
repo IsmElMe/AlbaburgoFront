@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   logout(token: string): Observable<{success: string}> {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('usuario');
     localStorage.removeItem('rol');

@@ -18,9 +18,11 @@ export class UsuarioModalComponent {
   mostrarPass = false;
   tipoPassword = 'password';
   editado$?: Observable<RespuestaAuth>;
+  borrado$?: Observable<RespuestaAuth>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {usuario: Usuario}, private servicioUsuarios: UsuarioService, private fb: FormBuilder) { }
 
+  rol = this.data.usuario.id_rol == 1 ? 'Administrador' : this.data.usuario.id_rol == 2 ? 'Cliente' : 'Mecánico';
   usuario = this.fb.group({
     nif: [this.data.usuario.nif, [Validators.pattern(/^[0-9]{8}[A-Za-z]{1}$/)]],
     email: [this.data.usuario.email, [Validators.email]],
@@ -54,6 +56,10 @@ export class UsuarioModalComponent {
       usuarioEditado.password = this.password?.value ?? '';
     
     this.editado$ = this.servicioUsuarios.actualizarUsuario(this.data.usuario.id ?? 0, usuarioEditado);
+  }
+
+  borrarUsuario() {
+    this.borrado$ = this.servicioUsuarios.borrarUsuario(this.data.usuario.id ?? 0);
   }
 
   mostrarPassword(): void {

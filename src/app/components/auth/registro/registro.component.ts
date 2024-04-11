@@ -70,7 +70,7 @@ export class RegistroComponent implements OnDestroy {
       this.subscripcionRegistro = this.auth.registrar(nuevoUsuario).subscribe({
         next: respuesta => {
           if (respuesta.token && respuesta.usuario) {
-            sessionStorage.setItem('token', respuesta.token);
+            localStorage.setItem('token', respuesta.token);
             localStorage.setItem('email', respuesta.usuario.email);
             localStorage.setItem('usuario', respuesta.usuario.nombre);
             this.auth.setNombreUsuario(respuesta.usuario.nombre);
