@@ -1,75 +1,79 @@
-<div class="container-fluid mat-app-background">
-    <header class="row bg-primary">
-        <nav class="navbar col-8">
-            <div class="row align-items-center w-100">
-                <a class="col-auto navbar-brand ms-4 me-5" routerLink="/">
-                    <img src="favicon.ico" alt="Logo" id="logoHeader" class="d-inline-block me-2">
-                    Taller Albaburgo
-                </a>
-                <ul class="col navbar-nav flex-row">
-                    <li class="nav-item">
-                      <a class="nav-link me-4" routerLink="/trabajos-anteriores">Trabajos anteriores</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" routerLink="/consejos-mantenimiento">Consejos mantenimiento</a>
-                    </li>
-                  </ul>
-            </div>
-        </nav>
-        <div class="col-4 align-content-center">
-            <div class="d-flex justify-content-end align-items-center">
-                <label class="switch me-5">
-                    <span class="sun">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g fill="#ffd43b">
-                                <circle r="5" cy="12" cx="12"></circle>
-                                <path d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z"></path>
-                            </g>
-                        </svg>
-                    </span>
-                    <span class="moon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                            <path d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
-                        </svg>
-                    </span>   
-                    <input id="cambioTema" type="checkbox" class="input" (change)="cambioTema($event)">
-                    <span class="slider"></span>
-                </label>
+<div class="mat-app-background">
+    <div class="container-fluid">
+        <header class="row bg-primary">
+            <nav class="navbar col-8">
+                <div class="row align-items-center w-100">
+                    <a class="col-auto navbar-brand ms-4 me-5" routerLink="/">
+                        <img src="favicon.ico" alt="Logo" id="logoHeader" class="d-inline-block me-2">
+                        Taller Albaburgo
+                    </a>
+                    <ul class="col navbar-nav flex-row">
+                        <li class="nav-item">
+                        <a class="nav-link me-4" routerLink="/trabajos-anteriores">Trabajos anteriores</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" routerLink="/consejos-mantenimiento">Consejos mantenimiento</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="col-4 align-content-center">
+                <div class="d-flex justify-content-end align-items-center">
+                    <label class="switch me-5">
+                        <span class="sun">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g fill="#ffd43b">
+                                    <circle r="5" cy="12" cx="12"></circle>
+                                    <path d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z"></path>
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="moon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                <path d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                            </svg>
+                        </span>   
+                        <input id="cambioTema" type="checkbox" class="input" (change)="cambioTema($event)">
+                        <span class="slider"></span>
+                    </label>
 
-                @if (nombreUsuario | async) {
-                    <div class="row align-content-center justify-content-end h-100">
-                        <div class="dropdown" data-bs-auto-close="outside">
-                            <a class="dropdown-toggle text-decoration-none d-flex align-items-center justify-content-end me-5" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg class="col-auto w-6 h-6 me-3 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
-                                </svg>                        
-                                <p class="col-auto m-0 fs-5 align-self-center">{{ nombreUsuario | async }}</p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-                                @if (rolUsuario | async; as rol) {
-                                    @if (rol === 'administrador') {
-                                        <li><a class="dropdown-item" routerLink="/admin">Panel administrador</a></li>
+                    @if (nombreUsuario | async) {
+                        <div class="row align-content-center justify-content-end h-100">
+                            <div class="dropdown" data-bs-auto-close="outside">
+                                <a class="dropdown-toggle text-decoration-none d-flex align-items-center justify-content-end me-5" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg class="col-auto w-6 h-6 me-3 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+                                    </svg>                        
+                                    <p class="col-auto m-0 fs-5 align-self-center">{{ nombreUsuario | async }}</p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                    @if (rolUsuario | async; as rol) {
+                                        @if (rol === 'administrador') {
+                                            <li><a class="dropdown-item" routerLink="/admin">Panel administrador</a></li>
+                                        }
                                     }
-                                }
-                                <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
-                                <li><a class="dropdown-item" href="#" (click)="cerrarSesion()">Cerrar sesión</a></li>
-                            </ul>
+                                    <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
+                                    <li><a class="dropdown-item" href="#" (click)="cerrarSesion()">Cerrar sesión</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                } @else {
-                    <div class="row align-content-center h-100">
-                        <a class="text-end text-decoration-none fs-5 pe-5" routerLink="/login">Iniciar sesión</a>
-                    </div>
-                }
+                    } @else {
+                        <div class="row align-content-center h-100">
+                            <a class="text-end text-decoration-none fs-5 pe-5" routerLink="/login">Iniciar sesión</a>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
+    </div>
     
     <main class="vh-100 mat-app-background">
         <router-outlet />
     </main>
 
-    <footer class="row">
-        <p></p>
-    </footer>
+    <div class="container-fluid">
+        <footer class="row">
+            <p></p>
+        </footer>
+    </div>
 </div>
