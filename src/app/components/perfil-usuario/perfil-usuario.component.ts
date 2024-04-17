@@ -14,11 +14,11 @@ import { CommonModule } from '@angular/common';
 })
 export class PerfilUsuarioComponent implements OnInit {
   usuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
-  vehiculos!: Observable<Vehiculo[]>;
+  vehiculos$!: Observable<Vehiculo[]>;
 
   constructor(private servicioVehiculos: VehiculoService) { }
 
   ngOnInit(): void {
-    this.vehiculos = this.servicioVehiculos.obtenerVehiculosUsuario(this.usuario.nif);
+    this.vehiculos$ = this.servicioVehiculos.obtenerVehiculosUsuario(this.usuario.nif);
   }
 }

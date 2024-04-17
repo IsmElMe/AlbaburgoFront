@@ -19,9 +19,6 @@ export class VehiculoService {
   }
 
   obtenerVehiculosUsuario(nif: string): Observable<Vehiculo[]> {
-    return this.http.get<Vehiculo[]>(`${API}/vehiculo/usuario/${nif}`)
-      .pipe(
-        catchError((error: HttpErrorResponse) => errorPeticion<Vehiculo[]>(error))
-      );
+    return this.http.get<Vehiculo[]>(`${API}/vehiculo/usuario/${nif}`);
   }
 }

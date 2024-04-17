@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-principal',
   standalone: true,
   imports: [],
-  templateUrl: './principal.component.html',
-  styleUrl: './principal.component.sass'
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.sass'
 })
-export class PrincipalComponent {
+export class HomeComponent {
 
 }

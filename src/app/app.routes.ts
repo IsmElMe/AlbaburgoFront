@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { RegistroComponent } from './components/auth/registro/registro.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { PrincipalComponent } from './components/principal/principal.component';
+import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component'
 
 export const routes: Routes = [
-    { path: '', component: PrincipalComponent },
+    { path: '', component: HomeComponent },
     { path: 'registro', component: RegistroComponent },
     { path: 'login', component: LoginComponent },
     { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent) },
