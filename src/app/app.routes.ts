@@ -8,6 +8,7 @@ export const routes: Routes = [
     { path: '', component: PrincipalComponent },
     { path: 'registro', component: RegistroComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent) },
     { path: 'admin', loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent), children: [
         { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
         { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) }

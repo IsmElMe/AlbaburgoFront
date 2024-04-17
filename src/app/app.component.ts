@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('usuario')) {
-      this.auth.setNombreUsuario(localStorage.getItem('usuario') ?? '');
+      this.auth.setNombreUsuario(JSON.parse(localStorage.getItem('usuario') ?? '').nombre);
       this.auth.setRolUsuario(localStorage.getItem('rol') ?? '');
     }
     
@@ -46,6 +46,6 @@ export class AppComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-    this.auth.logout(sessionStorage.getItem('token') ?? '');
+    this.auth.logout(localStorage.getItem('token') ?? '');
   }
 }

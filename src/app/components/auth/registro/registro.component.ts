@@ -71,8 +71,7 @@ export class RegistroComponent implements OnDestroy {
         next: respuesta => {
           if (respuesta.token && respuesta.usuario) {
             localStorage.setItem('token', respuesta.token);
-            localStorage.setItem('email', respuesta.usuario.email);
-            localStorage.setItem('usuario', respuesta.usuario.nombre);
+            localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
             this.auth.setNombreUsuario(respuesta.usuario.nombre);
             this.dialog.open(RegistroCompletadoModalComponent);
 
