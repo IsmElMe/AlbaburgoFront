@@ -16,7 +16,7 @@ import { UsuarioModalComponent } from '../../modals/admin/usuario-modal/usuario-
 export class UsuariosAdminComponent implements OnInit {
   usuarios$?: Observable<Usuario[]>;
 
-  constructor(private servicioUsuarios: UsuarioService,private dialog: MatDialog) { }
+  constructor(private servicioUsuarios: UsuarioService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
       this.usuarios$ = this.servicioUsuarios.obtenerUsuarios();

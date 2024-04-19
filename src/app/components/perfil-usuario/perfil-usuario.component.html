@@ -7,17 +7,24 @@
                 </figure>
                 <div class="col-12 col-md-8">
                     <div class="row">
-                        <h3 class="col-12 text-center fs-3 fs-md-1">{{usuario.nombre}} {{usuario.apellidos}}</h3>
-                        <h4 class="col-12 text-center fs-4 fs-md-2 my-4">{{usuario.email}}</h4>
+                        <div class="col-12 order-1 order-md-2 mb-md-5">
+                            <h3 class="text-center fs-3 fs-md-1">{{usuario.nombre}} {{usuario.apellidos}}</h3>
+                            <h4 class="text-center fs-4 fs-md-2 my-4">{{usuario.email}}</h4>
+                        </div>
+                        <div class="col-12 order-2 order-md-1 my-4 my-md-2">
+                            <div class="d-flex justify-content-center justify-content-md-end">
+                                <button class="btn btn-primary px-4 mb-4" (click)="modalUsuario()">Editar usuario</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row align-items-end mt-5">
+                    <div class="row align-items-end">
                         <div class="col-6 text-center">
                             <p class="d-block d-md-inline-block">Teléfono: &nbsp;</p>
-                            <p class="d-block d-md-inline-block">{{ usuario.telefono }}</p>
+                            <p class="d-block d-md-inline-block">{{usuario.telefono}}</p>
                         </div>
                         <div class="col text-center">
                             <p class="d-block d-md-inline-block">Fecha nacimiento: &nbsp;</p>
-                            <p class="d-block d-md-inline-block">{{ usuario.fecha_nacimiento }}</p>
+                            <p class="d-block d-md-inline-block">{{usuario.fecha_nacimiento}}</p>
                         </div>
                     </div>
                 </div>
@@ -121,6 +128,14 @@
                                             </svg>
                                             Kilómetros: {{vehiculo.kilometros}}km
                                         </p>
+                                    </div>
+                                </div>
+                                <div class="row card-footer">
+                                    <div class="col d-flex justify-content-center">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                    <div class="col d-flex justify-content-center">
+                                        <button class="btn btn-danger">Borrar</button>
                                     </div>
                                 </div>
                             </div>

@@ -46,6 +46,6 @@ export class AppComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-    this.auth.logout(localStorage.getItem('token') ?? '');
+    this.auth.logout();
   }
 }

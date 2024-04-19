@@ -2,7 +2,7 @@
 <mat-dialog-content class="pb-0">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-10 offset-1">
+      <div class="col-12 col-md-10 offset-md-1">
         <form class="form align-content-center my-4" method="post" [formGroup]="usuario">
             <div class="row">
                 <div class="col-md-6 mb-4">
@@ -68,10 +68,10 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-6 d-flex justify-content-center">
+                <div class="col d-flex justify-content-center">
                     <button class="btn btn-primary" (click)="editarUsuario()">Editar</button>
                 </div>
-                <div class="col-md-6 d-flex justify-content-center">
+                <div class="col d-flex justify-content-center">
                     <button class="btn btn-danger" (click)="borrarUsuario()">Borrar</button>
                 </div>
             </div>

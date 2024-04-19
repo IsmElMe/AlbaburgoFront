@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
@@ -20,6 +20,18 @@ export class UsuarioService {
   }
 
   actualizarUsuario(idUsuario: number, usuario: object): Observable<RespuestaAuth> {
+    const user = usuario as Usuario;
+    let nuevoUsuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
+    
+    nuevoUsuario.apellidos = user.apellidos;
+    nuevoUsuario.email = user.email;
+    nuevoUsuario.fecha_nacimiento = user.fecha_nacimiento;
+    nuevoUsuario.nif = user.nif;
+    nuevoUsuario.nombre = user.nombre;
+    nuevoUsuario.telefono = user.telefono;
+    
+    localStorage.setItem('usuario', JSON.stringify(nuevoUsuario));
+
     return this.http.put<RespuestaAuth>(`${API}/usuario/${idUsuario}`, usuario)
     .pipe(
       catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
@@ -27,6 +39,10 @@ export class UsuarioService {
   }
 
   borrarUsuario(idUsuario: number): Observable<RespuestaAuth> {
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('token');
+
     return this.http.delete(`${API}/usuario/${idUsuario}`)
       .pipe(
         catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))

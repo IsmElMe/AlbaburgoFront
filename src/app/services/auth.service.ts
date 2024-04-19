@@ -9,35 +9,34 @@ import { RespuestaAuth } from '../interfaces/respuesta-auth';
   providedIn: 'root'
 })
 export class AuthService {
-  private headers = { 'Content-Type': 'application/json' };
   private nombreUsuarioSubject = new BehaviorSubject<string>('');
   private rolUsuarioSubject = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) { }
 
   registrar(usuario: Usuario): Observable<RespuestaAuth> {
-    return this.http.post<RespuestaAuth>(`${SERVIDOR}/registrar`, JSON.stringify(usuario), { headers: this.headers })
+    return this.http.post<RespuestaAuth>(`${SERVIDOR}/registrar`, JSON.stringify(usuario))
       .pipe(
-        exhaustMap(respuesta => { console.log(respuesta); return of(respuesta); }),
+        exhaustMap(respuesta => { return of(respuesta); }),
         catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
       );
   }
 
   login(credenciales: Credenciales): Observable<RespuestaAuth> {
-    return this.http.post<RespuestaAuth>(`${SERVIDOR}/login`, JSON.stringify(credenciales), { headers: this.headers })
+    return this.http.post<RespuestaAuth>(`${SERVIDOR}/login`, JSON.stringify(credenciales))
       .pipe(
         switchMap(respuesta => { return of(respuesta); }),
         catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
       );
   }
 
-  logout(token: string): Observable<{success: string}> {
+  logout(): Observable<{success: string}> {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('rol');
     this.nombreUsuarioSubject = new BehaviorSubject<string>('');
 
-    return this.http.get<{success: string}>(`${SERVIDOR}/logout`, { headers: { 'Authorization: Bearer ': token } })
+    return this.http.get<{success: string}>(`${SERVIDOR}/logout`)
       .pipe(
         switchMap(respuesta => { return of(respuesta); }),
         catchError((error: HttpErrorResponse) => errorPeticion<{success: string}>(error))
