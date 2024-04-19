@@ -1,26 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Usuario } from '../../../interfaces/usuario';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { RegistroCompletadoModalComponent } from '../../modals/auth/registro-completado.modal/registro-completado.modal.component';
+import { RegistroErrorModalComponent } from '../../modals/auth/registro-error.modal/registro-error.modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.sass'
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnDestroy {
   mostrarPass = false;
   tipoPassword = 'password';
   mostrarRepetirPass = false;
   tipoRepetirPassword = 'password';
-  enviado = false;
-  registro$!: Observable<Usuario>;
+  subscripcionRegistro?: Subscription;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) { }
+  constructor(private auth: AuthService, private fb: FormBuilder, private dialog: MatDialog) { }
 
   usuario = this.fb.group({
     nif: ['', [Validators.required, Validators.pattern(/^[0-9]{8}[A-Za-z]{1}$/)]],
@@ -44,7 +47,12 @@ export class RegistroComponent {
   get password() { return this.usuario.get('password')?.get('pass'); }
   get repetirPassword() { return this.usuario.get('password')?.get('repetirPass'); }
 
-  registrar(evento: Event) {
+  ngOnDestroy(): void {
+    if (this.subscripcionRegistro)
+      this.subscripcionRegistro.unsubscribe();
+  }
+
+  registrar(evento: Event): void {
     evento.preventDefault();
     
     if (this.usuario.valid) {
@@ -59,28 +67,55 @@ export class RegistroComponent {
         'telefono': this.telefono!.value ?? ''
       };
 
-      this.registro$ = this.auth.registrar(nuevoUsuario);
-      this.enviado = true;
-      
+      this.subscripcionRegistro = this.auth.registrar(nuevoUsuario).subscribe({
+        next: respuesta => {
+          if (respuesta.token && respuesta.usuario) {
+            localStorage.setItem('token', respuesta.token);
+            localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
+            this.auth.setNombreUsuario(respuesta.usuario.nombre);
+            this.dialog.open(RegistroCompletadoModalComponent);
+
+            switch (respuesta.usuario.id_rol) {
+              case 1: 
+                localStorage.setItem('rol', 'administrador'); 
+                this.auth.setRolUsuario('administrador');
+                break;
+              case 2: 
+                localStorage.setItem('rol', 'cliente'); 
+                this.auth.setRolUsuario('cliente');
+                break;
+              case 3: 
+                localStorage.setItem('rol', 'mecanico'); 
+                this.auth.setRolUsuario('mecanico');
+                break;
+            }
+          }
+        },
+        error: error => {
+          console.error(error);
+          
+          this.dialog.open(RegistroErrorModalComponent);
+        }
+      });
     }
   }
 
-  mostrarPassword() {
+  mostrarPassword(): void {
     this.tipoPassword = 'text';
     this.mostrarPass = true;
   }
 
-  ocultarPassword() {
+  ocultarPassword(): void {
     this.tipoPassword = 'password';
     this.mostrarPass = false;
   }
 
-  mostrarRepetirPassword() {
+  mostrarRepetirPassword(): void {
     this.tipoRepetirPassword = 'text';
     this.mostrarRepetirPass = true;
   }
 
-  ocultarRepetirPassword() {
+  ocultarRepetirPassword(): void {
     this.tipoRepetirPassword = 'password';
     this.mostrarRepetirPass = false;
   }
