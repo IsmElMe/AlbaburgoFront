@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, debounceTime, switchMap } from 'rxjs';
 import { Usuario } from '../../../interfaces/usuario';
 import { UsuarioService } from '../../../services/usuario.service';
 import { CommonModule } from '@angular/common';
@@ -15,14 +15,25 @@ import { UsuarioModalComponent } from '../../modals/admin/usuario-modal/usuario-
 })
 export class UsuariosAdminComponent implements OnInit {
   usuarios$?: Observable<Usuario[]>;
+  filtro$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(private servicioUsuarios: UsuarioService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-      this.usuarios$ = this.servicioUsuarios.obtenerUsuarios();
+    this.usuarios$ = this.filtro$
+    .pipe(
+      debounceTime(300),
+      switchMap(filtro => filtro ? this.servicioUsuarios.obtenerUsuariosFiltrado(filtro) : this.servicioUsuarios.obtenerUsuarios())
+    );
   }
 
   modalUsuario(usuario: Usuario): void {
     this.dialog.open(UsuarioModalComponent, { data: { usuario: usuario } });
+  }
+
+  buscar(evento: Event): void {
+    const input = evento.target as HTMLInputElement;
+
+    this.filtro$.next(input.value);
   }
 }

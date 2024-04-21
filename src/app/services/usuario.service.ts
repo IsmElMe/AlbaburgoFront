@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, debounceTime } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 import { API, errorPeticion } from '../utils';
 import { RespuestaAuth } from '../interfaces/respuesta-auth';
@@ -14,6 +14,13 @@ export class UsuarioService {
 
   obtenerUsuarios(): Observable<Usuario[]> {  
     return this.http.get<Usuario[]>(`${API}/usuario`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<Usuario[]>(error))
+      );
+  }
+
+  obtenerUsuariosFiltrado(filtro: string): Observable<Usuario[]> { 
+    return this.http.get<Usuario[]>(`${API}/usuario/buscar/${filtro}`)
       .pipe(
         catchError((error: HttpErrorResponse) => errorPeticion<Usuario[]>(error))
       );
@@ -33,9 +40,9 @@ export class UsuarioService {
     localStorage.setItem('usuario', JSON.stringify(nuevoUsuario));
 
     return this.http.put<RespuestaAuth>(`${API}/usuario/${idUsuario}`, usuario)
-    .pipe(
-      catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
-    );
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
+      );
   }
 
   borrarUsuario(idUsuario: number): Observable<RespuestaAuth> {

@@ -39,108 +39,106 @@
                 </button>
             </div>
             <div class="row mt-4 gap-4">
-                @defer (on timer(1000)) {
-                    @if (vehiculos$ | async; as listaVehiculos) {
-                        @for (vehiculo of listaVehiculos; track vehiculo.vin) {
-                            <div class="col-12 col-md card p-0">
-                                <div class="card-header">
-                                    <figure class="card-img d-flex justify-content-center">
-                                        <img class="img-fluid" src="../../../assets/img/img-vehiculo.png" alt="Imagen vehículo">
-                                    </figure>
-                                    <h5>{{vehiculo.fabricante}} {{vehiculo.modelo}}</h5>
+                @defer (on idle) {
+                    @for (vehiculo of vehiculos$ | async; track vehiculo.vin) {
+                        <div class="col-12 col-md card p-0">
+                            <div class="card-header">
+                                <figure class="card-img d-flex justify-content-center">
+                                    <img class="img-fluid" src="../../../assets/img/img-vehiculo.png" alt="Imagen vehículo">
+                                </figure>
+                                <h5>{{vehiculo.fabricante}} {{vehiculo.modelo}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <p class="col-12 col-md-6">VIN: {{vehiculo.vin}}</p>
+                                    <p class="col">Matrícula: {{vehiculo.matricula | uppercase}}</p>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <p class="col-12 col-md-6">VIN: {{vehiculo.vin}}</p>
-                                        <p class="col">Matrícula: {{vehiculo.matricula | uppercase}}</p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="col-12 col-md-6">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                                <path d="M16 3v4" />
-                                                <path d="M8 3v4" />
-                                                <path d="M4 11h16" />
-                                                <path d="M11 15h1" />
-                                                <path d="M12 15v3" />
-                                            </svg>
-                                            Año: {{vehiculo.year}}
-                                        </p>
-                                        <p class="col">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
-                                            </svg>
-                                            Carrocería: {{vehiculo.carroceria}}
-                                        </p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="col-12 col-md-6">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-engine">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M3 10v6" />
-                                                <path d="M12 5v3" />
-                                                <path d="M10 5h4" />
-                                                <path d="M5 13h-2" />
-                                                <path d="M6 10h2l2 -2h3.382a1 1 0 0 1 .894 .553l1.448 2.894a1 1 0 0 0 .894 .553h1.382v-2h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2v-2h-3v2a1 1 0 0 1 -1 1h-3.465a1 1 0 0 1 -.832 -.445l-1.703 -2.555h-2v-6z" />
-                                            </svg>
-                                            Motor: {{vehiculo.motor}}
-                                        </p>
-                                        <p class="col">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bolt">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" />
-                                            </svg>
-                                            Potencia: {{vehiculo.potencia}}cv
-                                        </p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="col-12 col-md-6">
-                                            @if (vehiculo.transmision === 'Manual') {
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-manual-gearbox">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M5 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M12 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M12 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M5 8l0 8" />
-                                                    <path d="M12 8l0 8" />
-                                                    <path d="M19 8v2a2 2 0 0 1 -2 2h-12" />
-                                                </svg>
-                                            } @else {
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-automatic-gearbox">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M17 17v4h1a2 2 0 1 0 0 -4h-1z" />
-                                                    <path d="M17 11h1.5a1.5 1.5 0 0 0 0 -3h-1.5v5" />
-                                                    <path d="M5 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M5 7v3a1 1 0 0 0 1 1h3v7a1 1 0 0 0 1 1h3" />
-                                                    <path d="M9 11h4" />
-                                                </svg>
-                                            }
-                                            Transmision: {{vehiculo.transmision}}
-                                        </p>
-                                        <p class="col">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-location">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
-                                            </svg>
-                                            Kilómetros: {{vehiculo.kilometros}}km
-                                        </p>
-                                    </div>
+                                <div class="row">
+                                    <p class="col-12 col-md-6">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                            <path d="M16 3v4" />
+                                            <path d="M8 3v4" />
+                                            <path d="M4 11h16" />
+                                            <path d="M11 15h1" />
+                                            <path d="M12 15v3" />
+                                        </svg>
+                                        Año: {{vehiculo.year}}
+                                    </p>
+                                    <p class="col">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                            <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                            <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
+                                        </svg>
+                                        Carrocería: {{vehiculo.carroceria}}
+                                    </p>
                                 </div>
-                                <div class="row card-footer">
-                                    <div class="col d-flex justify-content-center">
-                                        <button class="btn btn-primary">Editar</button>
-                                    </div>
-                                    <div class="col d-flex justify-content-center">
-                                        <button class="btn btn-danger">Borrar</button>
-                                    </div>
+                                <div class="row">
+                                    <p class="col-12 col-md-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-engine">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M3 10v6" />
+                                            <path d="M12 5v3" />
+                                            <path d="M10 5h4" />
+                                            <path d="M5 13h-2" />
+                                            <path d="M6 10h2l2 -2h3.382a1 1 0 0 1 .894 .553l1.448 2.894a1 1 0 0 0 .894 .553h1.382v-2h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2v-2h-3v2a1 1 0 0 1 -1 1h-3.465a1 1 0 0 1 -.832 -.445l-1.703 -2.555h-2v-6z" />
+                                        </svg>
+                                        Motor: {{vehiculo.motor}}
+                                    </p>
+                                    <p class="col">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bolt">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" />
+                                        </svg>
+                                        Potencia: {{vehiculo.potencia}}cv
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-12 col-md-6">
+                                        @if (vehiculo.transmision === 'Manual') {
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-manual-gearbox">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M5 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M12 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M12 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M5 8l0 8" />
+                                                <path d="M12 8l0 8" />
+                                                <path d="M19 8v2a2 2 0 0 1 -2 2h-12" />
+                                            </svg>
+                                        } @else {
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-automatic-gearbox">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M17 17v4h1a2 2 0 1 0 0 -4h-1z" />
+                                                <path d="M17 11h1.5a1.5 1.5 0 0 0 0 -3h-1.5v5" />
+                                                <path d="M5 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M5 7v3a1 1 0 0 0 1 1h3v7a1 1 0 0 0 1 1h3" />
+                                                <path d="M9 11h4" />
+                                            </svg>
+                                        }
+                                        Transmision: {{vehiculo.transmision}}
+                                    </p>
+                                    <p class="col">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-location">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
+                                        </svg>
+                                        Kilómetros: {{vehiculo.kilometros}}km
+                                    </p>
                                 </div>
                             </div>
-                        } 
-                    }
+                            <div class="row card-footer">
+                                <div class="col d-flex justify-content-center">
+                                    <button class="btn btn-primary">Editar</button>
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <button class="btn btn-danger">Borrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    } 
                 } @placeholder {
                     <div class="d-flex justify-content-center mt-5">
                         <div class="spinner-border text-primary fs-3" role="status">
