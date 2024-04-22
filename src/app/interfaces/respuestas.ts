@@ -1,5 +1,4 @@
 import { Usuario } from "./usuario";
-import { Vehiculo } from "./vehiculo";
 
 export interface RespuestaAuth {
     token?: string,
@@ -7,7 +6,7 @@ export interface RespuestaAuth {
     usuario?: Usuario
 }
 
-export interface RespuestaVehiculo {
+export interface Respuesta<T> {
     error?: string,
-    vehiculo?: Vehiculo
+    respuesta?: T
 }

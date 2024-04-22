@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { Vehiculo } from '../interfaces/vehiculo';
 import { API, errorPeticion } from '../utils';
-import { RespuestaAuth, RespuestaVehiculo } from '../interfaces/respuestas';
+import { Respuesta } from '../interfaces/respuestas';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +23,10 @@ export class VehiculoService {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo/usuario/${nif}`);
   }
 
-  crearVehiculo(vehiculo: Vehiculo): Observable<RespuestaVehiculo> {
+  crearVehiculo(vehiculo: Vehiculo): Observable<Respuesta<Vehiculo>> {
     return this.http.post(`${API}/vehiculo`, vehiculo)
       .pipe(
-        catchError((error: HttpErrorResponse) => errorPeticion<RespuestaVehiculo>(error))
+        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
 }
