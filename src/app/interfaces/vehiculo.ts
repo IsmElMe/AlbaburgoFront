@@ -1,7 +1,6 @@
 export interface Vehiculo {
-    id: number,
     vin: string,
-    nif_propietario: string,
+    nif_propietario?: string,
     matricula: string,
     fabricante: string,
     modelo: string,

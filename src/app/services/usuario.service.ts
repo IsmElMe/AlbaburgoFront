@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 import { API, errorPeticion } from '../utils';
-import { RespuestaAuth } from '../interfaces/respuesta-auth';
+import { RespuestaAuth } from '../interfaces/respuestas';
 
 @Injectable({
   providedIn: 'root'

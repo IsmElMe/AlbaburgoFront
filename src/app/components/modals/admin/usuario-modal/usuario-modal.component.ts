@@ -5,7 +5,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { Observable } from 'rxjs';
-import { RespuestaAuth } from '../../../../interfaces/respuesta-auth';
+import { RespuestaAuth } from '../../../../interfaces/respuestas';
 
 @Component({
   selector: 'app-usuario-modal',

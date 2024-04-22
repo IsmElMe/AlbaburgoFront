@@ -8,8 +8,11 @@ export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'registro', component: RegistroComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent) },
     { path: 'trabajos-anteriores', loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent) },
+    { path: 'perfil', children: [
+        { path: '', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent) },
+        { path: 'crear-vehiculo', loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent) },
+    ] },
     { path: 'admin', loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent), children: [
         { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
         { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) }
