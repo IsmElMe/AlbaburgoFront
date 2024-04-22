@@ -21,10 +21,10 @@ export class UsuariosAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarios$ = this.filtro$
-    .pipe(
-      debounceTime(300),
-      switchMap(filtro => filtro ? this.servicioUsuarios.obtenerUsuariosFiltrado(filtro) : this.servicioUsuarios.obtenerUsuarios())
-    );
+      .pipe(
+        debounceTime(300),
+        switchMap(filtro => filtro ? this.servicioUsuarios.obtenerUsuariosFiltrado(filtro) : this.servicioUsuarios.obtenerUsuarios())
+      );
   }
 
   modalUsuario(usuario: Usuario): void {

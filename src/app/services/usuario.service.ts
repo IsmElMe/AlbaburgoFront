@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, debounceTime } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 import { API, errorPeticion } from '../utils';
 import { RespuestaAuth } from '../interfaces/respuesta-auth';
