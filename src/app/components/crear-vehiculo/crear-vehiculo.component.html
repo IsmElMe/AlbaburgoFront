@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12 col-md-8 offset-md-2">
-            <form class="form" [formGroup]="vehiculo">
+    <div class="row vh-100 align-content-center">
+        <div class="col-12 col-lg-8 offset-lg-2">
+            <form class="form" method="post" [formGroup]="vehiculo" (submit)="crearVehiculo($event)">
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <label class="form-label" for="inputVin">VIN</label>
@@ -18,7 +18,7 @@
                     <div class="col-md-6 mb-4">
                         <label for="inputFabricante" class="form-label">Fabricante</label>
                         <select id="inputFabricante" class="form-select" required formControlName="fabricante">
-                            <option value="Alfa Romeo">Alfa Romeo</option>
+                            <option selected value="Alfa Romeo">Alfa Romeo</option>
                             <option value="Aston Martin">Aston Martin</option>
                             <option value="Audi">Audi</option>
                             <option value="Bentley">Bentley</option>
@@ -63,10 +63,66 @@
                         </select>
                     </div>
                     <div class="col-md-6 mb-4">
-                        <label for="inputModelo" class="form-label">Modelo</label>
+                        <label class="form-label" for="inputModelo">Modelo</label>
                         <input type="text" id="inputModelo" class="form-control" required formControlName="modelo"
                             [ngClass]="{ 'is-valid': modelo?.valid, 'is-invalid': modelo?.invalid && (modelo?.touched || modelo?.dirty)}">
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="inputMotor" class="form-label">Motor</label>
+                        <select id="inputMotor" class="form-select" required formControlName="motor">
+                            <option selected value="Gasolina">Gasolina</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Eléctrico">Eléctrico</option>
+                            <option value="Híbrido">Híbrido</option>
+                            <option value="GLP">GLP</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label" for="inputPotencia">Potencia</label>
+                        <input type="number" id="inputPotencia" class="form-control" min="0" required formControlName="potencia"
+                            [ngClass]="{ 'is-valid': (potencia?.touched && potencia?.valid), 'is-invalid': potencia?.invalid && (potencia?.touched || potencia?.dirty)}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label" for="inputYear">Año</label>
+                        <input type="number" id="inputYear" class="form-control" min="1900" [max]="maxFecha" required formControlName="year"
+                            [ngClass]="{ 'is-valid': (year?.touched && year?.valid), 'is-invalid': year?.invalid && (year?.touched || year?.dirty)}">
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label" for="inputKilometros">Kilometros</label>
+                        <input type="number" id="inputKilometros" class="form-control" min="0" required formControlName="kilometros"
+                            [ngClass]="{ 'is-valid': (kilometros?.touched && kilometros?.valid), 'is-invalid': kilometros?.invalid && (kilometros?.touched || kilometros?.dirty)}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="inputCarroceria" class="form-label">Carrocería</label>
+                        <select id="inputCarroceria" class="form-select" required formControlName="carroceria">
+                            <option selected value="Sedán">Sedán</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Coupé">Coupé</option>
+                            <option value="Pick-up">Pick-up</option>
+                            <option value="Roadster">Roadster</option>
+                            <option value="Minivan">Minivan</option>
+                            <option value="Compacto">Compacto</option>
+                            <option value="Berlina">Berlina</option>
+                            <option value="Familiar">Familiar</option>
+                            <option value="Todoterreno">Todoterreno</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="inputTransmision" class="form-label">Transmisión</label>
+                        <select id="inputTransmision" class="form-select" required formControlName="transmision">
+                            <option selected value="Automática">Automática</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-md-end">
+                    <button type="submit" id="submit" class="col-12 col-md-4 col-lg-3 btn btn-primary" [disabled]="!vehiculo.valid">Añadir</button>
                 </div>
             </form>
         </div>

@@ -48,8 +48,7 @@ export class RegistroComponent implements OnDestroy {
   get repetirPassword() { return this.usuario.get('password')?.get('repetirPass'); }
 
   ngOnDestroy(): void {
-    if (this.subscripcionRegistro)
-      this.subscripcionRegistro.unsubscribe();
+    this.subscripcionRegistro?.unsubscribe();
   }
 
   registrar(evento: Event): void {

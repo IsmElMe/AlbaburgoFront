@@ -12,5 +12,5 @@ export interface Vehiculo {
     kilometros: number
 }
 
-type Carroceria = 'Sedán' | 'SUV' | 'Coupé' | 'Pick-up' | 'Roadster' | 'Minivan' | 'Compacto' | 'Berlina' | 'Familiar' | 'Todoterreno';
-type Motor = 'Gasolina' | 'Diesel' | 'Eléctrico' | 'Híbrido' | 'GLP';
+export type Carroceria = 'Sedán' | 'SUV' | 'Coupé' | 'Pick-up' | 'Roadster' | 'Minivan' | 'Compacto' | 'Berlina' | 'Familiar' | 'Todoterreno';
+export type Motor = 'Gasolina' | 'Diesel' | 'Eléctrico' | 'Híbrido' | 'GLP';
