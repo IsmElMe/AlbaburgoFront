@@ -38,10 +38,10 @@
                     Añadir vehículo
                 </button>
             </div>
-            <div class="row mt-4 gap-4">
+            <div class="row mt-4 row-gap-4">
                 @defer (on idle) {
                     @for (vehiculo of vehiculos$ | async; track vehiculo.vin) {
-                        <div class="col-12 col-md card p-0">
+                        <div class="col-12 col-lg-6 card p-0">
                             <div class="card-header">
                                 <figure class="card-img d-flex justify-content-center">
                                     <img class="img-fluid" src="../../../assets/img/img-vehiculo.png" alt="Imagen vehículo">
@@ -129,12 +129,14 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="row card-footer">
-                                <div class="col d-flex justify-content-center">
-                                    <button class="btn btn-primary">Editar</button>
-                                </div>
-                                <div class="col d-flex justify-content-center">
-                                    <button class="btn btn-danger">Borrar</button>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                    <div class="col d-flex justify-content-center">
+                                        <button class="btn btn-danger" (click)="borrarVehiculo(vehiculo.id ?? -1)">Borrar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

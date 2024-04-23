@@ -29,4 +29,11 @@ export class VehiculoService {
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
+
+  borrarVehiculo(id: number): Observable<Respuesta<Vehiculo>> {
+    return this.http.delete(`${API}/vehiculo/${id}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
+      );
+  }
 }

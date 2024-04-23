@@ -1,4 +1,5 @@
 export interface Vehiculo {
+    id?: number,
     vin: string,
     nif_propietario?: string,
     matricula: string,
