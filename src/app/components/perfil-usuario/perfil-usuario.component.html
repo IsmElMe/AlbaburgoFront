@@ -132,7 +132,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
-                                        <button class="btn btn-primary">Editar</button>
+                                        <button class="btn btn-primary" (click)="modalVehiculo(vehiculo)">Editar</button>
                                     </div>
                                     <div class="col d-flex justify-content-center">
                                         <button class="btn btn-danger" (click)="borrarVehiculo(vehiculo.id ?? -1)">Borrar</button>
@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                    } 
+                    }
                 } @placeholder {
                     <div class="d-flex justify-content-center mt-5">
                         <div class="spinner-border text-primary fs-3" role="status">

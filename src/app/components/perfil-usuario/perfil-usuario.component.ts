@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UsuarioModalComponent } from '../modals/admin/usuario-modal/usuario-modal.component';
 import { RouterLink } from '@angular/router';
+import { VehiculoModalComponent } from '../modals/admin/vehiculo-modal/vehiculo-modal.component';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -30,8 +31,12 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
     this.subscripcionBorradoVehiculo?.unsubscribe();
   }
 
-  modalUsuario(): void {  
+  modalUsuario(): void {
     this.dialog.open(UsuarioModalComponent, { data: { usuario: this.usuario } });
+  }
+
+  modalVehiculo(vehiculo: Vehiculo): void {
+    this.dialog.open(VehiculoModalComponent, { data: { vehiculo: vehiculo } });
   }
 
   borrarVehiculo(id: number): void {
