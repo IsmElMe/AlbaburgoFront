@@ -23,6 +23,13 @@ export class VehiculoService {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo/usuario/${nif}`);
   }
 
+  obtenerVehiculosFiltrado(filtro: string): Observable<Vehiculo[]> {
+    return this.http.get<Vehiculo[]>(`${API}/vehiculo/buscar/${filtro}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<Vehiculo[]>(error))
+      );
+  }
+
   crearVehiculo(vehiculo: Vehiculo): Observable<Respuesta<Vehiculo>> {
     return this.http.post(`${API}/vehiculo`, vehiculo)
       .pipe(
@@ -30,8 +37,15 @@ export class VehiculoService {
       );
   }
 
-  borrarVehiculo(id: number): Observable<Respuesta<Vehiculo>> {
-    return this.http.delete(`${API}/vehiculo/${id}`)
+  editarVehiculo(idVehiculo: number, vehiculo: object): Observable<Respuesta<Vehiculo>> {
+    return this.http.put<Respuesta<Vehiculo>>(`${API}/vehiculo/${idVehiculo}`, vehiculo)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
+      );
+  }
+
+  borrarVehiculo(idVehiculo: number): Observable<Respuesta<Vehiculo>> {
+    return this.http.delete(`${API}/vehiculo/${idVehiculo}`)
       .pipe(
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
