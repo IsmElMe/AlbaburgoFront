@@ -4,6 +4,7 @@ import { Credenciales, Usuario } from '../interfaces/usuario';
 import { SERVIDOR, errorPeticion } from '../utils';
 import { BehaviorSubject, Observable, catchError, exhaustMap, of, switchMap } from 'rxjs';
 import { RespuestaAuth } from '../interfaces/respuestas';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   private nombreUsuarioSubject = new BehaviorSubject<string>('');
   private rolUsuarioSubject = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   registrar(usuario: Usuario): Observable<RespuestaAuth> {
     return this.http.post<RespuestaAuth>(`${SERVIDOR}/registrar`, JSON.stringify(usuario))
@@ -35,6 +36,7 @@ export class AuthService {
     localStorage.removeItem('usuario');
     localStorage.removeItem('rol');
     this.nombreUsuarioSubject = new BehaviorSubject<string>('');
+    this.router.navigate(['']);
 
     return this.http.get<{success: string}>(`${SERVIDOR}/logout`)
       .pipe(

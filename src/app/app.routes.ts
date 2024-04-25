@@ -11,6 +11,7 @@ export const routes: Routes = [
     { path: 'registro', component: RegistroComponent, title: 'Registro' },
     { path: 'login', component: LoginComponent, title: 'Iniciar sesión' },
     { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent), canActivate: [authGuard], title: 'Perfil usuario' },
+    { path: 'perfil/crear-vehiculo', loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent), canActivate: [authGuard], title: 'Añadir vehículo' },
     { path: 'trabajos-anteriores', loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent), title: 'Trabajos anteriores' },
     { path: 'admin', loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent), canActivate: [authGuard, adminGuard], title: 'Administración', children: [
         { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
