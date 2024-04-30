@@ -2,11 +2,61 @@
 
 @include material.core();
 
+$custom-primary: (
+    50: #e0f2f1,
+    100: #b2dfdb,
+    200: #80cbc4,
+    300: #4e7f85,
+    400: #3b6064,
+    500: #009688,
+    600: #00897b,
+    700: #00796b,
+    800: #00695c,
+    900: #004d40,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #ffffff,
+        500: #000000,
+        600: #000000,
+        700: #000000,
+        800: #000000,
+        900: #ffffff,
+    )
+);
+
+$custom-accent: (
+    50: #f7f8e8,
+    100: #ecefca,
+    200: #e0e6ab,
+    300: #d3dd8b,
+    400: #bbdb9b,
+    500: #c8d56e,
+    600: #b1d28d,
+    700: #a6c97e,
+    800: #9bc06f,
+    900: #8ab55b,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #000000,
+        500: #000000,
+        600: #000000,
+        700: #000000,
+        800: #000000,
+        900: #000000,
+    )
+);
+
 $tema-claro: material.define-light-theme(
     (
         color: (
             primary: material.define-palette(material.$cyan-palette, 400),
-            accent: material.define-palette(material.$light-green-palette, A400)
+            accent: material.define-palette(material.$teal-palette, 400)
         ),
         typography: material.define-typography-config(),
         density: 0
@@ -16,8 +66,8 @@ $tema-claro: material.define-light-theme(
 $tema-oscuro: material.define-dark-theme(
     (
         color: (
-            primary: material.define-palette(material.$deep-purple-palette, 400),
-            accent: material.define-palette(material.$pink-palette, A400)
+            primary: material.define-palette($custom-primary, 400),
+            accent: material.define-palette($custom-accent, 400)
         ),
         typography: material.define-typography-config(),
         density: 0

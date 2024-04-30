@@ -1,0 +1,14 @@
+<section class="container-fluid">
+    <article class="row">
+        <div class="col-12 col-lg-8 offset-lg-2">
+            <mat-form-field color="accent">
+                <mat-label>Servicios</mat-label>
+                <mat-select [formControl]="serviciosSeleccionado" multiple>
+                    @for (servicio of servicios$ | async; track servicio.id) {
+                        <mat-option [value]="servicio">{{servicio.nombre}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </article>
+</section>
