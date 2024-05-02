@@ -11,12 +11,14 @@ export const routes: Routes = [
     { path: 'registro', component: RegistroComponent, title: 'Registro' },
     { path: 'login', component: LoginComponent, title: 'Iniciar sesión' },
     { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent), canActivate: [authGuard], title: 'Perfil usuario' },
-    { path: 'perfil/crear-vehiculo', loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent), canActivate: [authGuard], title: 'Añadir vehículo' },
+    { path: 'crear-vehiculo', loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent), canActivate: [authGuard], title: 'Añadir vehículo' },
     { path: 'trabajos-anteriores', loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent), title: 'Trabajos anteriores' },
+    { path: 'reservas', loadComponent: () => import('./components/reservas/reservas.component').then(c => c.ReservasComponent), title: 'Reservas' },
     { path: 'admin', loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent), canActivate: [authGuard, adminGuard], title: 'Administración', children: [
         { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
         { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) },
-        { path: 'vehiculos', loadComponent: () => import('./components/admin/vehiculos-admin/vehiculos-admin.component').then(c => c.VehiculosAdminComponent) }
+        { path: 'vehiculos', loadComponent: () => import('./components/admin/vehiculos-admin/vehiculos-admin.component').then(c => c.VehiculosAdminComponent) },
+        { path: 'servicios', loadComponent: () => import('./components/admin/servicios-admin/servicios-admin.component').then(c => c.ServiciosAdminComponent) }
     ] },
     { path: '**', component: NotFoundComponent, title: '404 Página no encontrada' }
 ];
