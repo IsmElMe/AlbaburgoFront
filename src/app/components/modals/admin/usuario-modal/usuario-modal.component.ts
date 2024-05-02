@@ -75,7 +75,13 @@ export class UsuarioModalComponent {
 
   transformarFecha(): string {
     const fechaSeparada = this.data.usuario.fecha_nacimiento.split('-');
-    const fechaDate = new Date(parseInt(fechaSeparada[2]), parseInt(fechaSeparada[1]) - 1, parseInt(fechaSeparada[0]));
+    let fechaDate;
+
+    if (fechaSeparada[0].length === 4) 
+      fechaDate = new Date(+fechaSeparada[0], +fechaSeparada[1] - 1, +fechaSeparada[2]);
+    else 
+      fechaDate = new Date(+fechaSeparada[2], +fechaSeparada[1] - 1, +fechaSeparada[0]);
+
     const mes = fechaDate.getMonth() < 9 ? `0${fechaDate.getMonth() + 1}` : fechaDate.getMonth() + 1;
     const dia = fechaDate.getDate() < 9 ? `0${fechaDate.getDate()}` : fechaDate.getDate();
     
