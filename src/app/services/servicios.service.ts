@@ -26,6 +26,20 @@ export class ServiciosService {
       );
   }
 
+  obtenerServiciosReparacion(): Observable<Servicio[]> {
+    return this.http.get<Servicio[]>(`${API}/servicio/tipo/reparacion`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<Servicio[]>(error))
+      );
+  }
+
+  obtenerServiciosMantenimiento(): Observable<Servicio[]> {
+    return this.http.get<Servicio[]>(`${API}/servicio/tipo/mantenimiento`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => errorPeticion<Servicio[]>(error))
+      );
+  }
+
   crearServicio(servicio: Servicio): Observable<Respuesta<Servicio>> {
     return this.http.post(`${API}/servicio`, servicio)
       .pipe(
