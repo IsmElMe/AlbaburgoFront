@@ -1,7 +1,10 @@
 <div class="row">
-    <div class="col-8 offset-2">
-        <div id="contBuscador" class="row justify-content-end">
-            <div class="col-3">
+    <div class="col-12 col-lg-8 offset-lg-2">
+        <div id="contBuscador" class="row justify-content-between">
+            <div class="col-4 col-lg-3">
+                <button class="btn btn-primary w-100" routerLink="/admin">Volver</button>
+            </div>
+            <div class="col-6 col-lg-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text rounded-start">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -12,25 +15,27 @@
                 </div>
             </div>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>NIF</th>
-                    <th>Email</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (usuario of usuarios$ | async; track usuario.nif) {
-                    <tr (click)="modalUsuario(usuario)">
-                        <td>{{usuario.nif}}</td>
-                        <td>{{usuario.email}}</td>
-                        <td>{{usuario.nombre}}</td>
-                        <td>{{usuario.telefono}}</td>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>NIF</th>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for (usuario of usuarios$ | async; track usuario.nif) {
+                        <tr (click)="modalUsuario(usuario)">
+                            <td>{{usuario.nif}}</td>
+                            <td>{{usuario.email}}</td>
+                            <td>{{usuario.nombre}}</td>
+                            <td>{{usuario.telefono}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

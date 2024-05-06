@@ -40,15 +40,14 @@ export class ReservasComponent implements OnInit, OnDestroy {
         todosServicios$.pipe(
           map(servicios => {
             const serviciosSeleccionados = [...(Array.isArray(reparacionesSeleccionados) ? reparacionesSeleccionados : []), ...(Array.isArray(mantenimientosSeleccionado) ? mantenimientosSeleccionado : [])];
+            
             return serviciosSeleccionados
               .map(nombreServicio => servicios.find(servicio => servicio.nombre === nombreServicio)?.precio || 0)
               .reduce((acc, current) => acc + current, 0);
           })
         )
       )
-    ).subscribe(precio => {
-      this.precio = precio;
-    });
+    ).subscribe(precio => this.precio = precio);
   }
 
   ngOnDestroy(): void {

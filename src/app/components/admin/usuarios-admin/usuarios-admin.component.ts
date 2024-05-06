@@ -5,11 +5,12 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UsuarioModalComponent } from '../../modals/admin/usuario-modal/usuario-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './usuarios-admin.component.html',
   styleUrl: './usuarios-admin.component.sass'
 })

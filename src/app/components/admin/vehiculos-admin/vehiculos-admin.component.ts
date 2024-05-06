@@ -5,11 +5,12 @@ import { VehiculoService } from '../../../services/vehiculo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { VehiculoModalComponent } from '../../modals/admin/vehiculo-modal/vehiculo-modal.component';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-vehiculos-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './vehiculos-admin.component.html',
   styleUrl: './vehiculos-admin.component.sass'
 })
