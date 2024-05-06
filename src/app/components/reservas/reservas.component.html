@@ -24,9 +24,15 @@
                     </mat-form-field>
                 </div>
             </div>
-            @if (precio > 0) {
+            @if (precio$ | async; as precio) {
                 <p>Presupuesto: {{precio}}€</p>
             }
+
+            <div class="row">
+                <div class="col-8">
+                    <mat-calendar />
+                </div>
+            </div>
         </div>
     </article>
 </section>
