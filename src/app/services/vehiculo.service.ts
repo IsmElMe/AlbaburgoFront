@@ -31,7 +31,7 @@ export class VehiculoService {
   }
 
   crearVehiculo(vehiculo: Vehiculo): Observable<Respuesta<Vehiculo>> {
-    return this.http.post(`${API}/vehiculo`, vehiculo)
+    return this.http.post<Respuesta<Vehiculo>>(`${API}/vehiculo`, vehiculo)
       .pipe(
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );

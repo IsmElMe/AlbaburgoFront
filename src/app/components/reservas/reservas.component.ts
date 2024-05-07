@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,7 +7,8 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { ServiciosService } from '../../services/servicios.service';
 import { Servicio } from '../../interfaces/servicio';
-import { Observable, combineLatest, map, startWith, switchMap } from 'rxjs';
+import { Observable, Subscription, combineLatest, map, startWith, switchMap } from 'rxjs';
+import { ReservasService } from '../../services/reservas.service';
 
 @Component({
   selector: 'app-reservas',
@@ -17,14 +18,19 @@ import { Observable, combineLatest, map, startWith, switchMap } from 'rxjs';
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.sass'
 })
-export class ReservasComponent implements OnInit {
+export class ReservasComponent implements OnInit, OnDestroy {
   servReparacion$!: Observable<Servicio[]>;
   servMantenimiento$!: Observable<Servicio[]>;
   precio$?: Observable<number>;
+  subscripcionReservas!: Subscription;
   reparacionesSeleccionado = new FormControl();
   mantenimientosSeleccionado = new FormControl();
+  fechasOcupadas: Date[] = [];
 
-  constructor(@Inject(MAT_DATE_LOCALE) private _locale: string, private _adapter: DateAdapter<any>, private servicioServicios: ServiciosService) { }
+  constructor(
+    @Inject(MAT_DATE_LOCALE) private _locale: string, private _adapter: DateAdapter<any>, 
+    private servicioServicios: ServiciosService, private servicioReservas: ReservasService
+  ) { } 
 
   ngOnInit(): void {
     this.servReparacion$ = this.servicioServicios.obtenerServiciosReparacion();
@@ -51,7 +57,27 @@ export class ReservasComponent implements OnInit {
       )
     );
 
+    this.subscripcionReservas = this.servicioReservas.obtenerReservas().subscribe(reservas => {
+      reservas.map(reserva => {
+        const fechaStr = reserva.fecha.split('-');
+        const fecha = new Date(`${fechaStr[2]}-${fechaStr[1]}-${fechaStr[0]}`);
+        
+        this.fechasOcupadas.push(fecha)
+      });
+    });
+
     this._locale = 'es-ES';
     this._adapter.setLocale(this._locale);
+  }
+
+  ngOnDestroy(): void {
+    this.subscripcionReservas.unsubscribe();
+  }
+
+  isDateAvailable(date: Date): string {
+    const dateStr = date.toISOString().split('T')[0];
+
+    return '';
+    // return this.availableDates.some(d => d.toISOString().split('T')[0] === dateStr) ? 'available-date' : undefined;
   }
 }
