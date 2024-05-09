@@ -28,9 +28,10 @@
                 <p>Presupuesto: {{precio}}€</p>
             }
 
-            <div class="row">
-                <div class="col-8">
-                    <mat-calendar />
+            <h2 class="mt-5">Selecciona cuándo quieres hacer la reserva</h2>
+            <div class="row mb-5">
+                <div class="col-12 col-md-8">
+                    <mat-calendar appMarcarDiasCalendario [minDate]="minDate" [maxDate]="maxDate" [dateClass]="dateClass" />
                 </div>
             </div>
         </div>

@@ -2,19 +2,20 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCalendarCellCssClasses, MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { ServiciosService } from '../../services/servicios.service';
 import { Servicio } from '../../interfaces/servicio';
 import { Observable, Subscription, combineLatest, map, startWith, switchMap } from 'rxjs';
 import { ReservasService } from '../../services/reservas.service';
+import { MarcarDiasCalendarioDirective } from '../../directives/marcar-dias-calendario.directive';
 
 @Component({
   selector: 'app-reservas',
   standalone: true,
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
-  imports: [MatFormFieldModule, MatSelectModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [MatFormFieldModule, MatSelectModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, CommonModule, MarcarDiasCalendarioDirective],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.sass'
 })
@@ -26,9 +27,11 @@ export class ReservasComponent implements OnInit, OnDestroy {
   reparacionesSeleccionado = new FormControl();
   mantenimientosSeleccionado = new FormControl();
   fechasOcupadas: Date[] = [];
+  minDate = new Date();
+  maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDate());
 
   constructor(
-    @Inject(MAT_DATE_LOCALE) private _locale: string, private _adapter: DateAdapter<any>, 
+    @Inject(MAT_DATE_LOCALE) private _locale: string, private _adapter: DateAdapter<Date>, 
     private servicioServicios: ServiciosService, private servicioReservas: ReservasService
   ) { } 
 
@@ -68,16 +71,24 @@ export class ReservasComponent implements OnInit, OnDestroy {
 
     this._locale = 'es-ES';
     this._adapter.setLocale(this._locale);
+    
+    this.fechasOcupadas.forEach(fecha => this.dateClass(fecha));
   }
 
   ngOnDestroy(): void {
     this.subscripcionReservas.unsubscribe();
   }
 
-  isDateAvailable(date: Date): string {
-    const dateStr = date.toISOString().split('T')[0];
+  dateClass = (date: Date): MatCalendarCellCssClasses => {
+    const classes: MatCalendarCellCssClasses = {};
+    const fecha = date.toDateString();
 
-    return '';
-    // return this.availableDates.some(d => d.toISOString().split('T')[0] === dateStr) ? 'available-date' : undefined;
+    if (this.fechasOcupadas.find(dia => dia.toDateString() === fecha)) 
+      classes['dia-ocupado'] = true;
+
+    if (date.getDay() === 0) 
+      classes['domingo'] = true;
+
+    return classes;
   }
 }
