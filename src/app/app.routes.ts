@@ -13,7 +13,7 @@ export const routes: Routes = [
     { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent), canActivate: [authGuard], title: 'Perfil usuario' },
     { path: 'crear-vehiculo', loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent), canActivate: [authGuard], title: 'Añadir vehículo' },
     { path: 'trabajos-anteriores', loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent), title: 'Trabajos anteriores' },
-    { path: 'reservas', loadComponent: () => import('./components/reservas/reservas.component').then(c => c.ReservasComponent), title: 'Reservas' },
+    { path: 'reservas', loadComponent: () => import('./components/reservas/reservas.component').then(c => c.ReservasComponent), canActivate: [authGuard], title: 'Reservas' },
     { path: 'admin', loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent), canActivate: [authGuard, adminGuard], title: 'Administración', children: [
         { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
         { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) },

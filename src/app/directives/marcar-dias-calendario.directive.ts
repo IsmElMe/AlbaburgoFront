@@ -31,9 +31,8 @@ export class MarcarDiasCalendarioDirective implements AfterViewInit, OnDestroy {
             const año = parseInt(partesFecha[4]);
             const date = new Date(año, mes, dia);
 
-            if (this.fechasOcupadas.find(dia => dia.toDateString() === date.toDateString())) {
+            if (this.fechasOcupadas.find(dia => dia.toDateString() === date.toDateString())) 
               this.renderer.addClass(cell, 'dia-ocupado');
-            }
 
             if (date.getDay() === 0)
               this.renderer.addClass(cell, 'domingo');
