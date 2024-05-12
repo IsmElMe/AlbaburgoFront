@@ -1,8 +1,35 @@
-:host ::ng-deep .mat-calendar-body-cell.dia-ocupado
+::ng-deep .mat-calendar-body-cell span
+    font-size: 20px
+
+::ng-deep .mat-calendar-body-cell.dia-ocupado, ::ng-deep .mat-calendar-body-cell.domingo
+    pointer-events: none
+
+::ng-deep .mat-calendar-body-cell.dia-ocupado .mat-calendar-body-cell-content
     background-color: red
 
-:host ::ng-deep .mat-calendar-body-cell.domingo
+::ng-deep .mat-calendar-body-cell.domingo .mat-calendar-body-cell-content
     background-color: grey
 
-:host ::ng-deep .mat-calendar-body-cell.dia-ocupado span, :host ::ng-deep .mat-calendar-body-cell.domingo span
-    color: white   
+::ng-deep .mat-calendar-body-cell.dia-ocupado span, ::ng-deep .mat-calendar-body-cell.domingo span
+    color: white
+    border-radius: 100%
+
+::ng-deep .mat-calendar-period-button, ::ng-deep .mat-calendar-period-button:hover
+    cursor: default
+    pointer-events: none
+
+:host ::ng-deep .mat-calendar-arrow
+    display: none
+
+::ng-deep [aria-hidden=true] .mat-calendar-body-label
+    display: none
+
+::ng-deep td.mat-calendar-body-label
+    visibility: hidden
+
+.mat-mdc-input-element::-webkit-calendar-picker-indicator 
+  display: block
+
+@media screen and (min-width: 768px) 
+    ::ng-deep .mat-calendar-body-cell span
+        font-size: 30px

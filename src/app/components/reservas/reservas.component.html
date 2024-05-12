@@ -31,7 +31,20 @@
             <h2 class="mt-5">Selecciona cuándo quieres hacer la reserva</h2>
             <div class="row mb-5">
                 <div class="col-12 col-md-8">
-                    <mat-calendar appMarcarDiasCalendario [minDate]="minDate" [maxDate]="maxDate" [dateClass]="dateClass" />
+                    <mat-calendar appMarcarDiasCalendario 
+                        [minDate]="minDate" [maxDate]="maxDate" 
+                        [(selected)]="diaSeleccionado" (selectedChange)="seleccionarDia()"
+                        [dateClass]="dateClass"
+                    />
+                </div>
+                <div class="col-12 col-md-4 d-flex d-md-block justify-content-center mt-5">
+                    <mat-form-field [class]="ocultarReserva">
+                        <mat-label>Hora</mat-label>
+                        <input matInput type="time" min="09:00" max="17:00" value="09:00" (change)="seleccionarHora($event)">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 offset-md-3 offset-lg-5">
+                    <button [class]="ocultarReserva" class="btn btn-primary w-100">Reservar</button>
                 </div>
             </div>
         </div>
