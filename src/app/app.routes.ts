@@ -10,15 +10,39 @@ export const routes: Routes = [
     { path: '', component: HomeComponent, title: 'Taller Albaburgo' },
     { path: 'registro', component: RegistroComponent, title: 'Registro' },
     { path: 'login', component: LoginComponent, title: 'Iniciar sesión' },
-    { path: 'perfil', loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent), canActivate: [authGuard], title: 'Perfil usuario' },
-    { path: 'crear-vehiculo', loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent), canActivate: [authGuard], title: 'Añadir vehículo' },
-    { path: 'trabajos-anteriores', loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent), title: 'Trabajos anteriores' },
-    { path: 'reservas', loadComponent: () => import('./components/reservas/reservas.component').then(c => c.ReservasComponent), canActivate: [authGuard], title: 'Reservas' },
-    { path: 'admin', loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent), canActivate: [authGuard, adminGuard], title: 'Administración', children: [
-        { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
-        { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) },
-        { path: 'vehiculos', loadComponent: () => import('./components/admin/vehiculos-admin/vehiculos-admin.component').then(c => c.VehiculosAdminComponent) },
-        { path: 'servicios', loadComponent: () => import('./components/admin/servicios-admin/servicios-admin.component').then(c => c.ServiciosAdminComponent) }
-    ] },
+    {
+        path: 'perfil', title: 'Perfil usuario',
+        loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'crear-vehiculo', title: 'Añadir vehículo',
+        loadComponent: () => import('./components/crear-vehiculo/crear-vehiculo.component').then(c => c.CrearVehiculoComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'trabajos-anteriores', title: 'Trabajos anteriores',
+        loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent),
+    },
+    {
+        path: 'reservas', title: 'Reservas',
+        loadComponent: () => import('./components/reservas/reservas.component').then(c => c.ReservasComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'reservas/formulario', title: 'Formulario reserva',
+        loadComponent: () => import('./components/reservas/form-reserva/form-reserva.component').then(c => c.FormReservaComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'admin', title: 'Administración',
+        loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent),
+        canActivate: [authGuard, adminGuard], children: [
+            { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
+            { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) },
+            { path: 'vehiculos', loadComponent: () => import('./components/admin/vehiculos-admin/vehiculos-admin.component').then(c => c.VehiculosAdminComponent) },
+            { path: 'servicios', loadComponent: () => import('./components/admin/servicios-admin/servicios-admin.component').then(c => c.ServiciosAdminComponent) }
+        ]
+    },
     { path: '**', component: NotFoundComponent, title: '404 Página no encontrada' }
 ];
