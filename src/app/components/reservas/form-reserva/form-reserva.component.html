@@ -1,1 +1,26 @@
-<p>{{fechaSeleccionada | async}}</p>
+<section class="container-fluid">
+    <article class="row">
+        <div class="row mt-5">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="d-block" color="accent">
+                    <mat-label>Servicios de reparación</mat-label>
+                    <mat-select [formControl]="reparacionesSeleccionado" multiple>
+                        @for (servicio of servReparacion$ | async; track servicio.id) {
+                            <mat-option [value]="servicio.nombre">{{servicio.nombre}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="d-block" color="accent">
+                    <mat-label>Servicios de mantenimiento</mat-label>
+                    <mat-select [formControl]="mantenimientosSeleccionado" multiple>
+                        @for (servicio of servMantenimiento$ | async; track servicio.id) {
+                            <mat-option [value]="servicio.nombre">{{servicio.nombre}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </article>
+</section>

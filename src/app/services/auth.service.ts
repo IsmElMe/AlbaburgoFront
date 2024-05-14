@@ -32,9 +32,8 @@ export class AuthService {
   }
 
   logout(): Observable<{success: string}> {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('rol');
+    localStorage.clear();
+    sessionStorage.clear();
     this.nombreUsuarioSubject = new BehaviorSubject<string>('');
     this.router.navigate(['']);
 

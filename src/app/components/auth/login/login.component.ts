@@ -2,12 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Credenciales } from '../../../interfaces/usuario';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginCompletadoModalComponent } from '../../modals/auth/login-completado-modal/login-completado-modal.component';
 import { LoginErrorModalComponent } from '../../modals/auth/login-error-modal/login-error-modal.component';
 import { RouterLink } from '@angular/router';
+import { VehiculoService } from '../../../services/vehiculo.service';
+import { Vehiculo } from '../../../interfaces/vehiculo';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnDestroy {
   tipoPassword = 'password';
   subscripcionLogin?: Subscription;
 
-  constructor(private auth: AuthService, private fb: FormBuilder, private dialog: MatDialog) { }
+  constructor(private auth: AuthService, private fb: FormBuilder, private dialog: MatDialog, private servicioVehiculos: VehiculoService) { }
 
   usuario = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -46,12 +48,17 @@ export class LoginComponent implements OnDestroy {
       };
       
       this.subscripcionLogin = this.auth.login(credenciales).subscribe({
-        next: respuesta => {
+        next: async respuesta => {
           if (respuesta.token && respuesta.usuario) {
             localStorage.setItem('token', respuesta.token);
             localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
             this.auth.setNombreUsuario(respuesta.usuario.nombre);
             this.dialog.open(LoginCompletadoModalComponent);
+
+            const vehiculos: Vehiculo[] = [];
+            const vehiculosUsuario = await firstValueFrom(this.servicioVehiculos.obtenerVehiculosUsuario(respuesta.usuario.nif));
+            vehiculosUsuario!.forEach(vehiculo => vehiculos.push(vehiculo));
+            localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
 
             switch (respuesta.usuario.id_rol) {
               case 1: 

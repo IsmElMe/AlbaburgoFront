@@ -52,14 +52,17 @@ export class ReservasComponent implements OnInit, OnDestroy {
       this.reparacionesSeleccionado.valueChanges.pipe(startWith(this.reparacionesSeleccionado.value || [])),
       this.mantenimientosSeleccionado.valueChanges.pipe(startWith(this.mantenimientosSeleccionado.value || []))
     ]).pipe(
-      switchMap(([reparacionesSeleccionados, mantenimientosSeleccionado]) => 
+      switchMap(([reparacionesSeleccionados, mantenimientosSeleccionado]) =>
         todosServicios$.pipe(
           map(servicios => {
             const serviciosSeleccionados = [...(Array.isArray(reparacionesSeleccionados) ? reparacionesSeleccionados : []), ...(Array.isArray(mantenimientosSeleccionado) ? mantenimientosSeleccionado : [])];
-            
-            return serviciosSeleccionados
+            const precioTotal = serviciosSeleccionados
               .map(nombreServicio => servicios.find(servicio => servicio.nombre === nombreServicio)?.precio || 0)
               .reduce((acc, current) => acc + current, 0);
+    
+            sessionStorage.setItem('serviciosSeleccionados', JSON.stringify(serviciosSeleccionados));
+    
+            return precioTotal;
           })
         )
       )
@@ -84,37 +87,42 @@ export class ReservasComponent implements OnInit, OnDestroy {
   }
 
   dateClass = (date: Date): MatCalendarCellCssClasses => {
-    const classes: MatCalendarCellCssClasses = {};
+    const clases: MatCalendarCellCssClasses = {};
     const fecha = date.toDateString();
 
-    if (this.fechasOcupadas.find(dia => dia.toDateString() === fecha)) 
-      classes['dia-ocupado'] = true;
+    if (this.fechasOcupadas.find(dia => dia.toDateString() === fecha)) clases['dia-ocupado'] = true;
+    if (date.getDay() === 0) clases['domingo'] = true;
 
-    if (date.getDay() === 0) 
-      classes['domingo'] = true;
-
-    return classes;
+    return clases;
   }
 
   seleccionarDia(): void {
-    const hora = this.horaSeleccionada?.split(':');
+    const hora = this.horaSeleccionada?.split(':') || ['09', '00'];
 
     if (!this.horaSeleccionada) this.diaSeleccionado?.setHours(9);
-    else this.diaSeleccionado?.setHours(+hora![0], +hora![1]);
-    
-    this.servicioReservas.setFechaSeleccionada(this.diaSeleccionado!);
+    else this.diaSeleccionado?.setHours(+hora[0], +hora[1]);
+
+    let dia = this.diaSeleccionado!.getDate() < 10 ? `0${this.diaSeleccionado!.getDate()}` : this.diaSeleccionado!.getDate(); 
+    let mes = this.diaSeleccionado!.getMonth() + 1 < 10? `0${this.diaSeleccionado!.getMonth() + 1}` : this.diaSeleccionado!.getMonth() + 1;
+
+    sessionStorage.setItem('fechaReserva', `${dia}-${mes}-${this.diaSeleccionado!.getFullYear()},${hora[0]}:${hora[1]}`);
     this.ocultarReserva = 'd-block';
   }
 
   seleccionarHora(evento: Event): void {
     const input = evento.target as HTMLInputElement;
+
+    if (input.value < '09:00') input.value = '09:00';
+    if (input.value > '20:00') input.value = '20:00';
+
     this.horaSeleccionada = input.value;
 
     const [hora, minuto] = this.horaSeleccionada.split(':');
     this.diaSeleccionado?.setHours(+hora, +minuto);
-    this.servicioReservas.setFechaSeleccionada(this.diaSeleccionado!);
+
+    let dia = this.diaSeleccionado!.getDate() < 10 ? `0${this.diaSeleccionado!.getDate()}` : this.diaSeleccionado!.getDate(); 
+    let mes = this.diaSeleccionado!.getMonth() + 1 < 10? `0${this.diaSeleccionado!.getMonth() + 1}` : this.diaSeleccionado!.getMonth() + 1;
     
-    if (input.value < '09:00') input.value = '09:00';
-    if (input.value > '20:00') input.value = '20:00';
+    sessionStorage.setItem('fechaReserva', `${dia}-${mes}-${this.diaSeleccionado!.getFullYear()},${hora}:${minuto}`);
   }
 }

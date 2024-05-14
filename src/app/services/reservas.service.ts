@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, catchError } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Reserva } from '../interfaces/reserva';
 import { API, errorPeticion } from '../utils';
 import { Respuesta } from '../interfaces/respuestas';
@@ -9,7 +9,6 @@ import { Respuesta } from '../interfaces/respuestas';
   providedIn: 'root'
 })
 export class ReservasService {
-  private fechaSeleccionada: ReplaySubject<Date> = new ReplaySubject(1);
 
   constructor(private http: HttpClient) { }
 
@@ -39,13 +38,5 @@ export class ReservasService {
      .pipe(
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Reserva>>(error))
       );
-  }
-
-  setFechaSeleccionada(fecha: Date): void {
-    this.fechaSeleccionada.next(fecha);
-  }
-
-  getFechaSeleccionada(): Observable<Date> {
-    return this.fechaSeleccionada.asObservable();
   }
 }
