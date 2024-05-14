@@ -1,25 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../interfaces/usuario';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
-import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UsuarioModalComponent } from '../modals/admin/usuario-modal/usuario-modal.component';
 import { RouterLink } from '@angular/router';
-import { VehiculoModalComponent } from '../modals/admin/vehiculo-modal/vehiculo-modal.component';
+import { VehiculoComponent } from '../vehiculo/vehiculo.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, VehiculoComponent],
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.sass',
 })
-export class PerfilUsuarioComponent implements OnInit, OnDestroy {
+export class PerfilUsuarioComponent implements OnInit {
   usuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
   vehiculos$!: Observable<Vehiculo[]>;
-  subscripcionBorradoVehiculo?: Subscription;
 
   constructor(private servicioVehiculos: VehiculoService, private dialog: MatDialog) { }
 
@@ -27,20 +26,13 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
     this.vehiculos$ = this.servicioVehiculos.obtenerVehiculosUsuario(this.usuario.nif);
   }
 
-  ngOnDestroy(): void {
-    this.subscripcionBorradoVehiculo?.unsubscribe();
-  }
-
   modalUsuario(): void {
     this.dialog.open(UsuarioModalComponent, { data: { usuario: this.usuario } });
   }
 
-  modalVehiculo(vehiculo: Vehiculo): void {
-    this.dialog.open(VehiculoModalComponent, { data: { vehiculo: vehiculo } });
-  }
-
-  borrarVehiculo(id: number): void {
-    this.subscripcionBorradoVehiculo = this.servicioVehiculos.borrarVehiculo(id).subscribe();
-    this.vehiculos$ = this.servicioVehiculos.obtenerVehiculosUsuario(this.usuario.nif);
+  eliminarVehiculo(vin: string): void {
+    this.vehiculos$ = this.vehiculos$.pipe(
+      map(vehiculos => vehiculos.filter(vehiculo => vehiculo.vin !== vin))
+    );
   }
 }
