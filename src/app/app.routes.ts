@@ -40,6 +40,7 @@ export const routes: Routes = [
         loadComponent: () => import('./components/admin/admin.component').then(c => c.AdminComponent),
         canActivate: [authGuard, adminGuard], children: [
             { path: '', loadComponent: () => import('./components/admin/panel-admin/panel-admin.component').then(c => c.PanelAdminComponent) },
+            { path: 'reservas-pendientes', loadComponent: () => import('./components/admin/reservas-pendientes/reservas-pendientes.component').then(c => c.ReservasPendientesComponent) },
             { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) },
             { path: 'vehiculos', loadComponent: () => import('./components/admin/vehiculos-admin/vehiculos-admin.component').then(c => c.VehiculosAdminComponent) },
             { path: 'servicios', loadComponent: () => import('./components/admin/servicios-admin/servicios-admin.component').then(c => c.ServiciosAdminComponent) }

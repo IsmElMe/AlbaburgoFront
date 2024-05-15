@@ -57,7 +57,7 @@ export class LoginComponent implements OnDestroy {
 
             const vehiculos: Vehiculo[] = [];
             const vehiculosUsuario = await firstValueFrom(this.servicioVehiculos.obtenerVehiculosUsuario(respuesta.usuario.nif));
-            vehiculosUsuario!.forEach(vehiculo => vehiculos.push(vehiculo));
+            vehiculosUsuario?.forEach(vehiculo => vehiculos.push(vehiculo));
             localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
 
             switch (respuesta.usuario.id_rol) {

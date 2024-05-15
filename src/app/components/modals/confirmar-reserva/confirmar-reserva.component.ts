@@ -30,7 +30,7 @@ export class ConfirmarReservaComponent implements OnDestroy {
       id_cliente: this.idCliente,
       fecha: this.data.fecha[0],
       hora: this.data.fecha[1],
-      estado: 'Pendiente' as estadoReserva
+      estado: 'pendiente' as estadoReserva
     };
     
     this.subscripcionReserva = this.servicioReservas.crearReserva(reserva).subscribe({

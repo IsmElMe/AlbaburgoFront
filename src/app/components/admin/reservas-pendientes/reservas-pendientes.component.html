@@ -1,0 +1,9 @@
+<section class="container-fluid">
+    <article class="row">
+        @for (reserva of reservasPendientes$ | async; track reserva.id) {
+            <p>{{reserva.fecha}}</p>
+            <button class="btn btn-primary" (click)="aceptarReserva()">Aceptar</button>
+            <button class="btn btn-danger" (click)="rechazarReserva()">Rechazar</button>
+        }
+    </article>
+</section>
