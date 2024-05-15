@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, retry } from 'rxjs';
 import { Servicio } from '../interfaces/servicio';
 import { API, errorPeticion } from '../utils';
 import { Respuesta } from '../interfaces/respuestas';
@@ -15,6 +15,7 @@ export class ServiciosService {
   obtenerServicios(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(`${API}/servicio`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Servicio[]>(error))
       );
   }
@@ -22,6 +23,7 @@ export class ServiciosService {
   obtenerServiciosFiltrado(filtro: string): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(`${API}/servicio/buscar/${filtro}`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Servicio[]>(error))
       );
   }
@@ -29,6 +31,7 @@ export class ServiciosService {
   obtenerServiciosReparacion(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(`${API}/servicio/tipo/reparacion`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Servicio[]>(error))
       );
   }
@@ -36,6 +39,7 @@ export class ServiciosService {
   obtenerServiciosMantenimiento(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(`${API}/servicio/tipo/mantenimiento`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Servicio[]>(error))
       );
   }
@@ -43,6 +47,7 @@ export class ServiciosService {
   crearServicio(servicio: Servicio): Observable<Respuesta<Servicio>> {
     return this.http.post<Respuesta<Servicio>>(`${API}/servicio`, servicio)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Servicio>>(error))
       );
   }
@@ -50,6 +55,7 @@ export class ServiciosService {
   borrarServicio(idServicio: number): Observable<Respuesta<Servicio>> {
     return this.http.delete(`${API}/servicio/${idServicio}`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Servicio>>(error))
       );
   }

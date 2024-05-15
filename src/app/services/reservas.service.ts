@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, retry } from 'rxjs';
 import { Reserva } from '../interfaces/reserva';
 import { API, errorPeticion } from '../utils';
 import { Respuesta } from '../interfaces/respuestas';
@@ -15,6 +15,7 @@ export class ReservasService {
   obtenerReservas(): Observable<Reserva[]> {
     return this.http.get<Reserva[]>(`${API}/reserva`)
      .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Reserva[]>(error))
       );
   }
@@ -22,6 +23,7 @@ export class ReservasService {
   obtenerReservasFiltrado(filtro: string): Observable<Reserva[]> {
     return this.http.get<Reserva[]>(`${API}/reserva/buscar/${filtro}`)
      .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Reserva[]>(error))
       );
   }
@@ -29,6 +31,7 @@ export class ReservasService {
   crearReserva(reserva: Reserva): Observable<Respuesta<Reserva>> {
     return this.http.post<Respuesta<Reserva>>(`${API}/reserva`, reserva)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Reserva>>(error))
       );
   }
@@ -36,6 +39,7 @@ export class ReservasService {
   borrarReserva(id: number): Observable<Respuesta<Reserva>> {
     return this.http.delete(`${API}/reserva/${id}`)
      .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Reserva>>(error))
       );
   }

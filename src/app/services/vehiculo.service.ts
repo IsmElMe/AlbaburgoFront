@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, firstValueFrom } from 'rxjs';
+import { Observable, catchError, firstValueFrom, retry, tap } from 'rxjs';
 import { Vehiculo } from '../interfaces/vehiculo';
 import { API, errorPeticion } from '../utils';
 import { Respuesta } from '../interfaces/respuestas';
@@ -15,6 +15,7 @@ export class VehiculoService {
   obtenerVehiculos(): Observable<Vehiculo[]> {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Vehiculo[]>(error))
       );
   }
@@ -22,6 +23,7 @@ export class VehiculoService {
   obtenerVehiculosUsuario(nif: string): Observable<Vehiculo[]> {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo/usuario/${nif}`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Vehiculo[]>(error))
       );
   }
@@ -29,15 +31,16 @@ export class VehiculoService {
   obtenerVehiculosFiltrado(filtro: string): Observable<Vehiculo[]> {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo/buscar/${filtro}`)
       .pipe(
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Vehiculo[]>(error))
       );
   }
 
   crearVehiculo(vehiculo: Vehiculo): Observable<Respuesta<Vehiculo>> {
-    this.actulizarVehiculosUsuario(vehiculo, 'crear');
-    
     return this.http.post<Respuesta<Vehiculo>>(`${API}/vehiculo`, vehiculo)
       .pipe(
+        tap(() => this.actulizarVehiculosUsuario('crear', vehiculo)),
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
@@ -45,6 +48,8 @@ export class VehiculoService {
   editarVehiculo(idVehiculo: number, vehiculo: object): Observable<Respuesta<Vehiculo>> {
     return this.http.put<Respuesta<Vehiculo>>(`${API}/vehiculo/${idVehiculo}`, vehiculo)
       .pipe(
+        tap(() => this.actulizarVehiculosUsuario('crear', vehiculo as Vehiculo)),
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
@@ -52,24 +57,25 @@ export class VehiculoService {
   borrarVehiculo(idVehiculo: number): Observable<Respuesta<Vehiculo>> {
     return this.http.delete(`${API}/vehiculo/${idVehiculo}`)
       .pipe(
+        tap(() => this.actulizarVehiculosUsuario('borrar', undefined, idVehiculo)),
+        retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
 
-  async actulizarVehiculosUsuario(vehiculo: Vehiculo, accion: 'crear' | 'editar' | 'borrar') {
+  async actulizarVehiculosUsuario(accion: 'crear' | 'editar' | 'borrar', vehiculo?: Vehiculo, idVehiculo?: number) {
     const nif = JSON.parse(localStorage.getItem('usuario') || '').nif;
     let vehiculos: Vehiculo[] = [];
 
     if (accion !== 'borrar') {
       const vehiculosUsuario = await firstValueFrom(this.obtenerVehiculosUsuario(nif));
       
-      vehiculos.push(vehiculo);
       vehiculosUsuario!.forEach(coche => vehiculos.push(coche));
       localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
     } else {
       let vehiculosUsuario = await firstValueFrom(this.obtenerVehiculosUsuario(nif));
       
-      vehiculosUsuario = vehiculosUsuario.filter(coche => coche.vin !== vehiculo.vin);
+      vehiculosUsuario = vehiculosUsuario.filter(coche => coche.id !== idVehiculo!);
       vehiculosUsuario!.forEach(coche => vehiculos.push(coche));
       localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
     }

@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component'
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
+import { reservaGuard } from './guards/reserva.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, title: 'Taller Albaburgo' },
@@ -32,7 +33,7 @@ export const routes: Routes = [
     {
         path: 'reservas/formulario', title: 'Formulario reserva',
         loadComponent: () => import('./components/reservas/form-reserva/form-reserva.component').then(c => c.FormReservaComponent),
-        canActivate: [authGuard]
+        canActivate: [authGuard, reservaGuard]
     },
     {
         path: 'admin', title: 'Administración',

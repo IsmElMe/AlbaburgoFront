@@ -67,12 +67,12 @@ export class CrearVehiculoComponent implements OnDestroy {
 
     this.subscripcionVehiculo = this.servicioVehiculos.crearVehiculo(nuevoVehiculo).subscribe({
       next: respuesta => {
-        this.dialog.open(CrearModalComponent, { data: { creado: true, tipo: 'vehiculo' } });
+        this.dialog.open(CrearModalComponent, { data: { creado: true, tipo: 'el vehiculo' } });
       },
       error: error => {
         console.error(error);
 
-        this.dialog.open(CrearModalComponent, { data: { creado: false, tipo: 'vehiculo' } });
+        this.dialog.open(CrearModalComponent, { data: { creado: false, tipo: 'el vehiculo' } });
       }
     });
   }
