@@ -26,11 +26,12 @@ export class ConfirmarReservaComponent implements OnDestroy {
 
   confirmarReserva(): void {
     const idCliente = JSON.parse(sessionStorage.getItem('id_cliente') || '');
-    const reserva: Reserva = {
+    const reserva = {
       id_cliente: +idCliente,
       fecha: this.data.fecha[0],
       hora: this.data.fecha[1],
-      estado: 'pendiente' as estadoReserva
+      estado: 'pendiente' as estadoReserva,
+      servicios: this.data.servicios
     };
     
     this.subscripcionReserva = this.servicioReservas.crearReserva(reserva).subscribe({

@@ -33,6 +33,14 @@ export class VehiculoService implements OnDestroy {
       );
   }
 
+  obtenerVehiculo(vin: string): Observable<Vehiculo> {
+    return this.http.get<Vehiculo>(`${API}/vehiculo/${vin}`)
+      .pipe(
+        retry(2),
+        catchError((error: HttpErrorResponse) => errorPeticion<Vehiculo>(error))
+      );
+  }
+
   obtenerVehiculosUsuario(nif: string): Observable<Vehiculo[]> {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo/usuario/${nif}`)
       .pipe(

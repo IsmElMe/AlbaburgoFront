@@ -19,6 +19,14 @@ export class ClientesService {
       );
   }
 
+  obtenerCliente(id_cliente: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`${API}/cliente/${id_cliente}`)
+     .pipe(
+        retry(2),
+        catchError((error: HttpErrorResponse) => errorPeticion<Cliente>(error))
+      );
+  }
+
   obtenerClienteNif(nif: string): Observable<Cliente> {
     return this.http.get<Cliente>(`${API}/cliente/buscar/usuario/${nif}`)
       .pipe(

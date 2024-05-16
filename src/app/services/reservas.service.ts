@@ -28,9 +28,17 @@ export class ReservasService {
       );
   }
 
-  crearReserva(reserva: Reserva): Observable<Respuesta<Reserva>> {
+  crearReserva(reserva: object): Observable<Respuesta<Reserva>> {
     return this.http.post<Respuesta<Reserva>>(`${API}/reserva`, reserva)
       .pipe(
+        retry(2),
+        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Reserva>>(error))
+      );
+  }
+
+  actualizarReserva(reserva: object): Observable<Respuesta<Reserva>> {
+    return this.http.put<Respuesta<Reserva>>(`${API}/reserva/${(reserva as Reserva).id}`, reserva)
+     .pipe(
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Reserva>>(error))
       );
