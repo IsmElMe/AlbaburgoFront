@@ -1,16 +1,29 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError, firstValueFrom, retry, tap } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, Subscription, catchError, firstValueFrom, retry, tap } from 'rxjs';
 import { Vehiculo } from '../interfaces/vehiculo';
 import { API, errorPeticion } from '../utils';
 import { Respuesta } from '../interfaces/respuestas';
+import { ClientesService } from './clientes.service';
+import { Cliente } from '../interfaces/cliente';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VehiculoService {
+export class VehiculoService implements OnDestroy {
+  subscripcionNuevoCliente?: Subscription;
+  subscripcionEdicionCliente?: Subscription;
+  subscripcionBorradoCliente?: Subscription;
+  subscripcionCliente?: Subscription;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private servicioClientes: ClientesService) { }
+
+  ngOnDestroy(): void {
+    this.subscripcionNuevoCliente?.unsubscribe();
+    this.subscripcionEdicionCliente?.unsubscribe();
+    this.subscripcionBorradoCliente?.unsubscribe();
+    this.subscripcionCliente?.unsubscribe();
+  }
 
   obtenerVehiculos(): Observable<Vehiculo[]> {
     return this.http.get<Vehiculo[]>(`${API}/vehiculo`)
@@ -37,33 +50,51 @@ export class VehiculoService {
   }
 
   crearVehiculo(vehiculo: Vehiculo): Observable<Respuesta<Vehiculo>> {
+    const nuevoCliente: Cliente = {
+      nif_usuario: JSON.parse(localStorage.getItem('usuario') || '').nif,
+      vin_vehiculo: vehiculo.vin
+    }
+
+    this.subscripcionNuevoCliente = this.servicioClientes.crearCliente(nuevoCliente).subscribe();
+
     return this.http.post<Respuesta<Vehiculo>>(`${API}/vehiculo`, vehiculo)
       .pipe(
-        tap(() => this.actulizarVehiculosUsuario('crear', vehiculo)),
+        tap(() => this.actulizarVehiculosUsuario('crear')),
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
 
   editarVehiculo(idVehiculo: number, vehiculo: object): Observable<Respuesta<Vehiculo>> {
+    const nuevoCliente: Cliente = {
+      nif_usuario: JSON.parse(localStorage.getItem('usuario') || '').nif,
+      vin_vehiculo: (vehiculo as Vehiculo).vin
+    }
+
+    this.subscripcionEdicionCliente = this.servicioClientes.editarCliente(nuevoCliente).subscribe();
+
     return this.http.put<Respuesta<Vehiculo>>(`${API}/vehiculo/${idVehiculo}`, vehiculo)
       .pipe(
-        tap(() => this.actulizarVehiculosUsuario('crear', vehiculo as Vehiculo)),
+        tap(() => this.actulizarVehiculosUsuario('crear')),
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
 
-  borrarVehiculo(idVehiculo: number): Observable<Respuesta<Vehiculo>> {
-    return this.http.delete(`${API}/vehiculo/${idVehiculo}`)
+  borrarVehiculo(vehiculo: object): Observable<Respuesta<Vehiculo>> {
+    this.subscripcionCliente = this.servicioClientes.obtenerClienteVin((vehiculo as Vehiculo).vin).subscribe({
+      next: cliente => this.subscripcionBorradoCliente = this.servicioClientes.borrarCliente(cliente.id ?? -1).subscribe()
+    });
+
+    return this.http.delete(`${API}/vehiculo/${(vehiculo as Vehiculo).id}`)
       .pipe(
-        tap(() => this.actulizarVehiculosUsuario('borrar', undefined, idVehiculo)),
+        tap(() => this.actulizarVehiculosUsuario('borrar', (vehiculo as Vehiculo).id)),
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Vehiculo>>(error))
       );
   }
 
-  async actulizarVehiculosUsuario(accion: 'crear' | 'editar' | 'borrar', vehiculo?: Vehiculo, idVehiculo?: number) {
+  async actulizarVehiculosUsuario(accion: 'crear' | 'editar' | 'borrar', idVehiculo?: number) {
     const nif = JSON.parse(localStorage.getItem('usuario') || '').nif;
     let vehiculos: Vehiculo[] = [];
 

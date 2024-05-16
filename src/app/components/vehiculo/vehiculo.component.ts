@@ -25,8 +25,8 @@ export class VehiculoComponent {
     this.dialog.open(VehiculoModalComponent, { data: { vehiculo: vehiculo } });
   }
 
-  borrarVehiculo(id: number): void {
-    this.servicioVehiculos.borrarVehiculo(id).subscribe();
+  borrarVehiculo(vehiculo: Vehiculo): void {
+    this.servicioVehiculos.borrarVehiculo(vehiculo).subscribe();
     this.vehiculoEliminado.emit(this.vehiculo.vin);
   }
 

@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
   styleUrl: './confirmar-reserva.component.sass'
 })
 export class ConfirmarReservaComponent implements OnDestroy {
-  idCliente = JSON.parse(localStorage.getItem('usuario') || '').id;
   subscripcionReserva?: Subscription;
 
   constructor(
@@ -22,12 +21,13 @@ export class ConfirmarReservaComponent implements OnDestroy {
   ) { }
 
   ngOnDestroy(): void {
-      this.subscripcionReserva?.unsubscribe();
+    this.subscripcionReserva?.unsubscribe();
   }
 
   confirmarReserva(): void {
+    const idCliente = JSON.parse(sessionStorage.getItem('id_cliente') || '');
     const reserva: Reserva = {
-      id_cliente: this.idCliente,
+      id_cliente: +idCliente,
       fecha: this.data.fecha[0],
       hora: this.data.fecha[1],
       estado: 'pendiente' as estadoReserva

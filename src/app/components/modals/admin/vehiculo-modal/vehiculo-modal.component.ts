@@ -63,6 +63,6 @@ export class VehiculoModalComponent {
   }
 
   borrarVehiculo(): void {
-    this.borrado$ = this.servicioVehiculos.borrarVehiculo(this.data.vehiculo.id ?? -1);
+    this.borrado$ = this.servicioVehiculos.borrarVehiculo(this.data.vehiculo);
   }
 }

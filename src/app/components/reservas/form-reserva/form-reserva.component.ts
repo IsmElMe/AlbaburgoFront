@@ -11,6 +11,7 @@ import { VehiculoService } from '../../../services/vehiculo.service';
 import { Vehiculo } from '../../../interfaces/vehiculo';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmarReservaComponent } from '../../modals/confirmar-reserva/confirmar-reserva.component';
+import { ClientesService } from '../../../services/clientes.service';
 
 @Component({
   selector: 'app-form-reserva',
@@ -27,6 +28,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   mantenimientosControl = new FormControl();
   subscripcionReparaciones!: Subscription;
   subscripcionMantenimientos!: Subscription;
+  subscripcionCliente?: Subscription;
   vehiculoSeleccionado?: Vehiculo;
   nifUsuario = JSON.parse(localStorage.getItem('usuario') || '').nif;
   fechaSeleccionada!: string;
@@ -38,7 +40,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   reservar = false;
   parteSeguro = false;
 
-  constructor(private dialog: MatDialog, private servicioVehiculos: VehiculoService, private servicioServicios: ServiciosService) { }
+  constructor(
+    private dialog: MatDialog, private servicioVehiculos: VehiculoService, 
+    private servicioServicios: ServiciosService, private servicioClientes: ClientesService
+  ) { }
   
   ngOnInit(): void {
     const serviciosPresupuesto = JSON.parse(sessionStorage.getItem('serviciosSeleccionados') || '[]');
@@ -90,6 +95,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscripcionMantenimientos.unsubscribe();
     this.subscripcionReparaciones.unsubscribe();
+    this.subscripcionCliente?.unsubscribe();
   }
 
   seleccionarVehiculo(vehiculo: Vehiculo) {
@@ -98,6 +104,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   }
 
   modalConfirmarReserva(): void {
+    this.subscripcionCliente = this.servicioClientes.obtenerClienteVin(this.vehiculoSeleccionado!.vin).subscribe({
+      next: cliente => sessionStorage.setItem('id_cliente', cliente.id!.toString())
+    });
+
     this.dialog.open(ConfirmarReservaComponent, { 
       data: { 
         servicios: this.serviciosSeleccionados, 
