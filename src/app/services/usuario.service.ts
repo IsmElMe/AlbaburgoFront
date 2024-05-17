@@ -36,6 +36,14 @@ export class UsuarioService {
       );
   }
 
+  obtenerUsuariosRol(id_rol: number): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${API}/usuario/rol/${id_rol}`)
+      .pipe(
+        retry(2),
+        catchError((error: HttpErrorResponse) => errorPeticion<Usuario[]>(error))
+      );
+  }
+
   actualizarUsuario(idUsuario: number, usuario: object): Observable<RespuestaAuth> {
     const user = usuario as Usuario;
     let nuevoUsuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');

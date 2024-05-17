@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{data.aceptada ? 'Aceptar reserva' : 'Rechazar reserva'}}</h2>
+<mat-dialog-content>
+    @if (data.aceptada) {
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Selecciona un mecánico</mat-label>
+                <mat-select [(value)]="mecanicoSeleccionado">
+                    <mat-option value=""></mat-option>
+                    @for (mecanico of mecanicos$ | async; track mecanico.id) {
+                        <mat-option [value]="mecanico">{{mecanico.nombre}} {{mecanico.apellidos}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <label class="col-12 form-label">Descripción para la reparación:</label>
+            <textarea class="col-12" [(ngModel)]="descripcionReparacion"></textarea>
+        </div>
+    } @else {
+        <div class="row">
+            <label class="col-12 form-label">Motivo rechazo reserva:</label>
+            <textarea class="col-12" [(ngModel)]="motivoRechazar"></textarea>
+        </div>
+        }
+</mat-dialog-content>
+<mat-dialog-actions class="row justify-content-around">
+    <button class="col-auto btn btn-secondary text-white px-4" mat-dialog-close>Cancelar</button>
+    @if (data.aceptada) {
+        <button class="col-auto btn btn-primary px-4" [disabled]="!mecanicoSeleccionado" (click)="aceptarReserva()">Aceptar</button>
+    } @else {
+        <button class="col-auto btn btn-danger px-4" [disabled]="!motivoRechazar" (click)="rechazarReserva()">Rechazar</button>
+    }
+</mat-dialog-actions>
