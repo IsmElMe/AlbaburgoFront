@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{data.finalizado ? 'Finalizar reparación' : 'Cancelar reparación'}}</h2>
+<mat-dialog-content>
+    @if (data.finalizado) {
+        <div class="row">
+            <label class="d-flex align-self-center col-auto form-label m-0">Horas de trabajo:</label>
+            <input class="col-auto form-control w-auto" type="number" min="0" [(ngModel)]="horasServicio">
+        </div>
+    } @else {
+        <div class="row">
+            <label class="col-12 form-label">Motivo cancelación reparación:</label>
+            <textarea class="col-12" [(ngModel)]="motivoCancelar"></textarea>
+        </div>
+        }
+</mat-dialog-content>
+<mat-dialog-actions class="row justify-content-around">
+    <button class="col-auto btn btn-secondary text-white px-4" mat-dialog-close>Cerrar</button>
+    @if (data.finalizado) {
+        <button class="col-auto btn btn-primary px-4" [disabled]="!horasServicio" (click)="finalizarReparacion()">Finalizar</button>
+    } @else {
+        <button class="col-auto btn btn-danger px-4" [disabled]="!motivoCancelar" (click)="cancelarReparacion()">Cancelar</button>
+    }
+</mat-dialog-actions>

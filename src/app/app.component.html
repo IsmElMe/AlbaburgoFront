@@ -63,6 +63,8 @@
                                             @if (rol === 'administrador') {
                                                 <li><a class="dropdown-item" routerLink="/admin">Panel administrador</a></li>
                                                 <li><a class="dropdown-item" routerLink="/admin/reservas-pendientes">Reservas pendientes</a></li>
+                                            } @else if (rol === 'mecanico') {
+                                                <li><a class="dropdown-item" routerLink="/reparaciones">Reparaciones</a></li>
                                             }
                                         }
                                         <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>

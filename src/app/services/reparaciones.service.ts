@@ -20,6 +20,22 @@ export class ReparacionesService {
      );
   }
 
+  obtenerReparacionesMecanico(nif: string): Observable<Reparacion[]> {
+    return this.http.get<Reparacion[]>(`${API}/reparacion/mecanico/${nif}`)
+    .pipe(
+       retry(2),
+       catchError((error: HttpErrorResponse) => errorPeticion<Reparacion[]>(error))
+    );
+  }
+
+  obtenerReparacionesFiltrado(filtro: string): Observable<Reparacion[]> {
+    return this.http.get<Reparacion[]>(`${API}/reparacion/buscar/${filtro}`)
+    .pipe(
+       retry(2),
+       catchError((error: HttpErrorResponse) => errorPeticion<Reparacion[]>(error))
+    );
+  }
+
   crearReparacion(reparacion: Reparacion): Observable<Respuesta<Reparacion>> {
     return this.http.post<Respuesta<Reparacion>>(`${API}/reparacion`, reparacion)
      .pipe(
@@ -28,8 +44,8 @@ export class ReparacionesService {
       );
   }
 
-  actualizarReparacion(idReparacion: number, reparacion: Reparacion): Observable<Respuesta<Reparacion>> {
-    return this.http.put<Respuesta<Reparacion>>(`${API}/reparacion/${idReparacion}`, reparacion)
+  actualizarReparacion(reparacion: Reparacion): Observable<Respuesta<Reparacion>> {
+    return this.http.put<Respuesta<Reparacion>>(`${API}/reparacion/${reparacion.id}`, reparacion)
      .pipe(
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Reparacion>>(error))

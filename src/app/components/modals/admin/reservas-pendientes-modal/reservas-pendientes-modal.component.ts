@@ -69,11 +69,6 @@ export class ReservasPendientesModalComponent implements OnInit, OnDestroy {
         
         this.subscripcionDatos = forkJoin([usuario$, vehiculo$]).subscribe({
           next: ([usuario, vehiculo]) => {
-            const hoy = new Date();
-            const dia = hoy.getDate().toString().padStart(2, '0');
-            const mes = (hoy.getMonth() + 1).toString().padStart(2, '0');
-            const year = hoy.getFullYear().toString();
-
             const correo: Correo = {
               destinatario: usuario[0].email,
               asunto: 'Reserva aceptada',
@@ -84,7 +79,7 @@ export class ReservasPendientesModalComponent implements OnInit, OnDestroy {
               id_cliente: cliente.id!,
               nif_mecanico: this.mecanicoSeleccionado!.nif,
               descripcion: this.descripcionReparacion,
-              fecha_inicio: `${dia}-${mes}-${year}`,
+              fecha_inicio: this.data.reserva.fecha,
               estado: 'pendiente',
               servicios: this.data.reserva.servicios
             }

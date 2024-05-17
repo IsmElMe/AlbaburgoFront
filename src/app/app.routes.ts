@@ -6,11 +6,16 @@ import { NotFoundComponent } from './components/not-found/not-found.component'
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 import { reservaGuard } from './guards/reserva.guard';
+import { mecanicoGuard } from './guards/mecanico.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, title: 'Taller Albaburgo' },
     { path: 'registro', component: RegistroComponent, title: 'Registro' },
     { path: 'login', component: LoginComponent, title: 'Iniciar sesión' },
+    {
+        path: 'trabajos-anteriores', title: 'Trabajos anteriores',
+        loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent),
+    },
     {
         path: 'perfil', title: 'Perfil usuario',
         loadComponent: () => import('./components/perfil-usuario/perfil-usuario.component').then(c => c.PerfilUsuarioComponent),
@@ -22,10 +27,6 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-        path: 'trabajos-anteriores', title: 'Trabajos anteriores',
-        loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent),
-    },
-    {
         path: 'reservas', title: 'Reservas',
         loadComponent: () => import('./components/reservas/reservas.component').then(c => c.ReservasComponent),
         canActivate: [authGuard]
@@ -34,6 +35,11 @@ export const routes: Routes = [
         path: 'reservas/formulario', title: 'Formulario reserva',
         loadComponent: () => import('./components/reservas/form-reserva/form-reserva.component').then(c => c.FormReservaComponent),
         canActivate: [authGuard, reservaGuard]
+    },
+    {
+        path: 'reparaciones', title: 'Reparaciones',
+        loadComponent: () => import('./components/admin/reparaciones-pendientes/reparaciones-pendientes.component').then(c => c.ReparacionesPendientesComponent),
+        canActivate: [authGuard, mecanicoGuard]
     },
     {
         path: 'admin', title: 'Administración',
