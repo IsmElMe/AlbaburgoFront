@@ -10,6 +10,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { VehiculoService } from '../../../services/vehiculo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReparacionModalComponent } from '../../modals/admin/reparacion-modal/reparacion-modal.component';
+import { DetallesModalComponent } from '../../modals/detalles-modal/detalles-modal.component';
 
 @Component({
   selector: 'app-reparaciones-pendientes',
@@ -27,7 +28,7 @@ export class ReparacionesPendientesComponent implements OnInit, OnDestroy {
   constructor(
     private servicioReparaciones: ReparacionesService, private servicioClientes: ClientesService, 
     private servicioUsuarios: UsuarioService, private servicioVehiculos: VehiculoService,
-    private modal: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -52,15 +53,19 @@ export class ReparacionesPendientesComponent implements OnInit, OnDestroy {
   }
 
   finalizarReparacion(reparacion: Reparacion) {
-    this.subscripcionFinalizar = this.modal.open(ReparacionModalComponent, { data: { finalizado: true, reparacion: reparacion } }).afterClosed().subscribe({
+    this.subscripcionFinalizar = this.dialog.open(ReparacionModalComponent, { data: { finalizado: true, reparacion: reparacion } }).afterClosed().subscribe({
       next: () => {
         this.reparaciones$ = this.servicioReparaciones.obtenerReparacionesMecanico(this.nif);
       }
     });
   }
 
+  detallesReserva(reparacion: Reparacion): void {
+    this.dialog.open(DetallesModalComponent, { data: { reparacion: reparacion } });
+  }
+
   cancelarReparacion(reparacion: Reparacion) {
-    this.subscripcionCancelar = this.modal.open(ReparacionModalComponent, { data: { finalizado: false, reparacion: reparacion } }).afterClosed().subscribe({
+    this.subscripcionCancelar = this.dialog.open(ReparacionModalComponent, { data: { finalizado: false, reparacion: reparacion } }).afterClosed().subscribe({
       next: () => {
         this.reparaciones$ = this.servicioReparaciones.obtenerReparacionesMecanico(this.nif);
       }

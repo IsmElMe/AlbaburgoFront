@@ -18,6 +18,7 @@ export class VehiculoComponent {
   @Output() vehiculoEliminado = new EventEmitter<string>();
   @Output() vehiculoSeleccionado = new EventEmitter<Vehiculo>;
   @Input() seleccionado = false;
+  @Input() imagen = '';
 
   constructor(private servicioVehiculos: VehiculoService, private dialog: MatDialog) { }
 

@@ -1,24 +1,33 @@
 <section class="container-fluid">
     <article class="row">
-        @for (reparacion of reparaciones$ | async; track reparacion.id) {
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <p>Fecha inicio: {{reparacion.fecha_inicio}}</p>
+        @if (reparaciones$ | async; as reparaciones) {
+            @if (reparaciones.length > 0) {
+                @for (reparacion of reparaciones$ | async; track reparacion.id) {
+                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <p>Fecha inicio: {{reparacion.fecha_inicio}}</p>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group flex-grow-1">
+                                    @for (servicio of reparacion.servicios; track servicio.id) {
+                                        <li class="list-group-item">{{servicio.nombre}}</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="card-footer d-flex justify-content-around">
+                                <button class="btn btn-danger" (click)="cancelarReparacion(reparacion)">Cancelar</button>
+                                <button class="btn btn-secondary text-white" (click)="detallesReserva(reparacion)">Detalles</button>
+                                <button class="btn btn-primary" (click)="finalizarReparacion(reparacion)">Finalizar</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-group flex-grow-1">
-                            @for (servicio of reparacion.servicios; track servicio.id) {
-                                <li class="list-group-item">{{servicio.nombre}}</li>
-                            }
-                        </ul>
-                    </div>
-                    <div class="card-footer d-flex justify-content-around">
-                        <button class="btn btn-danger" (click)="cancelarReparacion(reparacion)">Cancelar</button>
-                        <button class="btn btn-primary" (click)="finalizarReparacion(reparacion)">Finalizar</button>
-                    </div>
+                }
+            } @else {
+                <div class="vh-100 d-flex align-items-center">
+                    <p class="text-center w-100">No tienes ninguna reparación pendiente</p>
                 </div>
-            </div>
+            }
         }
     </article>
 </section>

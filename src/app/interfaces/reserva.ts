@@ -7,6 +7,7 @@ export interface Reserva {
     hora: string,
     estado: estadoReserva,
     imagen?: string,
+    parte_seguro?: string,
     servicios?: Servicio[]
 }
 

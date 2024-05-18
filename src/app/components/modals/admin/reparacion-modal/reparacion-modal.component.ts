@@ -9,6 +9,8 @@ import { UsuarioService } from '../../../../services/usuario.service';
 import { VehiculoService } from '../../../../services/vehiculo.service';
 import { Correo } from '../../../../interfaces/correo';
 import { FormsModule } from '@angular/forms';
+import { Factura } from '../../../../interfaces/factura';
+import { FacturasService } from '../../../../services/facturas.service';
 
 @Component({
   selector: 'app-reparacion-modal',
@@ -23,12 +25,13 @@ export class ReparacionModalComponent implements OnDestroy {
   subscripcionUsuario?: Subscription;
   subscripcionDatos?: Subscription;
   subscripcionReparacion?: Subscription;
+  subscripcionFacturas?: Subscription;
   horasServicio?: number;
   motivoCancelar?: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { finalizado: boolean, reparacion: Reparacion }, private dialogRef: MatDialogRef<ReparacionModalComponent>, 
-    private servicioReparaciones: ReparacionesService, private servicioClientes: ClientesService, 
+    private servicioReparaciones: ReparacionesService, private servicioClientes: ClientesService, private servicioFacturas: FacturasService,
     private servicioUsuarios: UsuarioService, private servicioVehiculo: VehiculoService, private servicioCorreo: MailService
   ) { }
 
@@ -38,14 +41,23 @@ export class ReparacionModalComponent implements OnDestroy {
     this.subscripcionUsuario?.unsubscribe();
     this.subscripcionDatos?.unsubscribe();
     this.subscripcionReparacion?.unsubscribe();
+    this.subscripcionFacturas?.unsubscribe();
   }
 
   finalizarReparacion() {
-    let servicios = '';
+    const hoy = new Date();
+    const dia = hoy.getDate().toString().padStart(2, '0');
+    const mes = (hoy.getMonth() + 1).toString().padStart(2, '0');
+    const year = hoy.getFullYear();
+
+    let factura = `<li>Horas de trabajo (${this.horasServicio}h): ${this.horasServicio! * 30}€</li>`;
+    let precioTotal = this.data.reparacion.servicios!.reduce((acc, servicio) => acc + servicio.precio, 0);
+    precioTotal += this.horasServicio! * 30;
     this.data.reparacion.estado = 'finalizado';
+    this.data.reparacion.fecha_fin = `${dia}-${mes}-${year}`;
 
     this.data.reparacion.servicios!.forEach(servicio => {
-      servicios += `<li>${servicio.nombre}</li>`;
+      factura += `<li>${servicio.nombre}: ${servicio.precio}€</li>`;
     });
 
     this.subscripcionCliente = this.servicioClientes.obtenerCliente(this.data.reparacion.id_cliente!).subscribe({
@@ -53,24 +65,32 @@ export class ReparacionModalComponent implements OnDestroy {
         const usuario$ = this.servicioUsuarios.obtenerUsuariosFiltrado(cliente.nif_usuario);
         const vehiculo$ = this.servicioVehiculo.obtenerVehiculosFiltrado(cliente.vin_vehiculo);
 
-        const hoy = new Date();
         hoy.setDate(hoy.getDate() + 1);
-        const dia = hoy.getDate().toString().padStart(2, '0');
+        const diaMin = hoy.getDate().toString().padStart(2, '0');
         hoy.setDate(hoy.getDate() + 3);
         const diaMax = hoy.getDate().toString().padStart(2, '0');
-        const mes = (hoy.getMonth() + 1).toString().padStart(2, '0');
-        const year = hoy.getFullYear();
-        
+ 
         this.subscripcionDatos = forkJoin([usuario$, vehiculo$]).subscribe({
           next: ([usuario, vehiculo]) => {
             const correo: Correo = {
               destinatario: usuario[0].email,
               asunto: 'Reparación finalizada',
-              contenido: `El servicio de su vehículo ${vehiculo[0].fabricante} ${vehiculo[0].modelo} ha finalizado. Puede venir a recogerlo el ${dia}-${mes}-${year} desde las 09:00 hasta las 20:00, recuerde que si no recoge su vehículo antes del ${diaMax}-${mes}-${year} se le sumará un cargo de estancia. Gracias por utilizar nuestros servicios. <br><br> Servicios realizados: <ul>${servicios}</ul> Factura: `
+              contenido: `El servicio de su vehículo ${vehiculo[0].fabricante} ${vehiculo[0].modelo} ha finalizado. Puede venir a recogerlo el ${diaMin}-${mes}-${year} desde las 09:00 hasta las 20:00, si no recoge su vehículo antes del ${diaMax}-${mes}-${year} se le sumará un cargo de estancia. Gracias por utilizar nuestros servicios. <br><br> Factura: <ul>${factura}</ul> IVA (21%): ${precioTotal * 0.21}€ <br> Precio total: ${precioTotal}€`
+            }
+
+            const datosFactura: Factura = {
+              id_reparacion: this.data.reparacion.id!,
+              precio_total: precioTotal,
+              horas: this.horasServicio
             }
 
             this.subscripcionCorreo = this.servicioCorreo.enviarCorreo(correo).subscribe();
             this.subscripcionReparacion = this.servicioReparaciones.actualizarReparacion(this.data.reparacion).subscribe();
+            this.subscripcionFacturas = this.servicioFacturas.crearFactura(datosFactura).subscribe({
+              next: () => {
+                this.dialogRef.close();
+              }
+            });
           }
         });
       }

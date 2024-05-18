@@ -56,14 +56,14 @@
             <h2>Información adicional para la reserva</h2>
             @if (reparacionesSeleccionado.length !== 0) {
                 <label class="col-12 form-label">
-                    <input [(ngModel)]="parteSeguro"  type="checkbox">
+                    <input [(ngModel)]="parteSeguroCheck" type="checkbox">
                     Hay parte del seguro
                 </label>
-                @if (parteSeguro) {
+                @if (parteSeguroCheck) {
                     <div class="col-12 col-md-6">
                         <label class="col-auto form-label">
                             Aqui puedes subir el parte del seguro
-                            <input class="form-control" type="file" accept="application/pdf" [required]="parteSeguro">
+                            <input class="form-control" type="file" accept="application/pdf" (change)="subirParteSeguro($event)" [required]="parteSeguroCheck">
                         </label>
                     </div>
                 }
@@ -71,7 +71,7 @@
             <div class="col-12 col-md-6 mt-3 mt-md-0">    
                 <label class="col-auto form-label">
                     Si quieres puedes subir una imagen del problema
-                    <input class="form-control" type="file" accept="image/*">
+                    <input class="form-control" type="file" accept="image/*" (change)="subirImagen($event)">
                 </label>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { Reserva } from '../../../interfaces/reserva';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservasPendientesModalComponent } from '../../modals/admin/reservas-pendientes-modal/reservas-pendientes-modal.component';
+import { DetallesModalComponent } from '../../modals/detalles-modal/detalles-modal.component';
 
 @Component({
   selector: 'app-reservas-pendientes',
@@ -35,6 +36,10 @@ export class ReservasPendientesComponent implements OnInit, OnDestroy {
         this.reservasPendientes$ = this.servicioReservas.obtenerReservasFiltrado('pendiente');
       }
     });
+  }
+
+  detallesReserva(reserva: Reserva): void {
+    this.dialog.open(DetallesModalComponent, { data: { reserva: reserva } });
   }
 
   rechazarReserva(reserva: Reserva): void {

@@ -1,8 +1,14 @@
 <div [class.seleccionable]="!editable" [class.seleccionado]="seleccionado" class="card p-0" (click)="seleccionarVehiculo()">
     <div class="card-header">
-        <figure class="card-img d-flex justify-content-center">
-            <img class="img-fluid" src="../../../assets/img/img-vehiculo.png" alt="Imagen vehículo">
-        </figure>
+        @if (imagen) {
+            <figure class="card-img d-flex justify-content-center">
+                <img class="img-fluid" src="http://albaburgo.server/storage/img/reservas/{{imagen}}" alt="Imagen vehículo">
+            </figure> 
+        } @else {
+            <figure class="card-img d-flex justify-content-center">
+                <img class="img-fluid" src="../../../assets/img/img-vehiculo.png" alt="Imagen vehículo">
+            </figure>
+        }
         <div class="row">
             <h5 class="col">{{vehiculo.fabricante}} {{vehiculo.modelo}}</h5>
             @if (seleccionado) {

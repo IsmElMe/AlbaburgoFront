@@ -37,8 +37,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   reparacionesSeleccionado: string[] = [];
   mantenimientosSeleccionado: string[] = [];
   serviciosSeleccionados: string[] = [];
+  imagen?: string;
+  parteSeguro?: string;
   reservar = false;
-  parteSeguro = false;
+  parteSeguroCheck = false;
 
   constructor(
     private dialog: MatDialog, private servicioVehiculos: VehiculoService, 
@@ -103,6 +105,26 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     this.comprobarDatos();
   }
 
+  subirImagen(evento: Event): void {
+    const reader = new FileReader();
+    const imagen = (evento.target as HTMLInputElement).files![0];
+
+    reader.readAsDataURL(imagen);
+    reader.onload = () => {
+      this.imagen = reader.result?.toString();
+    };
+  }
+
+  subirParteSeguro(evento: Event) {
+    const reader = new FileReader();
+    const parte = (evento.target as HTMLInputElement).files![0];
+
+    reader.readAsDataURL(parte);
+    reader.onload = () => {
+      this.parteSeguro = reader.result?.toString();
+    };
+  }
+
   modalConfirmarReserva(): void {
     this.subscripcionCliente = this.servicioClientes.obtenerClienteVin(this.vehiculoSeleccionado!.vin).subscribe({
       next: cliente => sessionStorage.setItem('id_cliente', cliente.id!.toString())
@@ -112,7 +134,9 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       data: { 
         servicios: this.serviciosSeleccionados, 
         fecha: [this.diaSeleccionado, this.horaSeleccionada], 
-        vehiculo: `${this.vehiculoSeleccionado!.fabricante} ${this.vehiculoSeleccionado!.modelo}` 
+        vehiculo: `${this.vehiculoSeleccionado!.fabricante} ${this.vehiculoSeleccionado!.modelo}`,
+        imagen: this.imagen,
+        parte: this.parteSeguro
       } 
     });
   }

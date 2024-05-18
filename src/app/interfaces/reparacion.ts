@@ -8,6 +8,8 @@ export interface Reparacion {
   fecha_inicio: string,
   fecha_fin?: string,
   estado: estadoReparacion,
+  imagen?: string,
+  parte_seguro?: string,
   servicios?: Servicio[]
 }
 

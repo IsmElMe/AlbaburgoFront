@@ -73,7 +73,7 @@ export class ReservasPendientesModalComponent implements OnInit, OnDestroy {
               destinatario: usuario[0].email,
               asunto: 'Reserva aceptada',
               contenido: `Su reserva a sido aceptada, venga con su vehículo ${vehiculo[0].fabricante} ${vehiculo[0].modelo} el dia ${this.data.reserva.fecha} a las ${this.data.reserva.hora} para realizar el servicio. Se le ha asignado el mecánico ${this.mecanicoSeleccionado!.nombre} ${this.mecanicoSeleccionado!.apellidos}. <br><br> Servicios que se van a realizar: <ul>${servicios}</ul>`
-            }
+            };
 
             const reparacion: Reparacion = {
               id_cliente: cliente.id!,
@@ -81,8 +81,10 @@ export class ReservasPendientesModalComponent implements OnInit, OnDestroy {
               descripcion: this.descripcionReparacion,
               fecha_inicio: this.data.reserva.fecha,
               estado: 'pendiente',
-              servicios: this.data.reserva.servicios
-            }
+              servicios: this.data.reserva.servicios,
+              imagen: this.data.reserva.imagen,
+              parte_seguro: this.data.reserva.parte_seguro
+            };
 
             this.subscripcionCorreo = this.servicioCorreo.enviarCorreo(correo).subscribe();
             this.subscripcionReserva = this.servicioReservas.actualizarReserva(this.data.reserva).subscribe();
