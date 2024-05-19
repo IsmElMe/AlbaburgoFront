@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 import { API, errorPeticion } from '../utils';
-import { RespuestaAuth } from '../interfaces/respuestas';
+import { Respuesta } from '../interfaces/respuestas';
 
 @Injectable({
   providedIn: 'root'
@@ -44,27 +44,15 @@ export class UsuarioService {
       );
   }
 
-  actualizarUsuario(idUsuario: number, usuario: object): Observable<RespuestaAuth> {
-    const user = usuario as Usuario;
-    let nuevoUsuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
-    
-    nuevoUsuario.apellidos = user.apellidos;
-    nuevoUsuario.email = user.email;
-    nuevoUsuario.fecha_nacimiento = user.fecha_nacimiento;
-    nuevoUsuario.nif = user.nif;
-    nuevoUsuario.nombre = user.nombre;
-    nuevoUsuario.telefono = user.telefono;
-    
-    localStorage.setItem('usuario', JSON.stringify(nuevoUsuario));
-
-    return this.http.put<RespuestaAuth>(`${API}/usuario/${idUsuario}`, usuario)
+  actualizarUsuario(idUsuario: number, usuario: object): Observable<Usuario> {
+    return this.http.put<Usuario>(`${API}/usuario/${idUsuario}`, usuario)
       .pipe(
         retry(2),
-        catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
+        catchError((error: HttpErrorResponse) => errorPeticion<Usuario>(error))
       );
   }
 
-  borrarUsuario(idUsuario: number): Observable<RespuestaAuth> {
+  borrarUsuario(idUsuario: number): Observable<Respuesta<Usuario>> {
     localStorage.removeItem('usuario');
     localStorage.removeItem('rol');
     localStorage.removeItem('token');
@@ -72,7 +60,7 @@ export class UsuarioService {
     return this.http.delete(`${API}/usuario/${idUsuario}`)
       .pipe(
         retry(2),
-        catchError((error: HttpErrorResponse) => errorPeticion<RespuestaAuth>(error))
+        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Usuario>>(error))
       );
   }
 }

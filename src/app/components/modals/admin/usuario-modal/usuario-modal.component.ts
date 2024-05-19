@@ -17,8 +17,9 @@ import { RespuestaAuth } from '../../../../interfaces/respuestas';
 export class UsuarioModalComponent {
   mostrarPass = false;
   tipoPassword = 'password';
-  editado$?: Observable<RespuestaAuth>;
+  editado$?: Observable<Usuario>;
   borrado$?: Observable<RespuestaAuth>;
+  imagen?: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {usuario: Usuario}, private servicioUsuarios: UsuarioService, private fb: FormBuilder) { }
 
@@ -44,19 +45,35 @@ export class UsuarioModalComponent {
 
   editarUsuario(): void {
     const usuarioEditado: Usuario = {
-      'nif': this.nif?.value ?? '',
-      'id_rol': this.data.usuario.id_rol,
-      'email': this.email?.value ?? '',
-      'nombre': this.nombre?.value ?? '',
-      'apellidos': this.apellidos?.value ?? '',
-      'fecha_nacimiento': this.fechaNacimiento?.value ?? '',
-      'telefono': this.telefono?.value ?? '',
+      nif: this.nif?.value ?? '',
+      id_rol: this.data.usuario.id_rol,
+      email: this.email?.value ?? '',
+      nombre: this.nombre?.value ?? '',
+      apellidos: this.apellidos?.value ?? '',
+      fecha_nacimiento: this.fechaNacimiento?.value ?? '',
+      telefono: this.telefono?.value ?? '',
+      imagen: this.imagen
     };
 
     if (this.password?.value)
       usuarioEditado.password = this.password?.value ?? '';
     
     this.editado$ = this.servicioUsuarios.actualizarUsuario(this.data.usuario.id ?? 0, usuarioEditado);
+    this.editado$.subscribe({
+      next: respuesta => {
+        let nuevoUsuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
+        
+        nuevoUsuario.apellidos = respuesta.apellidos;
+        nuevoUsuario.email = respuesta.email;
+        nuevoUsuario.fecha_nacimiento = respuesta.fecha_nacimiento;
+        nuevoUsuario.nif = respuesta.nif;
+        nuevoUsuario.nombre = respuesta.nombre;
+        nuevoUsuario.telefono = respuesta.telefono;
+        nuevoUsuario.imagen = respuesta.imagen;
+        
+        localStorage.setItem('usuario', JSON.stringify(nuevoUsuario));
+      }
+    });
   }
 
   borrarUsuario() {
@@ -71,6 +88,16 @@ export class UsuarioModalComponent {
   ocultarPassword(): void {
     this.tipoPassword = 'password';
     this.mostrarPass = false;
+  }
+
+  subirImagen(evento: Event): void {
+    const reader = new FileReader();
+    const imagen = (evento.target as HTMLInputElement).files![0];
+
+    reader.readAsDataURL(imagen);
+    reader.onload = () => {
+      this.imagen = reader.result?.toString();
+    };
   }
 
   transformarFecha(): string {

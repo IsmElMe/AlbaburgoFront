@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Usuario } from '../../interfaces/usuario';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,9 +16,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.sass',
 })
-export class PerfilUsuarioComponent implements OnInit {
+export class PerfilUsuarioComponent implements OnInit, OnDestroy {
   usuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
   vehiculos$!: Observable<Vehiculo[]>;
+  subscripcionEditar?: Subscription;
 
   constructor(private servicioVehiculos: VehiculoService, private dialog: MatDialog) { }
 
@@ -26,8 +27,14 @@ export class PerfilUsuarioComponent implements OnInit {
     this.vehiculos$ = this.servicioVehiculos.obtenerVehiculosUsuario(this.usuario.nif);
   }
 
+  ngOnDestroy(): void {
+    this.subscripcionEditar?.unsubscribe();
+  }
+
   modalUsuario(): void {
-    this.dialog.open(UsuarioModalComponent, { data: { usuario: this.usuario } });
+    this.dialog.open(UsuarioModalComponent, { data: { usuario: this.usuario } }).afterClosed().subscribe({
+      next: () => this.usuario = JSON.parse(localStorage.getItem('usuario') ?? '')
+    });
   }
 
   eliminarVehiculo(vin: string): void {
