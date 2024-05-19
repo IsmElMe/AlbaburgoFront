@@ -2,7 +2,10 @@
 <mat-dialog-content>
     @if (data.reserva) {
         <p class="mb-1">Fecha reserva:</p>
-        <p>{{data.reserva.fecha}} a las {{data.reserva.hora}}</p>
+        <p class="mb-1">{{data.reserva.fecha}} a las {{data.reserva.hora}}</p>
+        @if (data.reserva.frecuencia) {
+            <p>Cada {{data.reserva.frecuencia}} meses</p>
+        }
         <div class="d-flex flex-column align-items-stretch">
             <p>Servicios:</p>
             <ul class="list-group flex-grow-1">

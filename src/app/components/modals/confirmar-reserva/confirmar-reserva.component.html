@@ -10,7 +10,10 @@
             }
         </ul>
         <h3 class="mt-3">Fecha de la reserva</h3>
-        <p>El {{data.fecha[0]}} a las {{data.fecha[1]}}</p>
+        <p class="mb-1">El {{data.fecha[0]}} a las {{data.fecha[1]}}</p>
+        @if (data.frecuencia) {
+          <p>Cada {{data.frecuencia}} meses</p>
+        }
         <h3 class="mt-3">Vehículo seleccionado</h3>
         <p>{{data.vehiculo}}</p>
       </div>

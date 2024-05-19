@@ -16,7 +16,7 @@ export class ConfirmarReservaComponent implements OnDestroy {
   subscripcionReserva?: Subscription;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { servicios: string[], fecha: string[], vehiculo: string, imagen: string, parte: string },
+    @Inject(MAT_DIALOG_DATA) public data: { servicios: string[], fecha: string[], vehiculo: string, imagen: string, parte: string, frecuencia: number },
     private dialog: MatDialog, private servicioReservas: ReservasService
   ) { }
 
@@ -33,7 +33,8 @@ export class ConfirmarReservaComponent implements OnDestroy {
       estado: 'pendiente' as estadoReserva,
       servicios: this.data.servicios,
       imagen: this.data.imagen,
-      parte_seguro: this.data.parte
+      parte_seguro: this.data.parte,
+      frecuencia: this.data.frecuencia
     };
     
     this.subscripcionReserva = this.servicioReservas.crearReserva(reserva).subscribe({

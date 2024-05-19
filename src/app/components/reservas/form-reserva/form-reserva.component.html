@@ -62,8 +62,8 @@
                 @if (parteSeguroCheck) {
                     <div class="col-12 col-md-6">
                         <label class="col-auto form-label">
-                            Aqui puedes subir el parte del seguro
-                            <input class="form-control" type="file" accept="application/pdf" (change)="subirParteSeguro($event)" [required]="parteSeguroCheck">
+                            Sube aquí el parte del seguro
+                            <input class="form-control" type="file" accept="application/pdf" (change)="subirParteSeguro($event)">
                         </label>
                     </div>
                 }
@@ -74,6 +74,21 @@
                     <input class="form-control" type="file" accept="image/*" (change)="subirImagen($event)">
                 </label>
             </div>
+            <label class="col-12 form-label">
+                <input [(ngModel)]="reservaAutomaticaCheck" type="checkbox">
+                ¿Quieres hacer el servicio periódicamente?
+            </label>
+            @if (reservaAutomaticaCheck) {
+                <div class="col-12 col-md-6 col-lg-3">
+                    <p class="mb-1">Cada cuánto tiempo</p>
+                    <select class="form-select" [(ngModel)]="reservaAutomatica">
+                        <option value="3">Cada 3 meses</option>
+                        <option value="6">Cada 6 meses</option>
+                        <option value="9">Cada 9 meses</option>
+                        <option value="12">Cada año</option>
+                    </select>
+                </div>
+            }
         </div>
         <div class="row justify-content-center mt-4">
             <button class="col-auto btn btn-primary px-5" [disabled]="!reservar" (click)="modalConfirmarReserva()">Reservar</button>

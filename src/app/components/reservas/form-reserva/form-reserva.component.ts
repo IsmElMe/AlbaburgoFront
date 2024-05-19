@@ -39,8 +39,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   serviciosSeleccionados: string[] = [];
   imagen?: string;
   parteSeguro?: string;
+  reservaAutomatica?: number;
   reservar = false;
   parteSeguroCheck = false;
+  reservaAutomaticaCheck = false;
 
   constructor(
     private dialog: MatDialog, private servicioVehiculos: VehiculoService, 
@@ -126,6 +128,8 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   }
 
   modalConfirmarReserva(): void {
+    if (!this.reservaAutomaticaCheck) this.reservaAutomatica = undefined;
+
     this.subscripcionCliente = this.servicioClientes.obtenerClienteVin(this.vehiculoSeleccionado!.vin).subscribe({
       next: cliente => sessionStorage.setItem('id_cliente', cliente.id!.toString())
     });
@@ -136,7 +140,8 @@ export class FormReservaComponent implements OnInit, OnDestroy {
         fecha: [this.diaSeleccionado, this.horaSeleccionada], 
         vehiculo: `${this.vehiculoSeleccionado!.fabricante} ${this.vehiculoSeleccionado!.modelo}`,
         imagen: this.imagen,
-        parte: this.parteSeguro
+        parte: this.parteSeguro,
+        frecuencia: this.reservaAutomatica
       } 
     });
   }
@@ -151,7 +156,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     return aux;
   }
 
-  comprobarDatos():void {
+  comprobarDatos(): void {
     if (this.vehiculoSeleccionado && this.serviciosSeleccionados.length !== 0)
       this.reservar = true;
     else this.reservar = false;
