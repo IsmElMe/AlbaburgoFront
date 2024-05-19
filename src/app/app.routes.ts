@@ -49,7 +49,9 @@ export const routes: Routes = [
             { path: 'reservas-pendientes', loadComponent: () => import('./components/admin/reservas-pendientes/reservas-pendientes.component').then(c => c.ReservasPendientesComponent) },
             { path: 'usuarios', loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component').then(c => c.UsuariosAdminComponent) },
             { path: 'vehiculos', loadComponent: () => import('./components/admin/vehiculos-admin/vehiculos-admin.component').then(c => c.VehiculosAdminComponent) },
-            { path: 'servicios', loadComponent: () => import('./components/admin/servicios-admin/servicios-admin.component').then(c => c.ServiciosAdminComponent) }
+            { path: 'servicios', loadComponent: () => import('./components/admin/servicios-admin/servicios-admin.component').then(c => c.ServiciosAdminComponent) },
+            { path: 'reservas', loadComponent: () => import('./components/admin/reservas-admin/reservas-admin.component').then(c => c.ReservasAdminComponent) },
+            { path: 'reparaciones', loadComponent: () => import('./components/admin/reparaciones-admin/reparaciones-admin.component').then(c => c.ReparacionesAdminComponent) }
         ]
     },
     { path: '**', component: NotFoundComponent, title: '404 Página no encontrada' }

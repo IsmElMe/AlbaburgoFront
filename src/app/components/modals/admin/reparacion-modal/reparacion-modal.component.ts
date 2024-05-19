@@ -98,7 +98,13 @@ export class ReparacionModalComponent implements OnDestroy {
   }
 
   cancelarReparacion() {
+    const hoy = new Date();
+    const dia = hoy.getDate().toString().padStart(2, '0');
+    const mes = (hoy.getMonth() + 1).toString().padStart(2, '0');
+    const year = hoy.getFullYear();
+
     this.data.reparacion.estado = 'cancelado';
+    this.data.reparacion.fecha_fin = `${dia}-${mes}-${year}`;
 
     this.subscripcionCliente = this.servicioClientes.obtenerCliente(this.data.reparacion.id_cliente!).subscribe({
       next: cliente => {
