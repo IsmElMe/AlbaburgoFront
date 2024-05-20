@@ -61,7 +61,7 @@ export class UsuarioModalComponent {
     this.editado$ = this.servicioUsuarios.actualizarUsuario(this.data.usuario.id ?? 0, usuarioEditado);
     this.editado$.subscribe({
       next: respuesta => {
-        let nuevoUsuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '');
+        let nuevoUsuario: Usuario = JSON.parse(localStorage.getItem('usuario') ?? '{}');
         
         nuevoUsuario.apellidos = respuesta.apellidos;
         nuevoUsuario.email = respuesta.email;

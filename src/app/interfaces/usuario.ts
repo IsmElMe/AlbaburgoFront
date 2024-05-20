@@ -8,7 +8,9 @@ export interface Usuario {
     password?: string,
     fecha_nacimiento: string,
     telefono: string,
-    imagen?: string
+    imagen?: string,
+    tiene_servicio?: number,
+    tiene_nota?: number
 }
 
 export interface Credenciales {

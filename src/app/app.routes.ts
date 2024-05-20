@@ -7,6 +7,7 @@ import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 import { reservaGuard } from './guards/reserva.guard';
 import { mecanicoGuard } from './guards/mecanico.guard';
+import { notaGuard } from './guards/nota.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, title: 'Taller Albaburgo' },
@@ -40,6 +41,11 @@ export const routes: Routes = [
         path: 'reparaciones', title: 'Reparaciones',
         loadComponent: () => import('./components/admin/reparaciones-pendientes/reparaciones-pendientes.component').then(c => c.ReparacionesPendientesComponent),
         canActivate: [authGuard, mecanicoGuard]
+    },
+    {
+        path: 'notas', title: 'Reseñas',
+        loadComponent: () => import('./components/notas/notas.component').then(c => c.NotasComponent),
+        canActivate: [authGuard, notaGuard]
     },
     {
         path: 'admin', title: 'Administración',

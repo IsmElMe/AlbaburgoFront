@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-12 col-md-6 offset-md-3">
+            <h1>Crear una reseña</h1>
+            <form class="form align-content-center my-4" method="post" [formGroup]="nota">
+                <label class="form-label" for="comentario">Comente aquí su experiencia</label>
+                <textarea id="comentario" class="form-control mb-3" required formControlName="comentario"></textarea>
+                @for (pregunta of preguntas$ | async; track pregunta.id) {
+                    <label class="form-label" for="pregunta{{$index + 1}}">{{pregunta.pregunta}}</label>
+                    @if (pregunta.tipo === 'texto') {
+                        <input id="pregunta{{$index + 1}}" class="form-control mb-3" type="text" formControlName="pregunta{{$index + 1}}">
+                    } @else {
+                        <input id="pregunta{{$index + 1}}" class="form-range mb-3" type="range" formControlName="pregunta{{$index + 1}}">
+                    }
+                }
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mt-4 px-4" [disabled]="!nota.valid" (click)="guardarNota()">Guardar reseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -63,5 +63,29 @@
                 </div>
             </div>
         </div>
+        <div class="row my-5">
+            <div class="col-10 offset-1">
+                <div class="row justify-content-between">
+                    <h3 class="col-auto">Reseñas de los clientes</h3>
+                    @if (usuario?.tiene_servicio && !usuario?.tiene_nota) {
+                        <button class="col-12 col-md-auto btn btn-primary px-md-4" routerLink="/notas">Dejar una reseña</button>
+                    }
+                </div>
+                <div class="row mt-4 g-3">
+                    @for (nota of notas$ | async; track nota.id) {
+                        <div class="col-12 col-md-6 col-lg-3 d-flex">
+                            <div class="card d-flex flex-column flex-fill p-0">
+                                <div class="card-header">
+                                    <p>{{nota.usuario?.nombre}} {{nota.usuario?.apellidos}}</p>
+                                </div>
+                                <div class="card-body">
+                                    <p>{{nota.comentario}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
