@@ -10,7 +10,7 @@
                     @if (pregunta.tipo === 'texto') {
                         <input id="pregunta{{$index + 1}}" class="form-control mb-3" type="text" formControlName="pregunta{{$index + 1}}">
                     } @else {
-                        <input id="pregunta{{$index + 1}}" class="form-range mb-3" type="range" formControlName="pregunta{{$index + 1}}">
+                        <star-rating [starType]="'svg'" [hoverEnabled]="true"></star-rating>
                     }
                 }
                 <div class="d-flex justify-content-end">

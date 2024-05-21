@@ -5,11 +5,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } fro
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthInterceptor } from './auth.interceptor';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { StarRatingConfigService } from 'angular-star-rating';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), provideHttpClient(withFetch()), provideAnimationsAsync(), 
     importProvidersFrom(HttpClientModule), { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideNativeDateAdapter()
+    provideNativeDateAdapter(), StarRatingConfigService
   ]
 };

@@ -74,13 +74,6 @@ export class VehiculoService implements OnDestroy {
   }
 
   editarVehiculo(idVehiculo: number, vehiculo: object): Observable<Respuesta<Vehiculo>> {
-    const nuevoCliente: Cliente = {
-      nif_usuario: JSON.parse(localStorage.getItem('usuario') || '').nif,
-      vin_vehiculo: (vehiculo as Vehiculo).vin
-    }
-
-    this.subscripcionEdicionCliente = this.servicioClientes.editarCliente(nuevoCliente).subscribe();
-
     return this.http.put<Respuesta<Vehiculo>>(`${API}/vehiculo/${idVehiculo}`, vehiculo)
       .pipe(
         tap(() => this.actulizarVehiculosUsuario('crear')),

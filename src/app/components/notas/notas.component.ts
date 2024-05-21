@@ -5,11 +5,12 @@ import { PreguntasService } from '../../services/preguntas.service';
 import { Observable, Subscription } from 'rxjs';
 import { Pregunta } from '../../interfaces/pregunta';
 import { CommonModule } from '@angular/common';
+import { StarRatingModule } from 'angular-star-rating';
 
 @Component({
   selector: 'app-notas',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, StarRatingModule],
   templateUrl: './notas.component.html',
   styleUrl: './notas.component.sass'
 })
