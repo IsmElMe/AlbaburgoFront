@@ -8,6 +8,9 @@
                 <img class="img-fluid w-100" src="../../../../assets/images/correcto.png" alt="Correcto">
             </figure>
             <p class="text-center mt-3">Se ha creado {{data.tipo}} correctamente</p>
+            @if (data.tipo === 'la reserva') {
+              <p class="text-center mt-3">Pronto recibirá un correo electrónico con el estado de su reserva</p>
+            }
         } @else {
             <figure class="figure w-100">
                 <img class="img-fluid w-100" src="../../../../assets/images/error.png" alt="Error">
@@ -19,5 +22,5 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="row">
-  <button class="rounded" mat-dialog-close (click)="redireccionar()">Cerrar</button>
+  <button class="btn btn-primary" mat-dialog-close (click)="redireccionar()">Cerrar</button>
 </mat-dialog-actions>

@@ -25,7 +25,8 @@
                 </div>
             </div>
             @if (precio$ | async; as precio) {
-                <p>Presupuesto: {{precio}}€</p>
+                <p class="mb-1">Presupuesto: {{precio}}€</p>
+                <p>Precio calculado sin contar las horas de trabajo</p>
             }
 
             <h2 class="mt-5">Selecciona cuándo quieres hacer la reserva</h2>

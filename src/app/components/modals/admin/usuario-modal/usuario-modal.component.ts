@@ -66,10 +66,12 @@ export class UsuarioModalComponent {
         nuevoUsuario.apellidos = respuesta.apellidos;
         nuevoUsuario.email = respuesta.email;
         nuevoUsuario.fecha_nacimiento = respuesta.fecha_nacimiento;
+        nuevoUsuario.imagen = respuesta.imagen;
         nuevoUsuario.nif = respuesta.nif;
         nuevoUsuario.nombre = respuesta.nombre;
         nuevoUsuario.telefono = respuesta.telefono;
-        nuevoUsuario.imagen = respuesta.imagen;
+        nuevoUsuario.tiene_nota = respuesta.tiene_nota;
+        nuevoUsuario.tiene_servicio = respuesta.tiene_servicio;
         
         localStorage.setItem('usuario', JSON.stringify(nuevoUsuario));
       }
