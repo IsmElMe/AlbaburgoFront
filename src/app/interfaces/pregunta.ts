@@ -1,5 +1,5 @@
 export interface Pregunta {
   id?: number,
   pregunta: string,
-  tipo: 'estrella' | 'texto'
+  tipo: 'estrella' | 'texto' | 'radio'
 }

@@ -3,14 +3,25 @@
         <div class="col-12 col-md-6 offset-md-3">
             <h1>Crear una reseña</h1>
             <form class="form align-content-center my-4" method="post" [formGroup]="nota">
-                <label class="form-label" for="comentario">Comente aquí su experiencia</label>
+                <label class="form-label" for="comentario">Comente aquí su experiencia <span class="text-danger">*</span></label>
                 <textarea id="comentario" class="form-control mb-3" required formControlName="comentario"></textarea>
                 @for (pregunta of preguntas$ | async; track pregunta.id) {
                     <label class="form-label" for="pregunta{{$index + 1}}">{{pregunta.pregunta}}</label>
                     @if (pregunta.tipo === 'texto') {
                         <input id="pregunta{{$index + 1}}" class="form-control mb-3" type="text" formControlName="pregunta{{$index + 1}}">
+                    } @else if (pregunta.tipo === 'radio') {
+                        <div class="d-flex justify-content-around mb-3">
+                            <div class="form-check form-check-inline">
+                                <input id="pregunta{{$index + 1}}_no" class="form-check-input" type="radio" value="no" formControlName="pregunta{{$index + 1}}">
+                                <label class="form-check-label" for="pregunta{{$index + 1}}_no">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input id="pregunta{{$index + 1}}_si" class="form-check-input" type="radio" value="si" formControlName="pregunta{{$index + 1}}">
+                                <label class="form-check-label" for="pregunta{{$index + 1}}_si">Si</label>
+                            </div>
+                        </div>
                     } @else {
-                        <star-rating [starType]="'svg'" [hoverEnabled]="true"></star-rating>
+                        <star-rating-control starType="svg" [hoverEnabled]="true" formControlName="pregunta{{$index + 1}}" />
                     }
                 }
                 <div class="d-flex justify-content-end">

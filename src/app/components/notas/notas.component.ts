@@ -6,6 +6,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Pregunta } from '../../interfaces/pregunta';
 import { CommonModule } from '@angular/common';
 import { StarRatingModule } from 'angular-star-rating';
+import { MatDialog } from '@angular/material/dialog';
+import { CrearModalComponent } from '../modals/crear-modal/crear-modal.component';
 
 @Component({
   selector: 'app-notas',
@@ -15,10 +17,14 @@ import { StarRatingModule } from 'angular-star-rating';
   styleUrl: './notas.component.sass'
 })
 export class NotasComponent implements OnInit, OnDestroy {
+  idUsuario = JSON.parse(localStorage.getItem('usuario') ?? '').id;
   preguntas$!: Observable<Pregunta[]>;
   subscripcionNota?: Subscription;
   
-  constructor(private fb: FormBuilder, private servicioNotas: NotasService, private servicioPreguntas: PreguntasService) { }
+  constructor(
+    private fb: FormBuilder, private modal: MatDialog,
+    private servicioNotas: NotasService, private servicioPreguntas: PreguntasService
+  ) { }
 
   ngOnInit(): void {
     this.preguntas$ = this.servicioPreguntas.obtenerPreguntas();
@@ -34,8 +40,8 @@ export class NotasComponent implements OnInit, OnDestroy {
     pregunta2: [''],
     pregunta3: [''],
     pregunta4: [''],
-    pregunta5: [0],
-    pregunta6: [0]
+    pregunta5: [''],
+    pregunta6: ['']
   });
 
   get comentario() { return this.nota.get('comentario'); }
@@ -47,6 +53,24 @@ export class NotasComponent implements OnInit, OnDestroy {
   get pregunta6() { return this.nota.get('pregunta6'); }
 
   guardarNota(): void {
-    
+    const nota = {
+      comentario: this.comentario!.value ?? '',
+      id_usuario: this.idUsuario,
+      preguntas: {
+        1: this.pregunta1?.value,
+        2: this.pregunta2?.value,
+        3: this.pregunta3?.value,
+        4: this.pregunta4?.value,
+        5: this.pregunta5?.value?.toString(),
+        6: this.pregunta6?.value?.toString()
+      }
+    }
+
+    let usuarioEditar = JSON.parse(localStorage.getItem('usuario') ?? '{}');
+    usuarioEditar.tiene_nota = 1;
+    localStorage.setItem('usuario', JSON.stringify(usuarioEditar));
+
+    this.subscripcionNota = this.servicioNotas.crearNota(nota).subscribe();
+    this.modal.open(CrearModalComponent, { data: { creado: true, tipo: 'la reseña' } });
   }
 }

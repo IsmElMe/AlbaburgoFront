@@ -87,10 +87,8 @@ export class ReparacionModalComponent implements OnDestroy {
             let usuarioEditar = JSON.parse(localStorage.getItem('usuario') ?? '{}');
             usuarioEditar.tiene_servicio = 1;
             localStorage.setItem('usuario', JSON.stringify(usuarioEditar));
-            usuario[0].tiene_servicio = 1;
 
             this.subscripcionCorreo = this.servicioCorreo.enviarCorreo(correo).subscribe();
-            this.subscripcionUsuario = this.servicioUsuarios.actualizarUsuario(usuario[0].id!, usuario[0]).subscribe();
             this.subscripcionReparacion = this.servicioReparaciones.actualizarReparacion(this.data.reparacion).subscribe();
             this.subscripcionFacturas = this.servicioFacturas.crearFactura(datosFactura).subscribe({
               next: () => {

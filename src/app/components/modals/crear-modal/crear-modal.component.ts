@@ -21,6 +21,7 @@ export class CrearModalComponent {
       switch (this.data.tipo) {
         case 'el vehiculo': this.router.navigate(['perfil']); break;
         case 'la reserva': this.router.navigate(['']); break;
+        case 'la reseña': this.router.navigate(['']); break;
       }
 
       this.dialog.closeAll();

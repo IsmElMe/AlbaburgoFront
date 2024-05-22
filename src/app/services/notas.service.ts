@@ -36,7 +36,7 @@ export class NotasService {
       );
   }
 
-  crearNota(nota: Nota): Observable<Nota> { 
+  crearNota(nota: object): Observable<Nota> { 
     return this.http.post<Nota>(`${API}/nota`, nota)
      .pipe(
         retry(2),
