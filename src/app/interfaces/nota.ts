@@ -7,9 +7,5 @@ export interface Nota {
   comentario: string,
   usuario?: Usuario,
   preguntas?: Pregunta[],
-  pivot?: {
-    id_nota?: number,
-    id_pregunta?: number,
-    valor: string
-  }
+  created_at: string
 }

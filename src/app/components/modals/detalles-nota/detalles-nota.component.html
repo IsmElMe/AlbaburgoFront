@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Reseña de {{data.nota.usuario!.nombre}} {{data.nota.usuario!.apellidos}}</h2>
+<mat-dialog-content>
+    <div class="col-12">
+        <div class="card d-flex flex-column flex-fill p-0 nota">
+            <div class="card-header d-flex justify-content-between">
+                <p>{{data.nota.usuario?.nombre}} {{data.nota.usuario?.apellidos}}</p>
+                <p>{{data.nota.created_at | transformarFecha}}</p>
+            </div>
+            <div class="card-body">
+                <p>{{data.nota.comentario}}</p>
+            </div>
+            <div class="card-footer">
+                @for (pregunta of data.nota.preguntas; track pregunta.id) {
+                    <p class="mb-1">{{pregunta.pregunta}}</p>
+                    <p class="text-secondary mb-3">
+                        @if (pregunta.id === 5) {
+                            @switch (pregunta.pivot?.valor) {
+                                @case ('1') { Muy lento }
+                                @case ('2') { Lento }
+                                @case ('3') { Aceptable }
+                                @case ('4') { Rápido }
+                                @case ('5') { Muy rápido }
+                            }
+                        } @else if (pregunta.id === 6) {
+                            @switch (pregunta.pivot?.valor) {
+                                @case ('1') { Muy mala }
+                                @case ('2') { Mala }
+                                @case ('3') { Mejorable }
+                                @case ('4') { Buena }
+                                @case ('5') { Muy buena }
+                            }
+                        } @else {
+                            {{pregunta.pivot?.valor | titlecase}}
+                        }
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="row justify-content-around">
+    <button class="btn btn-primary" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

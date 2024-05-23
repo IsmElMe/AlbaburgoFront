@@ -27,14 +27,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (reparacion of reparaciones$ | async; track reparacion.id) {
-                        <tr>
-                            <td>{{reparacion.id_cliente}}</td>
-                            <td>{{reparacion.nif_mecanico}}</td>
-                            <td>{{reparacion.fecha_inicio}}</td>
-                            <td>{{reparacion.fecha_fin || 'Sin finalizar'}}</td>
-                            <td>{{reparacion.estado}}</td>
-                        </tr>
+                    @defer (on idle) {
+                        @for (reparacion of reparaciones$ | async; track reparacion.id) {
+                            <tr>
+                                <td>{{reparacion.id_cliente}}</td>
+                                <td>{{reparacion.nif_mecanico}}</td>
+                                <td>{{reparacion.fecha_inicio}}</td>
+                                <td>{{reparacion.fecha_fin || 'Sin finalizar'}}</td>
+                                <td>{{reparacion.estado}}</td>
+                            </tr>
+                        }
+                    } @placeholder {
+                        <div class="d-flex justify-content-center mt-5">
+                            <div class="spinner-border text-primary fs-3" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    } @error {
+                        <p class="text-center text-danger">Hubo un error al cargar las reparaciones</p>
                     }
                 </tbody>
             </table>

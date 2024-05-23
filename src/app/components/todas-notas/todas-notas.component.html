@@ -1,1 +1,28 @@
-<p>todas-notas works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <h1 class="mt-5">Todas las reseñas</h1>
+        @defer (on idle) {
+            @for (nota of notas$ | async; track nota.id) {
+                <div class="col-12 col-md-6 col-lg-3 d-flex my-4" (click)="detallesNota(nota)">
+                    <div class="card d-flex flex-column flex-fill p-0 nota">
+                        <div class="card-header d-flex justify-content-between">
+                            <p>{{nota.usuario?.nombre}} {{nota.usuario?.apellidos}}</p>
+                            <p>{{nota.created_at | transformarFecha}}</p>
+                        </div>
+                        <div class="card-body">
+                            <p>{{nota.comentario}}</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        } @placeholder {
+            <div class="d-flex justify-content-center mt-5">
+                <div class="spinner-border text-primary fs-3" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        } @error {
+            <p class="text-center text-danger">Hubo un error al cargar las reseñas</p>
+        }
+    </div>
+</div>

@@ -26,13 +26,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (usuario of usuarios$ | async; track usuario.nif) {
-                        <tr (click)="modalUsuario(usuario)">
-                            <td>{{usuario.nif}}</td>
-                            <td>{{usuario.email}}</td>
-                            <td>{{usuario.nombre}}</td>
-                            <td>{{usuario.telefono}}</td>
-                        </tr>
+                    @defer (on idle) { 
+                        @for (usuario of usuarios$ | async; track usuario.nif) {
+                            <tr (click)="modalUsuario(usuario)">
+                                <td>{{usuario.nif}}</td>
+                                <td>{{usuario.email}}</td>
+                                <td>{{usuario.nombre}}</td>
+                                <td>{{usuario.telefono}}</td>
+                            </tr>
+                        }
+                    } @placeholder {
+                        <div class="d-flex justify-content-center mt-5">
+                            <div class="spinner-border text-primary fs-3" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    } @error {
+                        <p class="text-center text-danger">Hubo un error al cargar los usuarios</p>
                     }
                 </tbody>
             </table>

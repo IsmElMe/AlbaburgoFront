@@ -25,12 +25,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (servicio of servicios$ | async; track servicio.id) {
-                        <tr (click)="modalServicio(servicio)">
-                            <td>{{servicio.nombre}}</td>
-                            <td>{{servicio.tipo}}</td>
-                            <td>{{servicio.precio}}€</td>
-                        </tr>
+                    @defer (on idle) { 
+                        @for (servicio of servicios$ | async; track servicio.id) {
+                            <tr (click)="modalServicio(servicio)">
+                                <td>{{servicio.nombre}}</td>
+                                <td>{{servicio.tipo}}</td>
+                                <td>{{servicio.precio}}€</td>
+                            </tr>
+                        
+                        }
+                    } @placeholder {
+                        <div class="d-flex justify-content-center mt-5">
+                            <div class="spinner-border text-primary fs-3" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    } @error {
+                        <p class="text-center text-danger">Hubo un error al cargar los servicios</p>
                     }
                 </tbody>
             </table>

@@ -19,18 +19,18 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Cliente</th>
+                        <th>Usuario</th>
+                        <th>Reseña</th>
                         <th>Fecha</th>
-                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     @defer (on idle) {
-                        @for (reserva of reservas$ | async; track reserva.id) {
-                            <tr>
-                                <td>{{reserva.id_cliente}}</td>
-                                <td>{{reserva.fecha}}, {{reserva.hora}}</td>
-                                <td>{{reserva.estado}}</td>
+                        @for (nota of notas$ | async; track nota.id) {
+                            <tr (click)="detallesNota(nota)">
+                                <td>{{nota.usuario?.nombre}} {{nota.usuario?.apellidos}}</td>
+                                <td>{{nota.comentario}}</td>
+                                <td>{{nota.created_at | transformarFecha}}</td>
                             </tr>
                         }
                     } @placeholder {
@@ -40,10 +40,11 @@
                             </div>
                         </div>
                     } @error {
-                        <p class="text-center text-danger">Hubo un error al cargar las reservas</p>
+                        <p class="text-center text-danger">Hubo un error al cargar las reseñas</p>
                     }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+

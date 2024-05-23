@@ -21,7 +21,7 @@ export class NotasService {
   }
 
   obtenerNotasHome(): Observable<Nota[]> {
-    return this.http.get<Nota[]>(`${API}/nota/buscar/random`)
+    return this.http.get<Nota[]>(`${API}/nota/obtener/random`)
      .pipe(
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Nota[]>(error))
@@ -33,6 +33,14 @@ export class NotasService {
       .pipe(
         retry(2),
         catchError((error: HttpErrorResponse) => errorPeticion<Nota>(error))
+      );
+  }
+
+  obtenerNotasFiltrado(filtro: string): Observable<Nota[]> {
+    return this.http.get<Nota[]>(`${API}/nota/buscar/${filtro}`)
+      .pipe(
+        retry(2),
+        catchError((error: HttpErrorResponse) => errorPeticion<Nota[]>(error))
       );
   }
 

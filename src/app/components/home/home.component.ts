@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Nota } from '../../interfaces/nota';
 import { NotasService } from '../../services/notas.service';
+import { TransformarFechaPipe } from '../../pipes/transformar-fecha.pipe';
 
 @Component({
   selector: 'app-principal',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, TransformarFechaPipe, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass'
 })
