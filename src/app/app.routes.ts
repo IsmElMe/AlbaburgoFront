@@ -43,7 +43,11 @@ export const routes: Routes = [
         canActivate: [authGuard, mecanicoGuard]
     },
     {
-        path: 'notas', title: 'Reseñas',
+        path: 'ver-notas', title: 'Reseñas',
+        loadComponent: () => import('./components/todas-notas/todas-notas.component').then(c => c.TodasNotasComponent)
+    },
+    {
+        path: 'notas', title: 'Crear reseña',
         loadComponent: () => import('./components/notas/notas.component').then(c => c.NotasComponent),
         canActivate: [authGuard, notaGuard]
     },

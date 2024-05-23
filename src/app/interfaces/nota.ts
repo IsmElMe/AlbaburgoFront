@@ -6,5 +6,10 @@ export interface Nota {
   id_usuario: number,
   comentario: string,
   usuario?: Usuario,
-  preguntas?: Pregunta[]
+  preguntas?: Pregunta[],
+  pivot?: {
+    id_nota?: number,
+    id_pregunta?: number,
+    valor: string
+  }
 }
