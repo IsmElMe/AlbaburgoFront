@@ -21,7 +21,19 @@
                             </div>
                         </div>
                     } @else {
-                        <star-rating-control starType="svg" [hoverEnabled]="true" formControlName="pregunta{{$index + 1}}" />
+                        @if (pregunta.id === 5) {
+                            <div class="row justify-content-center">
+                                <label class="col-auto mt-lg-4">Lento</label>
+                                <star-rating-control class="col-auto" starType="svg" [hoverEnabled]="true" formControlName="pregunta{{$index + 1}}" />
+                                <label class="col-auto mt-lg-4">Rápido</label>
+                            </div>
+                        } @else {
+                            <div class="row justify-content-center">
+                                <label class="col-auto mt-lg-4">Mala</label>
+                                <star-rating-control class="col-auto" starType="svg" [hoverEnabled]="true" formControlName="pregunta{{$index + 1}}" />
+                                <label class="col-auto mt-lg-4">Buena</label>
+                            </div>
+                        }
                     }
                 }
                 <div class="d-flex justify-content-end">

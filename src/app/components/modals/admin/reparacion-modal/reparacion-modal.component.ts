@@ -75,7 +75,7 @@ export class ReparacionModalComponent implements OnDestroy {
             const correo: Correo = {
               destinatario: usuario[0].email,
               asunto: 'Reparación finalizada',
-              contenido: `El servicio de su vehículo ${vehiculo[0].fabricante} ${vehiculo[0].modelo} ha finalizado. Puede venir a recogerlo el ${diaMin}-${mes}-${year} desde las 09:00 hasta las 20:00, si no recoge su vehículo antes del ${diaMax}-${mes}-${year} se le sumará un cargo de estancia. Gracias por utilizar nuestros servicios. <br><br> Factura: <ul>${factura}</ul> IVA (21%): ${precioTotal * 0.21}€ <br> Precio total: ${precioTotal}€`
+              contenido: `El servicio de su vehículo ${vehiculo[0].fabricante} ${vehiculo[0].modelo} ha finalizado. Puede venir a recogerlo el ${diaMin}-${mes}-${year} desde las 09:00 hasta las 20:00, si no recoge su vehículo antes del ${diaMax}-${mes}-${year} se le sumará un cargo de estancia. Gracias por utilizar nuestros servicios. <br><br> Factura: <ul>${factura}</ul> IVA (21%): ${precioTotal * 0.21}€ <br> Precio total (IVA incluido): ${precioTotal}€`
             }
 
             const datosFactura: Factura = {

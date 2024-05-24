@@ -15,19 +15,19 @@
                     <p class="text-secondary mb-3">
                         @if (pregunta.id === 5) {
                             @switch (pregunta.pivot?.valor) {
-                                @case ('1') { Muy lento }
-                                @case ('2') { Lento }
-                                @case ('3') { Aceptable }
-                                @case ('4') { Rápido }
-                                @case ('5') { Muy rápido }
+                                @case ('1') { Muy lento ({{pregunta.pivot?.valor}}) }
+                                @case ('2') { Lento ({{pregunta.pivot?.valor}}) }
+                                @case ('3') { Aceptable ({{pregunta.pivot?.valor}}) }
+                                @case ('4') { Rápido ({{pregunta.pivot?.valor}}) }
+                                @case ('5') { Muy rápido ({{pregunta.pivot?.valor}}) }
                             }
                         } @else if (pregunta.id === 6) {
                             @switch (pregunta.pivot?.valor) {
-                                @case ('1') { Muy mala }
-                                @case ('2') { Mala }
-                                @case ('3') { Mejorable }
-                                @case ('4') { Buena }
-                                @case ('5') { Muy buena }
+                                @case ('1') { Muy mala ({{pregunta.pivot?.valor}}) }
+                                @case ('2') { Mala ({{pregunta.pivot?.valor}}) }
+                                @case ('3') { Mejorable ({{pregunta.pivot?.valor}}) }
+                                @case ('4') { Buena ({{pregunta.pivot?.valor}}) }
+                                @case ('5') { Muy buena ({{pregunta.pivot?.valor}}) }
                             }
                         } @else {
                             {{pregunta.pivot?.valor | titlecase}}
