@@ -6,7 +6,23 @@ $colorSecundario: #bbdb9b
 $colorPrincipalHover: #4e7f85
 
 *
-    font-family: "Sedan"
+    font-family: "Oswald"
+    font-weight: 500
 
 .mat-app-background
     border-color: white
+
+.dark-mode
+    .card-header, .card-footer
+        background-color: #404040
+        color: white
+    
+    .card-body, .list-group-item
+        background-color: #303030
+        color: white
+
+    .texto
+        color: $colorSecundario !important
+
+    #img-vehiculo
+        filter: invert(1)

@@ -2,11 +2,11 @@
     <div class="card-header">
         @if (imagen) {
             <figure class="card-img d-flex justify-content-center">
-                <img class="figure-img" src="http://albaburgo.server/storage/img/reservas/{{imagen}}" alt="Imagen vehículo">
+                <img class="figure-img w-100" src="http://albaburgo.server/storage/img/reservas/{{imagen}}" alt="Imagen vehículo">
             </figure> 
         } @else {
             <figure class="card-img d-flex justify-content-center">
-                <img class="figure-img" src="../../../assets/images/img-vehiculo.png" alt="Imagen vehículo">
+                <img id="img-vehiculo" class="figure-img" src="../../../assets/images/img-vehiculo.png" alt="Imagen vehículo">
             </figure>
         }
         <div class="row">

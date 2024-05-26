@@ -15,7 +15,11 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent, title: 'Iniciar sesión' },
     {
         path: 'trabajos-anteriores', title: 'Trabajos anteriores',
-        loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent),
+        loadComponent: () => import('./components/trabajos-anteriores/trabajos-anteriores.component').then(c => c.TrabajosAnterioresComponent)
+    },
+    {
+        path: 'consejos-mantenimiento', title: 'Consejos mantenimiento',
+        loadComponent: () => import('./components/consejos-mantenimiento/consejos-mantenimiento.component').then(c => c.ConsejosMantenimientoComponent)
     },
     {
         path: 'perfil', title: 'Perfil usuario',
