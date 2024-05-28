@@ -1,7 +1,8 @@
-<section class="container-fluid">
+<section class="container-fluid py-5">
     <article class="row">
         @if (reparaciones$ | async; as reparaciones) {
             @if (reparaciones.length > 0) {
+                <h2>Tus reparaciones pendientes</h2>
                 @defer (on idle) {
                     @for (reparacion of reparaciones$ | async; track reparacion.id) {
                         <div class="col-12 col-md-6 col-lg-4 mt-3">
