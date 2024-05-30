@@ -1,8 +1,5 @@
 @import 'styles'
 
-label
-    color: $colorSecundario
-
 .password-input
     position: relative
     display: inline-block
@@ -17,11 +14,69 @@ label
     top: 50%
     transform: translateY(-50%)
 
-button[type='submit']
-    background-color: $colorPrincipal
-
 button[type='submit']:hover, button[type='submit']:focus
     background-color: $colorPrincipalHover
 
-form
-    min-height: 75vh
+.container-fluid
+    background: rgb(59,96,100)
+    background: linear-gradient(144deg, rgba(59,96,100,1) 0%, rgba(187,219,155,1) 75%)
+
+.cuadrado
+    position: absolute
+    filter: blur(100px)
+    width: 300px
+    height: 400px
+    background: $colorPrincipal
+
+.loginBox
+    position: relative
+
+.loginCont
+    position: relative
+    width: 300px
+    min-height: 400px
+    background: rgba(255, 255, 255, 0.1)
+    backdrop-filter: blur(5px)
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 1.0)
+    border: 1px solid rgba(255, 255, 255, 0.5)
+    border-right: 1px solid rgba(255, 255, 255, 0.2)
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2)
+
+.loginForm
+    position: relative
+    padding: 40px
+
+h2
+    position: relative
+    font-size: 24px
+    letter-spacing: 1px
+    margin-bottom: 40px
+
+h2::before
+    content: ''
+    position: absolute
+    left: 0
+    bottom: -10px
+    width: 180px
+    height: 4px
+    background: #fff
+
+p
+    font-size: 20px
+
+@media screen and (min-width: 500px)
+    .cuadrado:nth-child(1)
+        width: 500px
+        height: 500px
+        background: $colorPrincipal
+
+    .loginCont
+        position: relative
+        width: 450px
+        min-height: 400px
+        background: rgba(255, 255, 255, 0.1)
+        backdrop-filter: blur(5px)
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 1.0)
+        border: 1px solid rgba(255, 255, 255, 0.5)
+        border-right: 1px solid rgba(255, 255, 255, 0.2)
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2)

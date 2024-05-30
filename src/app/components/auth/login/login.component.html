@@ -1,44 +1,41 @@
 <div class="container-fluid">
-    <section class="row">
-        <div class="col-10 offset-1 col-lg-6 offset-lg-3">
-            <form class="form align-content-center" method="post" [formGroup]="usuario" (submit)="login($event)">
-                <div class="row">
-                    <label for="inputEmail" class="form-label col-12">Email</label>
-                    <input type="email" id="inputEmail" class="form-control mb-4" placeholder="ejemplo@gmail.com" required formControlName="email"
-                        [ngClass]="{ 'is-valid': email?.valid, 'is-invalid': email?.invalid && (email?.touched || email?.dirty)}">
-                </div>
-                <div class="row">
-                    <div class="col-12 mb-4 px-0">
-                        <label for="inputPassword" class="col-12 form-label">Contraseña</label>
-                        <div class="password-input w-100">
-                            <input [type]="tipoPassword" id="inputPassword" class="form-control" required formControlName="password"
-                                [ngClass]="{ 'is-valid': password?.valid, 'is-invalid': password?.invalid && (password?.touched || password?.dirty)}">
-                            <button type="button" id="botonPassword" class="border-0 bg-transparent" (mousedown)="mostrarPassword()" (mouseup)="ocultarPassword()">
-                                @if (mostrarPass) {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                    <path
-                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                </svg>
-                                } @else {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-eye" viewBox="0 0 16 16">
-                                    <path
-                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                    <path
-                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                </svg>
-                                }
-                            </button>
+    <section class="d-flex justify-content-center align-items-center vh-100">
+        <div class="cuadrado"></div>
+        <div class="loginBox">
+            <div class="d-flex justify-content-center align-items-center rounded loginCont">
+                <div class="w-100 h-100 loginForm">
+                    <h2 class="text-white">Iniciar sesión</h2>
+                    <form class="form" method="post" [formGroup]="usuario" (submit)="login($event)">
+                        <div class="inputBox">
+                            <input type="email" id="inputEmail" class="form-control mb-4" placeholder="Email" required formControlName="email"
+                                [ngClass]="{ 'is-valid': email?.valid, 'is-invalid': email?.invalid && (email?.touched || email?.dirty)}">
                         </div>
-                    </div>
+                        <div class="inputBox">
+                            <div class="password-input w-100">
+                                <input [type]="tipoPassword" id="inputPassword" class="form-control" placeholder="Contraseña" required formControlName="password"
+                                    [ngClass]="{ 'is-valid': password?.valid, 'is-invalid': password?.invalid && (password?.touched || password?.dirty)}">
+                                <button type="button" id="botonPassword" class="border-0 bg-transparent" (mousedown)="mostrarPassword()" (mouseup)="ocultarPassword()">
+                                    @if (mostrarPass) {
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                        </svg>
+                                    } @else {
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                        </svg>
+                                    }
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row flex-column flex-md-row justify-content-md-between mt-4">
+                            <button type="submit" id="submit" class="btn btn-primary" [disabled]="!usuario.valid">Iniciar sesión</button>
+                            <p class="text-white text-center mt-3">¿No tienes una cuenta? <a class="text-dark" routerLink="/registro">¡Registrate!</a></p>
+                        </div>
+                    </form>
                 </div>
-                <div class="row flex-column-reverse flex-md-row justify-content-md-between">
-                    <button type="submit" id="submit" class="col-12 col-md-4 col-lg-3 btn text-white order-1 order-md-2" [disabled]="!usuario.valid">Iniciar sesión</button>
-                    <p class="d-inline col-12 col-md-8 order-2 order-md-1 fs-sm-6">¿No tienes una cuenta? <a routerLink="/registro">¡Registrate!</a></p>
-                </div>
-            </form>
+            </div>
         </div>
     </section>
 </div>

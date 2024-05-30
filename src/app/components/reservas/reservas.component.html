@@ -38,11 +38,12 @@
                         [dateClass]="dateClass"
                     />
                 </div>
-                <div class="col-12 col-md-4 d-flex d-md-block justify-content-center mt-5">
-                    <mat-form-field [class]="ocultarReserva">
-                        <mat-label>Hora</mat-label>
-                        <input matInput type="time" min="09:00" max="17:00" value="09:00" (change)="seleccionarHora($event)">
-                    </mat-form-field>
+                <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mt-5">
+                    <div [class]="ocultarReserva">
+                        <h3 class="fs-5">Selecciona la hora de la reserva</h3>
+                        <input class="form-control text-center" placeholder="Selecciona una hora" [ngxTimepicker]="rango" min="09:00 am" max="20:00 pm" value="09:00 am" readonly>
+                        <ngx-material-timepicker #rango [theme]="temaReloj" (timeSet)="seleccionarHora($event)" />
+                    </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4 offset-md-3 offset-lg-5 mt-4">
                     <button [class]="ocultarReserva" class="btn btn-primary w-100" routerLink="formulario">Siguiente</button>

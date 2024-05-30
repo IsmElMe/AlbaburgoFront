@@ -12,12 +12,13 @@ import { Observable, Subscription, combineLatest, map, startWith, switchMap } fr
 import { ReservasService } from '../../services/reservas.service';
 import { MarcarDiasCalendarioDirective } from '../../directives/marcar-dias-calendario.directive';
 import { RouterLink } from '@angular/router';
+import { NgxMaterialTimepickerModule, NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 
 @Component({
   selector: 'app-reservas',
   standalone: true,
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, CommonModule, RouterLink, MarcarDiasCalendarioDirective],
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, NgxMaterialTimepickerModule, FormsModule, ReactiveFormsModule, CommonModule, RouterLink, MarcarDiasCalendarioDirective],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.sass'
 })
@@ -34,6 +35,20 @@ export class ReservasComponent implements OnInit, OnDestroy {
   minDate = new Date();
   maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDate());
   ocultarReserva = 'd-none';
+  temaReloj: NgxMaterialTimepickerTheme = {
+    container: {
+      bodyBackgroundColor: '#424242',
+      buttonColor: '#fff'
+    },
+    dial: {
+      dialBackgroundColor: '#555',
+    },
+    clockFace: {
+      clockFaceBackgroundColor: '#555',
+      clockHandColor: '#9fbd90',
+      clockFaceTimeInactiveColor: '#fff'
+    }
+  }
 
   constructor(
     @Inject(MAT_DATE_LOCALE) private _locale: string, private _adapter: DateAdapter<Date>, 
@@ -109,20 +124,22 @@ export class ReservasComponent implements OnInit, OnDestroy {
     this.ocultarReserva = 'd-block';
   }
 
-  seleccionarHora(evento: Event): void {
-    const input = evento.target as HTMLInputElement;
+  seleccionarHora(horaSeleccionada: string): void {
+    const [tiempo, letras] = horaSeleccionada.split(' ');
+    let [hora, minutos] = tiempo.split(':').map(Number);
 
-    if (input.value < '09:00') input.value = '09:00';
-    if (input.value > '20:00') input.value = '20:00';
+    if (letras === 'PM' && hora !== 12) hora += 12;
+    if (letras === 'AM' && hora === 12) hora = 0;
 
-    this.horaSeleccionada = input.value;
+    const horaFormat = hora.toString().padStart(2, '0');
+    const minutosFormat = minutos.toString().padStart(2, '0');
 
-    const [hora, minuto] = this.horaSeleccionada.split(':');
-    this.diaSeleccionado?.setHours(+hora, +minuto);
+    this.horaSeleccionada = `${horaFormat}:${minutosFormat}`;
+    this.diaSeleccionado?.setHours(+horaFormat, +minutosFormat);
 
     let dia = this.diaSeleccionado!.getDate() < 10 ? `0${this.diaSeleccionado!.getDate()}` : this.diaSeleccionado!.getDate(); 
-    let mes = this.diaSeleccionado!.getMonth() + 1 < 10? `0${this.diaSeleccionado!.getMonth() + 1}` : this.diaSeleccionado!.getMonth() + 1;
+    let mes = this.diaSeleccionado!.getMonth() + 1 < 10 ? `0${this.diaSeleccionado!.getMonth() + 1}` : this.diaSeleccionado!.getMonth() + 1;
     
-    sessionStorage.setItem('fechaReserva', `${dia}-${mes}-${this.diaSeleccionado!.getFullYear()},${hora}:${minuto}`);
+    sessionStorage.setItem('fechaReserva', `${dia}-${mes}-${this.diaSeleccionado!.getFullYear()},${horaFormat}:${minutosFormat}`);
   }
 }

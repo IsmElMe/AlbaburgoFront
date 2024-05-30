@@ -1,10 +1,10 @@
 @import 'styles'
     
-::ng-deep .mat-calendar-body-today
+::ng-deep .mat-calendar-body-today, input:hover
     border-color: $colorPrincipal !important
     border-width: 4px !important
     
-::ng-deep .mat-calendar-body-cell span
+::ng-deep .mat-calendar-body-cell span, ::ng-deep .mat-calendar-controls button
     font-size: 20px
 
 ::ng-deep .mat-calendar-body-cell.dia-ocupado, ::ng-deep .mat-calendar-body-cell.domingo, ::ng-deep .mat-calendar-body-disabled
@@ -36,6 +36,9 @@
 .mat-mdc-input-element::-webkit-calendar-picker-indicator 
   display: block
 
+input
+    cursor: pointer
+
 @media screen and (min-width: 768px) 
-    ::ng-deep .mat-calendar-body-cell span
+    ::ng-deep .mat-calendar-body-cell span, ::ng-deep .mat-calendar-controls button
         font-size: 30px
