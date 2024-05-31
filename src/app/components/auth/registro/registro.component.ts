@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Usuario } from '../../../interfaces/usuario';
 import { Subscription } from 'rxjs';
@@ -22,6 +22,7 @@ export class RegistroComponent implements OnDestroy {
   mostrarRepetirPass = false;
   tipoRepetirPassword = 'password';
   subscripcionRegistro?: Subscription;
+  tipoInput = 'text';
 
   constructor(private auth: AuthService, private fb: FormBuilder, private dialog: MatDialog) { }
 
@@ -33,9 +34,9 @@ export class RegistroComponent implements OnDestroy {
     fechaNacimiento: ['', [Validators.required]],
     telefono: ['', [Validators.required]],
     password: this.fb.group({
-      pass: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]],
-      repetirPass: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]]
-    })
+      pass: ['', [Validators.required]],
+      repetirPass: ['', [Validators.required]]
+    }, { validators: passIguales })
   });
 
   get nif() { return this.usuario.get('nif'); }
@@ -118,4 +119,17 @@ export class RegistroComponent implements OnDestroy {
     this.tipoRepetirPassword = 'password';
     this.mostrarRepetirPass = false;
   }
+
+  cambiarInput(): void {
+    this.tipoInput = 'date';
+  }
+}
+
+function passIguales(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('pass');
+  const repetirPassword = control.get('repetirPass');
+
+  if (!password || !repetirPassword) return null;
+
+  return password.value === repetirPassword.value ? null : { passwordsMismatch: true };
 }
