@@ -32,7 +32,7 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
   }
 
   modalUsuario(): void {
-    this.dialog.open(UsuarioModalComponent, { data: { usuario: this.usuario } }).afterClosed().subscribe({
+    this.subscripcionEditar = this.dialog.open(UsuarioModalComponent, { data: { usuario: this.usuario } }).afterClosed().subscribe({
       next: () => this.usuario = JSON.parse(localStorage.getItem('usuario') ?? '')
     });
   }
