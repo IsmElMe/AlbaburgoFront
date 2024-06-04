@@ -14,7 +14,6 @@ export class VehiculoService implements OnDestroy {
   subscripcionNuevoCliente?: Subscription;
   subscripcionEdicionCliente?: Subscription;
   subscripcionBorradoCliente?: Subscription;
-  subscripcionCliente?: Subscription;
 
   constructor(private http: HttpClient, private servicioClientes: ClientesService) { }
 
@@ -22,7 +21,6 @@ export class VehiculoService implements OnDestroy {
     this.subscripcionNuevoCliente?.unsubscribe();
     this.subscripcionEdicionCliente?.unsubscribe();
     this.subscripcionBorradoCliente?.unsubscribe();
-    this.subscripcionCliente?.unsubscribe();
   }
 
   obtenerVehiculos(): Observable<Vehiculo[]> {
@@ -83,10 +81,6 @@ export class VehiculoService implements OnDestroy {
   }
 
   borrarVehiculo(vehiculo: object): Observable<Respuesta<Vehiculo>> {
-    this.subscripcionCliente = this.servicioClientes.obtenerClienteVin((vehiculo as Vehiculo).vin).subscribe({
-      next: cliente => this.subscripcionBorradoCliente = this.servicioClientes.borrarCliente(cliente.id ?? -1).subscribe()
-    });
-
     return this.http.delete(`${API}/vehiculo/${(vehiculo as Vehiculo).id}`)
       .pipe(
         tap(() => this.actulizarVehiculosUsuario('borrar', (vehiculo as Vehiculo).id)),

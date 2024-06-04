@@ -1,16 +1,17 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, retry } from 'rxjs';
+import { Observable, catchError, retry, tap } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 import { API, errorPeticion } from '../utils';
 import { Respuesta } from '../interfaces/respuestas';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private servicioAuth: AuthService) { }
 
   obtenerUsuarios(): Observable<Usuario[]> {  
     return this.http.get<Usuario[]>(`${API}/usuario`)
@@ -53,14 +54,13 @@ export class UsuarioService {
   }
 
   borrarUsuario(idUsuario: number): Observable<Respuesta<Usuario>> {
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('token');
+    let idUsuarioActual = JSON.parse(localStorage.getItem('usuario') ?? '{}').id;
 
     return this.http.delete(`${API}/usuario/${idUsuario}`)
       .pipe(
         retry(2),
-        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Usuario>>(error))
+        catchError((error: HttpErrorResponse) => errorPeticion<Respuesta<Usuario>>(error)),
+        tap(() => { if (idUsuarioActual == idUsuario) this.servicioAuth.logout(); })
       );
   }
 }
