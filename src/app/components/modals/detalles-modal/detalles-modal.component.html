@@ -35,8 +35,14 @@
             </div>
         }
     } @else {
-        <p class="mb-1">Fecha inicio reparación:</p>
+        <p class="fw-bold mb-1">Fecha inicio reparación:</p>
         <p>{{data.reparacion.fecha_inicio}}</p>
+        
+        @if (data.reparacion.descripcion) {
+            <p class="fw-bold mb-1">Descripción:</p>
+            <p>{{data.reparacion.descripcion}}</p>
+        }
+
         <div class="d-flex flex-column align-items-stretch">
             <p>Servicios:</p>
             <ul class="list-group flex-grow-1">
